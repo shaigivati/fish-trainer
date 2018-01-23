@@ -1,2 +1,2 @@
-{0: 'right': 16, 'left': 17}
-{1: 'right': 18, 'left': 19}
+{'right': 16, 'left': 17}
+{'right': 18, 'left': 19}

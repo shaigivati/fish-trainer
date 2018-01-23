@@ -10,13 +10,13 @@ class Tank:
 		
 	
 	def decide(self, x):
-		if( x < self.width/4 and not self.side == 'Left' ):
-			self.side = 'Left'
-			return 'Left'
+		if( x < self.width/4 and not self.side == 'left' ):
+			self.side = 'left'
+			return 'left'
 		
-		elif( x > self.width*3/4 and not self.side == 'Right'):
-			self.side = 'Right'
-			return 'Right'
+		elif( x > self.width*3/4 and not self.side == 'right'):
+			self.side = 'right'
+			return 'right'
 			
 		return None
 		

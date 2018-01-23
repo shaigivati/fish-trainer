@@ -2,19 +2,25 @@
 
 import socket
 import argparse
+import json
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-f", "--file", required=True,help="path to scene file")
 args = vars(ap.parse_args())
 
-fish= []
+
+
+with open(args["file"]) as f:
+	lines = f.read().splitlines()
+	
+fish= []	
 for line in lines:
 	fish.append(eval(line))
 	
 TCP_IP = '132.72.44.66'
 TCP_PORT = 5005
-BUFFER_SIZE = 20  # Normally 1024, but we want fast response
+BUFFER_SIZE = 1024  #was 20-  Normally 1024, but we want fast response
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((TCP_IP, TCP_PORT))
@@ -26,8 +32,16 @@ while 1:
 	while 1:
 		data = conn.recv(BUFFER_SIZE)
 		if not data: break
-		print "server received data:", data
-		conn.send(data)  # echo
+		#id=data.id
+		json_acceptable_string = data.replace("'", "\"")
+		d = json.loads(json_acceptable_string)
+		
+		id = d["id"]
+		side=d['side']
+		print side
+		print fish[id][side]
+		#print "server received data:", data
+		conn.send('1')  # echo
 	conn.close()
 
 
