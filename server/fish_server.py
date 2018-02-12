@@ -3,6 +3,7 @@
 import socket
 import argparse
 import json
+import feeder
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -42,6 +43,7 @@ while 1:
 		side=d['side']
 		print side
 		print fish[id][side]
+		feeder.spin(fish[id][side],53)
 		#print "server received data:", data
 		conn.send('1')  # echo
 	conn.close()
