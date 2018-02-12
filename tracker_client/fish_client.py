@@ -7,7 +7,7 @@ class FishClient:
 	
 	def __init__(self):
 		#self.TCP_IP = '132.72.44.66'
-		self.TCP_IP = '132.72.88.57'
+		self.TCP_IP = '132.72.91.148'
 		self.TCP_PORT = 5007
 		self.BUFFER_SIZE = 1024
 		self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -21,4 +21,4 @@ class FishClient:
 		print "received data:", data
 		
 	def kill(self):
-		s.close()
+		self.s.close()

@@ -19,8 +19,8 @@ for line in lines:
 	fish.append(eval(line))
 	
 #TCP_IP = '132.72.44.66'
-TCP_IP = '132.72.88.57'
-TCP_PORT = 5007
+TCP_IP = ''
+TCP_PORT = 5008
 BUFFER_SIZE = 1024  #was 20-  Normally 1024, but we want fast response
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

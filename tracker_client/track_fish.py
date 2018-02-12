@@ -6,16 +6,14 @@
 # python track_fish.py --video fish_video_example.mp4
 # python track_fish.py  # for use with camera
 
-import sys
-
 # sys.path.append('C:/Users/Owner/PycharmProjects/deepgaze')
 
 
 import cv2
 import numpy as np
-from deepgaze.color_detection import BackProjectionColorDetector
-from deepgaze.mask_analysis import BinaryMaskAnalyser
-from deepgaze.motion_tracking import ParticleFilter
+from deepgaz.color_detection import BackProjectionColorDetector
+from deepgaz.mask_analysis import BinaryMaskAnalyser
+from deepgaz.motion_tracking import ParticleFilter
 import argparse
 from tracker_client.fish_tank import Tank
 from tracker_client.fish_client import FishClient
