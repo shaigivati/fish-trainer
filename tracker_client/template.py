@@ -105,7 +105,7 @@ while True:
 
 if len(refPt) == 2:
 
-    thefile = open('test.txt', 'w')
+    #thefile = open('test.txt', 'w')
 
     for fishy in fish:
         print fishy

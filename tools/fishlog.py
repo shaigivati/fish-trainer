@@ -12,9 +12,9 @@ class FishLog:
         '''file name- fish_name+date+time, open new file, init counters to 0'''
         
         self.fish_name=fish_name
-        print 'hello_world'
+        print 'start logging data'
         # Open a file
-        filename='log/'+strftime("%Y-%m-%d %H%M%S", gmtime())+'_'+fish_name+".txt" # time+name
+        filename='../data/log/'+strftime("%Y-%m-%d %H%M%S", gmtime())+'_'+fish_name+".txt" # time+name
         self.fo = open(filename, "w")
         
     def add_tracked_point(self,x,y):
@@ -38,4 +38,4 @@ class FishLog:
         self.line_number=self.line_number+1
         self.feed_count[side]=self.feed_count[side]+1
         
-'''mdir'''
+

@@ -45,7 +45,7 @@ while 1:
 		print fish[id][side]
 		feeder.spin(fish[id][side],53)
 		#print "server received data:", data
-		conn.send('1')  # echo
+		conn.send(side)  # echo
 	conn.close()
 
 
