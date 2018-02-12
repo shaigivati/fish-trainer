@@ -11,9 +11,9 @@
 
 import cv2
 import numpy as np
-from deepgaz.color_detection import BackProjectionColorDetector
-from deepgaz.mask_analysis import BinaryMaskAnalyser
-from deepgaz.motion_tracking import ParticleFilter
+from deepgaze.color_detection import BackProjectionColorDetector
+from deepgaze.mask_analysis import BinaryMaskAnalyser
+from deepgaze.motion_tracking import ParticleFilter
 import argparse
 from tracker_client.fish_tank import Tank
 from tracker_client.fish_client import FishClient
