@@ -51,7 +51,7 @@ while 1:
 			conn.send(side)  # echo
 		except:
 			str_err=str(sys.exc_info())
-			print "error: [0]-", str_err[0], "[1]-", str_err[1], "[2]-", str_err[2]"
+			print "error: [0]-", str_err[0], "[1]-", str_err[1], "[2]-", str_err[2]
 			print str_err[0].find("socket.error"), " , ", str_err[2].find("Connection reset by peer")
 			#if (str_err[0].find("socket.error") is not -1): print "s.err"
 			#if (str_err[2].find("Connection reset by peer") is not -1): print "peer reset"
