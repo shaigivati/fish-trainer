@@ -37,6 +37,7 @@ def input_thread():
 			break
 
 def main_server():
+	global flag_first_time
 	# construct the argument parser and parse the arguments
 	ap = argparse.ArgumentParser()
 	ap.add_argument("-f", "--file", required=True,help="path to scene file")
