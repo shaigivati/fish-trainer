@@ -50,7 +50,7 @@ while 1:
 			#print "server received data:", data
 			conn.send(side)  # echo
 		except:
-			str_err=sys.exc_info()
+			str_err=str(sys.exc_info())
 			print "error: ", str_err
 			if (str_err[0].find("socket.error") is not -1): print "s.err"
 			if (str_err[1].find("Connection reset by peer") is not -1): print "peer reset"
