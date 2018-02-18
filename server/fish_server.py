@@ -29,11 +29,11 @@ BUFFER_SIZE = 1024  #was 20-  Normally 1024, but we want fast response
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((TCP_IP, TCP_PORT))
 s.listen(1)
-print 'Server is up and waiting for connections'
+print "Server is up and waiting for connections"
 
 while 1:
 	conn, addr = s.accept()
-	print 'Connection address:', addr
+	print "Connection address:", addr
 	while 1:
 		try:
 			data = conn.recv(BUFFER_SIZE)
@@ -50,11 +50,16 @@ while 1:
 			#print "server received data:", data
 			conn.send(side)  # echo
 		except:
+			# check if error raised because computer disconnected
 			str_err=str(sys.exc_info())
-			#print "error: [0]-", str_err[0], "[1]-", str_err[1], "[2]-", str_err[2]
-			print str_err.find("socket.error"), " , ", str_err.find("Connection reset by peer")
-			if (str_err.find("socket.error") is not -1): print "s.err"
-			if (str_err.find("Connection reset by peer") is not -1): print "peer reset"
+
+			err_socket[0]=(str_err.find("socket.error") is not -1)
+			err_socket[1] =(str_err.find("Connection reset by peer") is not -1)
+			if (err_socket[0] and err_socket[1]):
+				print "socket.err - client disconnected"
+				print "Server is up and waiting for connections"
+				pass
+
 			#print "Unexpected error: [0]-", sys.exc_info()[0], " [1]-", sys.exc_info()[1], " [2]-", sys.exc_info()[2]
 	conn.close()
 
