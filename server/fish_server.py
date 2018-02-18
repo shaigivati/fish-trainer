@@ -117,6 +117,7 @@ def main():
 		flag_first_time=True
 		while True: #loop
 			main_server()
+			sys.stdout.flush()
 			#i+=1
 			#if (i>1):
 				#print ("main loop")
