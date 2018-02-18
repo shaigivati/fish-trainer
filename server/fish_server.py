@@ -52,7 +52,7 @@ while 1:
 		except:
 			# check if error raised because computer disconnected
 			str_err=str(sys.exc_info())
-
+			err_socket = []
 			err_socket[0]=(str_err.find("socket.error") is not -1)
 			err_socket[1] =(str_err.find("Connection reset by peer") is not -1)
 			if (err_socket[0] and err_socket[1]):
