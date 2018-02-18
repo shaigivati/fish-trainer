@@ -108,7 +108,7 @@ def main_server():
 			i_progress_count+=1
 			print (".", end='')
 			if (i_progress_count>10):
-				print("\r",end='')
+				print("\r100%\033[K",end='')
 			pass
 
 
