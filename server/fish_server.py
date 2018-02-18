@@ -69,7 +69,7 @@ def main_server():
 
 	#while 1:
 
-	s.settimeout(0.2)
+	s.settimeout(0.1)
 	try:
 		conn, addr = s.accept()
 		print ("Connection address:", addr)
@@ -107,7 +107,7 @@ def main_server():
 		if (err_socket[0]):
 			i_progress_count+=1
 			print (".", end='')
-			if (i_progress_count>10):
+			if (i_progress_count>30):
 				i_progress_count=0
 				print("\r\033[K",end='')
 			pass
