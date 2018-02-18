@@ -5,7 +5,7 @@ import socket
 import argparse
 import json
 import feeder
-
+import thread 		#for multithread func. (keyboard input)
 
 def read_key():
 	import termios
