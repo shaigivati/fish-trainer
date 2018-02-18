@@ -50,7 +50,7 @@ while 1:
 			#print "server received data:", data
 			conn.send(side)  # echo
 		except:
-			print "Unexpected error:", sys.exc_info()[0]
+			print "Unexpected error: [0]-", sys.exc_info()[0], " [1]-", sys.exc_info()[1]
 	conn.close()
 
 
