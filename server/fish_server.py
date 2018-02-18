@@ -63,10 +63,11 @@ def main_server():
 	if (flag_first_time):
 		flag_first_time=False
 		print ("Server is up and waiting for connections")
+		i_progress_count=0
 
 	#while 1:
 
-	s.settimeout(1)
+	s.settimeout(0.2)
 	try:
 		conn, addr = s.accept()
 		print ("Connection address:", addr)
@@ -102,7 +103,10 @@ def main_server():
 		err_socket = []
 		err_socket.append(str_err.find("socket.timeout") is not -1)
 		if (err_socket[0]):
+			i_progress_count+=1
 			print (".", end='')
+			if (i_progress_count>10):
+				print("\r",end='')
 			pass
 
 
