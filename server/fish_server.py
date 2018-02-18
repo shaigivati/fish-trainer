@@ -64,18 +64,19 @@ def main_server():
 	#while 1:
 	try:
 		data = conn.recv(BUFFER_SIZE)
-		if not data: break
-		#id=data.id
-		json_acceptable_string = data.replace("'", "\"")
-		d = json.loads(json_acceptable_string)
+		#if not data: break
+		if data:
+			#id=data.id
+			json_acceptable_string = data.replace("'", "\"")
+			d = json.loads(json_acceptable_string)
 
-		id = d["id"]
-		side=d['side']
-		print side
-		print fish[id][side]
-		feeder.spin(fish[id][side],53)
-		#print "server received data:", data
-		conn.send(side)  # echo
+			id = d["id"]
+			side=d['side']
+			print side
+			print fish[id][side]
+			feeder.spin(fish[id][side],53)
+			#print "server received data:", data
+			conn.send(side)  # echo
 	except:
 		# check if error raised because computer disconnected
 		str_err=str(sys.exc_info())
