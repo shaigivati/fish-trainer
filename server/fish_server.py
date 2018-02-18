@@ -117,14 +117,14 @@ def main():
 		flag_first_time=True
 		while True: #loop
 			main_server()
-			i+=1
-			if (i>1):
+			#i+=1
+			#if (i>1):
 				#print ("main loop")
-				i=0
+			#	i=0
 
 	except KeyboardInterrupt:                           # ADDED
 		print ("Quit")
-		s.close()
+		#conn.close()
 		sys.exit(0)
 
 
