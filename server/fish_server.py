@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
+from __future__ import print_function	#to 'print' without newline
 import sys
 import socket
 import argparse
 import json
 import feeder
 import thread 							#for multithread func. (keyboard input)
-from __future__ import print_function	#to 'print' without newline
 
 def read_key():
 	import termios
