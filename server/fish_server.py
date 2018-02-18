@@ -57,14 +57,14 @@ def main_server():
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.bind((TCP_IP, TCP_PORT))
 	s.listen(1)
-	print "Server is up and waiting for connections"
+	print ("Server is up and waiting for connections")
 
 	#while 1:
 
 	s.settimeout(1)
 	try:
 		conn, addr = s.accept()
-		print "Connection address:", addr
+		print ("Connection address:", addr)
 		s.settimeout(None)
 		# while 1:
 		try:
@@ -77,8 +77,8 @@ def main_server():
 
 				id = d["id"]
 				side = d['side']
-				print side
-				print fish[id][side]
+				print (side)
+				print (fish[id][side])
 				feeder.spin(fish[id][side], 53)
 				# print "server received data:", data
 				conn.send(side)  # echo
@@ -89,15 +89,15 @@ def main_server():
 			err_socket.append(str_err.find("socket.error") is not -1)
 			err_socket.append(str_err.find("Connection reset by peer") is not -1)
 			if (err_socket[0] and err_socket[1]):
-				print "socket.err - client disconnected"
-				print "Server is up and waiting for connections"
+				print ("socket.err - client disconnected")
+				print ("Server is up and waiting for connections")
 				pass
 	except:
 		str_err = str(sys.exc_info())
 		err_socket = []
 		err_socket.append(str_err.find("socket.timeout") is not -1)
 		if (err_socket[0]):
-			print ".", end=''
+			print (".", end='')
 			pass
 
 
@@ -113,7 +113,7 @@ def main():
 			main_server()
 			i+=1
 			if (i>200):
-				print "main loop"
+				print ("main loop")
 				i=0
 
 	except KeyboardInterrupt:                           # ADDED
