@@ -8,6 +8,8 @@ import json
 import feeder
 import thread 							#for multithread func. (keyboard input)
 
+flag_first_time=True
+
 def read_key():
 	import termios
 	import sys
