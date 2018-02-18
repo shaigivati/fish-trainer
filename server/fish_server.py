@@ -58,37 +58,37 @@ def main_server():
 	s.listen(1)
 	print "Server is up and waiting for connections"
 
-	while 1:
-		conn, addr = s.accept()
-		print "Connection address:", addr
-		while 1:
-			try:
-				data = conn.recv(BUFFER_SIZE)
-				if not data: break
-				#id=data.id
-				json_acceptable_string = data.replace("'", "\"")
-				d = json.loads(json_acceptable_string)
+	#while 1:
+	conn, addr = s.accept()
+	print "Connection address:", addr
+	#while 1:
+	try:
+		data = conn.recv(BUFFER_SIZE)
+		if not data: break
+		#id=data.id
+		json_acceptable_string = data.replace("'", "\"")
+		d = json.loads(json_acceptable_string)
 
-				id = d["id"]
-				side=d['side']
-				print side
-				print fish[id][side]
-				feeder.spin(fish[id][side],53)
-				#print "server received data:", data
-				conn.send(side)  # echo
-			except:
-				# check if error raised because computer disconnected
-				str_err=str(sys.exc_info())
-				err_socket = []
-				err_socket.append(str_err.find("socket.error") is not -1)
-				err_socket.append(str_err.find("Connection reset by peer") is not -1)
-				if (err_socket[0] and err_socket[1]):
-					print "socket.err - client disconnected"
-					print "Server is up and waiting for connections"
-					pass
+		id = d["id"]
+		side=d['side']
+		print side
+		print fish[id][side]
+		feeder.spin(fish[id][side],53)
+		#print "server received data:", data
+		conn.send(side)  # echo
+	except:
+		# check if error raised because computer disconnected
+		str_err=str(sys.exc_info())
+		err_socket = []
+		err_socket.append(str_err.find("socket.error") is not -1)
+		err_socket.append(str_err.find("Connection reset by peer") is not -1)
+		if (err_socket[0] and err_socket[1]):
+			print "socket.err - client disconnected"
+			print "Server is up and waiting for connections"
+			pass
 
-				#print "Unexpected error: [0]-", sys.exc_info()[0], " [1]-", sys.exc_info()[1], " [2]-", sys.exc_info()[2]
-		conn.close()
+		#print "Unexpected error: [0]-", sys.exc_info()[0], " [1]-", sys.exc_info()[1], " [2]-", sys.exc_info()[2]
+	#conn.close()
 
 def main():
 	try:
@@ -97,7 +97,9 @@ def main():
 		while True: #loop
 			main_server()
 			i+=1
-			if (i>200): print "main loop"
+			if (i>200):
+				print "main loop"
+				i=0
 
 	except KeyboardInterrupt:                           # ADDED
 		print ("Quit")
