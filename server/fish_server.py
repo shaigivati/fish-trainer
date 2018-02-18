@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
+import sys
 import socket
 import argparse
 import json
 import feeder
+
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -33,19 +35,22 @@ while 1:
 	conn, addr = s.accept()
 	print 'Connection address:', addr
 	while 1:
-		data = conn.recv(BUFFER_SIZE)
-		if not data: break
-		#id=data.id
-		json_acceptable_string = data.replace("'", "\"")
-		d = json.loads(json_acceptable_string)
+		try:
+			data = conn.recv(BUFFER_SIZE)
+			if not data: break
+			#id=data.id
+			json_acceptable_string = data.replace("'", "\"")
+			d = json.loads(json_acceptable_string)
 		
-		id = d["id"]
-		side=d['side']
-		print side
-		print fish[id][side]
-		feeder.spin(fish[id][side],53)
-		#print "server received data:", data
-		conn.send(side)  # echo
+			id = d["id"]
+			side=d['side']
+			print side
+			print fish[id][side]
+			feeder.spin(fish[id][side],53)
+			#print "server received data:", data
+			conn.send(side)  # echo
+		except:
+			print "Unexpected error:", sys.exc_info()[0]
 	conn.close()
 
 
