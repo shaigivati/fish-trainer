@@ -59,7 +59,12 @@ def main_server():
 	print "Server is up and waiting for connections"
 
 	#while 1:
+
+	s.settimeout(10)
+
 	conn, addr = s.accept()
+
+	s.settimeout(None)
 	print "Connection address:", addr
 	#while 1:
 	try:
