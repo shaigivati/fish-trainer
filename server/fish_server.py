@@ -5,7 +5,8 @@ import socket
 import argparse
 import json
 import feeder
-import thread 		#for multithread func. (keyboard input)
+import thread 							#for multithread func. (keyboard input)
+from __future__ import print_function	#to 'print' without newline
 
 def read_key():
 	import termios
@@ -92,8 +93,13 @@ def main_server():
 				print "Server is up and waiting for connections"
 				pass
 	except:
-		print str(sys.exc_info())
-		pass
+		str_err = str(sys.exc_info())
+		err_socket = []
+		err_socket.append(str_err.find("socket.timeout") is not -1)
+		if (err_socket[0]):
+			print ".", end=''
+			pass
+
 
 
 		#print "Unexpected error: [0]-", sys.exc_info()[0], " [1]-", sys.exc_info()[1], " [2]-", sys.exc_info()[2]
