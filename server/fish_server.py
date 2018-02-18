@@ -60,10 +60,11 @@ def main_server():
 
 	#while 1:
 
-	s.settimeout(10)
-
-	conn, addr = s.accept()
-
+	s.settimeout(1)
+	try:
+		conn, addr = s.accept()
+	except:
+		print str(sys.exc_info())
 	s.settimeout(None)
 	print "Connection address:", addr
 	#while 1:
