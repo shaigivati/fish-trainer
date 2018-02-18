@@ -8,30 +8,30 @@ import feeder
 
 
 def read_key():
-    import termios
-    import sys
-    fd = sys.stdin.fileno()
-    old = termios.tcgetattr(fd)
-    new = termios.tcgetattr(fd)
-    new[3] &= ~(termios.ICANON | termios.ECHO) # c_lflags
-    c = None
-    try:
-        termios.tcsetattr(fd, termios.TCSANOW, new)
-        c = sys.stdin.read(1)
-    finally:
-        termios.tcsetattr(fd, termios.TCSANOW, old)
-    return c
+	import termios
+	import sys
+	fd = sys.stdin.fileno()
+	old = termios.tcgetattr(fd)
+	new = termios.tcgetattr(fd)
+	new[3] &= ~(termios.ICANON | termios.ECHO) # c_lflags
+	c = None
+	try:
+		termios.tcsetattr(fd, termios.TCSANOW, new)
+		c = sys.stdin.read(1)
+	finally:
+		termios.tcsetattr(fd, termios.TCSANOW, old)
+	return c
 
 def input_thread():
 
-    #global key_pressed
-    while True:
-        key_pressed=read_key()
-        print ("Key pressed- %s" % key_pressed)
-        #print(key_pressed)
-        if (key_pressed=="q" or key_pressed=="Q"):
-            thread.interrupt_main()
-            break
+	#global key_pressed
+	while True:
+		key_pressed=read_key()
+		print ("Key pressed- %s" % key_pressed)
+		#print(key_pressed)
+		if (key_pressed=="q" or key_pressed=="Q"):
+			thread.interrupt_main()
+			break
 
 def main_server():
 	# construct the argument parser and parse the arguments
@@ -91,20 +91,20 @@ def main_server():
 		conn.close()
 
 def main():
-    try:
-        thread.start_new_thread(input_thread, ())       # ADDED
+	try:
+		thread.start_new_thread(input_thread, ())       # ADDED
 
-        while True: #loop
+		while True: #loop
 			main_server()
 
-    except KeyboardInterrupt:                           # ADDED
-        print ("Quit")
+	except KeyboardInterrupt:                           # ADDED
+		print ("Quit")
 		conn.close()
-        sys.exit(0)
+		sys.exit(0)
 
 
 if  __name__ =='__main__':
-    main()
+	main()
 
 #TBD-
 # make sever into loop
