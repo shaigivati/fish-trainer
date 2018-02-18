@@ -119,12 +119,12 @@ def main():
 			main_server()
 			i+=1
 			if (i>1):
-				print ("main loop")
+				#print ("main loop")
 				i=0
 
 	except KeyboardInterrupt:                           # ADDED
 		print ("Quit")
-		conn.close()
+		s.close()
 		sys.exit(0)
 
 
