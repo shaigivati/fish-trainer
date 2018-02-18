@@ -93,9 +93,11 @@ def main_server():
 def main():
 	try:
 		thread.start_new_thread(input_thread, ())       # ADDED
-
+		i=0
 		while True: #loop
 			main_server()
+			i+=1
+			if (i>200): print "main loop"
 
 	except KeyboardInterrupt:                           # ADDED
 		print ("Quit")
