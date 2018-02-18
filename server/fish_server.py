@@ -57,7 +57,9 @@ def main_server():
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.bind((TCP_IP, TCP_PORT))
 	s.listen(1)
-	print ("Server is up and waiting for connections")
+	if (flag_first_time):
+		flag_first_time=False
+		print ("Server is up and waiting for connections")
 
 	#while 1:
 
@@ -109,10 +111,11 @@ def main():
 	try:
 		thread.start_new_thread(input_thread, ())       # ADDED
 		i=0
+		flag_first_time=True
 		while True: #loop
 			main_server()
 			i+=1
-			if (i>200):
+			if (i>1):
 				print ("main loop")
 				i=0
 
