@@ -72,6 +72,7 @@ def main_server():
 	s.settimeout(0.1)
 	try:
 		conn, addr = s.accept()
+		print ("OK")
 		print ("Connection address:", addr)
 		s.settimeout(None)
 		# while 1:
@@ -85,8 +86,8 @@ def main_server():
 
 				id = d["id"]
 				side = d['side']
-				print (side)
-				print (fish[id][side])
+				print ("-->",side)
+				print ("-->",fish[id][side])
 				feeder.spin(fish[id][side], 53)
 				# print "server received data:", data
 				conn.send(side)  # echo
@@ -97,8 +98,9 @@ def main_server():
 			err_socket.append(str_err.find("socket.error") is not -1)
 			err_socket.append(str_err.find("Connection reset by peer") is not -1)
 			if (err_socket[0] and err_socket[1]):
-				print ("socket.err - client disconnected")
-				print ("Server is up and waiting for connections")
+				print ("-->socket.err - client disconnected")
+				flag_first_time=True
+				#print ("Server is up and waiting for connections")
 				pass
 	except:
 		str_err = str(sys.exc_info())
@@ -133,6 +135,7 @@ def main():
 	except KeyboardInterrupt:                           # ADDED
 		print ("Quit")
 		#conn.close()
+		feeder.destruct()
 		sys.exit(0)
 
 
