@@ -59,12 +59,12 @@ def main_server():
 	TCP_PORT = 5008
 	BUFFER_SIZE = 1024  #was 20-  Normally 1024, but we want fast response
 
-	s = socket(socket.AF_INET, socket.SOCK_STREAM)
-
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	s.bind((TCP_IP, TCP_PORT))
+	s.listen(1)
 
 	if (flag_first_time):
-		s.bind((TCP_IP, TCP_PORT))
-		s.listen(1)
+
 		flag_first_time=False
 		print ("Server is up and waiting for connections")
 		i_progress_count=0
