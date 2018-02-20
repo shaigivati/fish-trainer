@@ -62,6 +62,10 @@ def main_server():
 	TCP_PORT = 5008
 	BUFFER_SIZE = 1024  #was 20-  Normally 1024, but we want fast response
 
+	s.socket(socket.AF_INET, socket.SOCK_STREAM)
+	s.connect((TCP_IP, TCP_PORT))
+	s.listen(1)
+
 	if (flag_first_time):
 
 		flag_first_time=False
@@ -115,13 +119,12 @@ def main_server():
 				print("\r\033[K",end='')
 			pass
 
+	s.close()
+
 
 
 		#print "Unexpected error: [0]-", sys.exc_info()[0], " [1]-", sys.exc_info()[1], " [2]-", sys.exc_info()[2]
 	#conn.close()
-s.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((TCP_IP, TCP_PORT))
-s.listen(1)
 
 def main():
 	try:
