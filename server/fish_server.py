@@ -61,9 +61,9 @@ def main_server():
 	TCP_PORT = 5008
 	BUFFER_SIZE = 1024  #was 20-  Normally 1024, but we want fast response
 
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 	if (flag_first_time):
-		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		s.bind((TCP_IP, TCP_PORT))
 		s.listen(1)
 		flag_first_time=False
