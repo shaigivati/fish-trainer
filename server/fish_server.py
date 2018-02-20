@@ -10,6 +10,7 @@ import thread 							#for multithread func. (keyboard input)
 
 flag_first_time=True
 i_progress_count = 0
+step_no_to_spin=320
 
 def read_key():
 	import termios
@@ -40,6 +41,7 @@ def input_thread():
 def main_server():
 	global flag_first_time
 	global i_progress_count
+	global step_no_to_spin
 	# construct the argument parser and parse the arguments
 	ap = argparse.ArgumentParser()
 	ap.add_argument("-f", "--file", required=True,help="path to scene file")
@@ -88,7 +90,7 @@ def main_server():
 				side = d['side']
 				print ("-->",side)
 				print ("-->",fish[id][side])
-				feeder.spin(fish[id][side], 53)
+				feeder.spin(fish[id][side], step_no_to_spin)
 				# print "server received data:", data
 				conn.send(side)  # echo
 		except:
