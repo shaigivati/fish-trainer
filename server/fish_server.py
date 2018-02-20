@@ -39,6 +39,7 @@ def input_thread():
 			break
 
 def main_server():
+	global s
 	global flag_first_time
 	global i_progress_count
 	global step_no_to_spin
@@ -60,15 +61,6 @@ def main_server():
 	TCP_IP = ''
 	TCP_PORT = 5008
 	BUFFER_SIZE = 1024  #was 20-  Normally 1024, but we want fast response
-	s.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.connect((TCP_IP, TCP_PORT))
-	s.listen(1)
-	try:
-		#s.socket(socket.AF_INET, socket.SOCK_STREAM)
-		#s.bind((TCP_IP, TCP_PORT))
-
-	except:
-		pass
 
 	if (flag_first_time):
 
@@ -127,6 +119,9 @@ def main_server():
 
 		#print "Unexpected error: [0]-", sys.exc_info()[0], " [1]-", sys.exc_info()[1], " [2]-", sys.exc_info()[2]
 	#conn.close()
+s.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((TCP_IP, TCP_PORT))
+s.listen(1)
 
 def main():
 	try:
@@ -134,6 +129,7 @@ def main():
 		i=0
 		flag_first_time=True
 		while True: #loop
+
 			main_server()
 			sys.stdout.flush()
 			#i+=1
