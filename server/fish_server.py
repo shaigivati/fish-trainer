@@ -39,7 +39,6 @@ def input_thread():
 			break
 
 def main_server():
-	global s
 	global flag_first_time
 	global i_progress_count
 	global step_no_to_spin
