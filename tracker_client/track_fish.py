@@ -182,6 +182,7 @@ def main_tf(lst_args, in_queue):
 
 				feed_side = tank[id].decide(x_estimated)
 				if (feed_side != None):
+					print "id:",id," side:",feed_side
 					fish_client.send(id, feed_side)
 					logger.add_feed(feed_side)
 
@@ -193,8 +194,8 @@ def main_tf(lst_args, in_queue):
 				i_msg=0
 			i_msg+=1
 			#time.sleep(time_to_sleep)
-		else:
-			print ""
+		#else:
+			#print ""
 			#print "sure, it was defined."
 	  #  if cv2.waitKey(1) & 0xFF == ord('q'): break #Exit when Q is pressed
 
