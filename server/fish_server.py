@@ -14,7 +14,6 @@ step_no_to_spin=320
 
 def read_key():
 	import termios
-	import sys
 	fd = sys.stdin.fileno()
 	old = termios.tcgetattr(fd)
 	new = termios.tcgetattr(fd)
@@ -28,7 +27,6 @@ def read_key():
 	return c
 
 def input_thread():
-
 	#global key_pressed
 	while True:
 		key_pressed=read_key()
@@ -61,12 +59,12 @@ def main_server():
 	TCP_PORT = 5008
 	BUFFER_SIZE = 1024  #was 20-  Normally 1024, but we want fast response
 
-	s.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.bind((TCP_IP, TCP_PORT))
-	s.listen(1)
+	s = socket(socket.AF_INET, socket.SOCK_STREAM)
+
 
 	if (flag_first_time):
-
+		s.bind((TCP_IP, TCP_PORT))
+		s.listen(1)
 		flag_first_time=False
 		print ("Server is up and waiting for connections")
 		i_progress_count=0
