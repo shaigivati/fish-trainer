@@ -63,7 +63,7 @@ def main_server():
 	BUFFER_SIZE = 1024  #was 20-  Normally 1024, but we want fast response
 
 	s.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.connect((TCP_IP, TCP_PORT))
+	s.bind((TCP_IP, TCP_PORT))
 	s.listen(1)
 
 	if (flag_first_time):
