@@ -261,8 +261,9 @@ def while_true_func(server):
                 args=(client_sock,)
                 # without comma you'd get a... TypeError: handle_client_connection() argument after * must be a sequence, not _socketobject
             )
-            client_handler.start()
-            line_counter=0
+            app.onTxtUpdate(' ')
+            #client_handler.start()
+            line_counter=-1
             line_dir=1
         except:
             pass
