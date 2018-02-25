@@ -219,20 +219,20 @@ def get_ip():
 
 
 def handle_client_connection(client_socket):
-    global exit_var
+    global exit_var, line_counter, line_dir
     request = client_socket.recv(1024)
     str_tmp = 'Received {}'.format(request)
     app.onTxtUpdate('{}'.format(str_tmp))
     l.info(str_tmp)
+    line_counter = 0
+    line_dir = 1
     if request=='Close': exit_var=True
     client_socket.send(request)
     client_socket.close()
 
 
 def while_true_func(server):
-    global exit_var
-    global connected
-    global first_accp_conn
+    global exit_var, connected, first_accp_conn, line_counter, line_dir
     line_counter=0
     line_dir=1
     while not exit_var:
