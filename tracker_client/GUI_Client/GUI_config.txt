@@ -1,0 +1,18 @@
+[Fish Statistics]
+log folder = /Users/talzoor/Documents/FishLabInfo/log
+days back = 100
+arg = 1
+
+[Communication]
+server ip = 132.72.58.148
+
+[Motor]
+stepNum = 320
+
+[Fish]
+argument1 = --file=tank_config.txt
+argument2 = --n=
+
+
+[Others]
+Route: 66
