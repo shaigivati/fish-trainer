@@ -221,7 +221,7 @@ def get_ip():
 def handle_client_connection(client_socket):
     global exit_var, line_counter, line_dir
     request = client_socket.recv(1024)
-    str_tmp = 'Received {}'.format(request)
+    str_tmp = 'Received {}'.format(repr(request))
     app.onTxtUpdate('{}'.format(str_tmp))
     l.info(str_tmp)
     line_counter = 0
