@@ -224,9 +224,10 @@ def handle_client_connection(client_socket):
     str_tmp = 'Received {}'.format(repr(request))
     app.onTxtUpdate('{}'.format(str_tmp))
     l.info(str_tmp)
-    line_counter = 0
+    line_counter = -1
     line_dir = 1
     if request=='Close': exit_var=True
+    print("HERE")
     client_socket.send(request)
     client_socket.close()
 
