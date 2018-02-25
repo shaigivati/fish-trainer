@@ -227,7 +227,6 @@ def handle_client_connection(client_socket):
     line_counter = -1
     line_dir = 1
     if request=='Close': exit_var=True
-    print("HERE")
     client_socket.send(request)
     client_socket.close()
 
@@ -262,7 +261,6 @@ def while_true_func(server):
                 args=(client_sock,)
                 # without comma you'd get a... TypeError: handle_client_connection() argument after * must be a sequence, not _socketobject
             )
-            app.onTxtUpdate(' ')
             client_handler.start()
             line_counter=-1
             line_dir=1
