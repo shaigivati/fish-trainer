@@ -82,7 +82,6 @@ def main_tf(lst_args, in_queue):
 
 	template = cv2.imread('template.png')
 	logger = fishlog.FishLog(lst_args["log"])
-	fish_client = FishClient()
 
 	out=[]
 	width=[]
@@ -185,6 +184,7 @@ def main_tf(lst_args, in_queue):
 				feed_side = tank[id].decide(x_estimated)
 				if (feed_side != None):
 					print "id:",id," side:",feed_side
+					fish_client = FishClient()
 					fish_client.send(id, feed_side)
 					logger.add_feed(feed_side)
 
