@@ -222,7 +222,7 @@ def handle_client_connection(client_socket):
     global exit_var
     request = client_socket.recv(1024)
     str_tmp = 'Received {}'.format(request)
-    app.onTxtUpdate(str_tmp)
+    app.onTxtUpdate('{}\n'.format(str_tmp))
     l.info(str_tmp)
     if request=='Close': exit_var=True
     client_socket.send(request)
@@ -262,7 +262,7 @@ def while_true_func(server):
                 # without comma you'd get a... TypeError: handle_client_connection() argument after * must be a sequence, not _socketobject
             )
             client_handler.start()
-            line_counter=0
+            line_counter=-1
             line_dir=1
         except:
             pass
