@@ -14,6 +14,7 @@ from tracker_client.fish_tank import Tank
 from tracker_client.fish_client import FishClient
 from tools import fishlog
 import threading
+import os
 import multiprocessing
 
 
@@ -24,6 +25,7 @@ class Counter(object):
     def __init__(self, start = 0):
         self.lock = threading.Lock()
         self.value = start
+
     def increment(self):
         logging.debug('Waiting for a lock')
         self.lock.acquire()
@@ -34,12 +36,12 @@ class Counter(object):
             logging.debug('Released a lock')
             self.lock.release()
 
+
 def main_tf(lst_args, in_queue):
 	global counter
 	# construct the argument parser and parse the arguments
 	#for arg in sys.argv[1:]:
 	#	print arg
-
 	#ap = argparse.ArgumentParser()
 
 	#ap.add_argument("-v", "--video",help="path to the (optional) video file")
@@ -160,7 +162,7 @@ def main_tf(lst_args, in_queue):
 				my_particle[id].predict(x_velocity=0, y_velocity=0, std=std)
 
 				#Drawing the particles.
-				#my_particle[id].drawParticles(frame_cut)
+				my_particle[id].drawParticles(frame_cut)
 
 				#Estimate the next position using the internal model
 				x_estimated, y_estimated, _, _ = my_particle[id].estimate()
@@ -204,16 +206,24 @@ def main_tf(lst_args, in_queue):
 	#print("Bye...")
 
 counter = Counter()
+
 if __name__ == '__main__':
+	arguments = sys.argv
+	file_name = arguments[0]
+	arg_temp = str(arguments[1])
+	arg1 = arg_temp[arg_temp.find('=')+1:]
+	arg_temp = str(arguments[2])
+	arg2 = arg_temp[arg_temp.find('=')+1:]
+	#print ('1:{} 2:{} 3:{}'.format(file_name, arg1, arg2))
 
-	ap = argparse.ArgumentParser()
-
-	ap.add_argument("-v", "--video", help="path to the (optional) video file")
-	ap.add_argument("-f", "--file", required=True, help="path to scene file")
-	ap.add_argument("-log", "--log", required=True, help="path to scene file")
-
-	args = vars(ap.parse_args())
+	args={"file_name" : file_name, "file" : arg1, "log" : arg2}
+	#ap = argparse.ArgumentParser()
+	#ap.add_argument("-v", "--video", help="path to the (optional) video file")
+	#ap.add_argument("-f", "--file", required=True, help="path to scene file")
+	#ap.add_argument("-log", "--log", required=True, help="path to scene file")
+	#args = vars(ap.parse_args())
 	#print "if:",args
+	print(args)
 	in_queue = multiprocessing.Queue()
 	in_queue.put(1)
 	main_tf(args,in_queue)

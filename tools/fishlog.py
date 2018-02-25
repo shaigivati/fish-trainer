@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import datetime
 from time import gmtime, strftime
-
+import os
 
 class FishLog:
     line_number=0
@@ -14,8 +14,13 @@ class FishLog:
         self.fish_name=fish_name
         print 'start logging data'
         # Open a file
-        filename='../data/log/'+strftime("%Y-%m-%d %H%M%S", gmtime())+'_'+fish_name+".txt" # time+name
-        self.fo = open(filename, "w")
+        curr_dir = os.path.dirname(os.path.abspath(__file__))
+        last_slh_index = curr_dir.find('Fish_traning')+13
+        data_dir = '{}{}'.format(curr_dir[0:last_slh_index], 'data/log/')
+        filename='{}{}{}{}'.format(data_dir, strftime("%Y-%m-%d %H%M%S", gmtime()), '_'+fish_name, ".txt") # time+name
+
+        print filename
+        self.fo = open(filename, 'w')
         
     def add_tracked_point(self,x,y):
         self.fo.write(str(self.line_number)+' ') #

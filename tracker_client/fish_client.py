@@ -8,7 +8,7 @@ class FishClient:
 	def __init__(self):
 		#self.TCP_IP = '132.72.44.66'
 		self.TCP_IP = '132.72.91.148'
-		self.TCP_PORT = 5008
+		self.TCP_PORT = 50007
 		self.BUFFER_SIZE = 1024
 		self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.s.connect((self.TCP_IP, self.TCP_PORT))

@@ -19,10 +19,8 @@ except ImportError:
 import ConfigParser
 import sys
 import threading
-import fish_stat
 import time
 import subprocess
-
 
 
 Config = ConfigParser.ConfigParser()
@@ -45,6 +43,7 @@ def vp_start_gui():
     global val, w, root, app
     root = Tk()
     app = GUIClass(root)
+    app.onRunTraining()
 
     root.wm_attributes("-topmost", 1)
     root.focus_force()
@@ -490,7 +489,6 @@ class GUIClass(Tk):
 
         self.fillValue()
 
-
     def fillValue(self):
         Config.read('GUI_config.txt')
         self.LogFolderName = ConfigSectionMap("Fish Statistics")['log folder']
@@ -538,8 +536,10 @@ class GUIClass(Tk):
         sys.exit(1)
 
     def onRunTraining(self):
-        print('ClientGUI_support.onRunTraining')
         sys.stdout.flush()
+        TrackInfo = ThreadingProcess('../track_fish.py', '-f=tank_config.txt', '-log=F999DAY1').run()
+        app.txtMainLog.insert(END, TrackInfo)
+        app.txtMainLog.see(END)
 
     def onSendtest(self):
         print('ClientGUI_support.onSendtest')
