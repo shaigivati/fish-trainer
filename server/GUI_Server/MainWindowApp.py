@@ -264,7 +264,7 @@ def while_true_func(server):
     while not exit_var:
         if line_counter>=30:
             line_dir*=-1
-            line_counter=-1
+            line_counter=0
 
         if line_dir>0:
             app.onTxtUpdate(".", False)
