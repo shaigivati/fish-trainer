@@ -276,7 +276,7 @@ def while_true_func(server):
         try:
             client_sock, address = server.accept()
             str_tmp = '\nAccepted connection from {}:{}'.format(address[0], address[1])
-            #app.onTxtUpdate(' ')
+
             if first_accp_conn:
                 app.onTxtUpdate(str_tmp)
                 first_accp_conn=False
