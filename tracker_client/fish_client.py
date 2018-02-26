@@ -13,6 +13,7 @@ class FishClient:
 		self.BUFFER_SIZE = 1024
 		self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.s.connect((self.TCP_IP, self.TCP_PORT))
+
 	def send(self,id, side):
 		
 		data=json.dumps({'id':id,'side':side})

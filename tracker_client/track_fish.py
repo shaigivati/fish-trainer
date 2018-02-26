@@ -54,7 +54,7 @@ def main_tf(lst_args, in_queue):
 	full_script_path='{}{}'.format(os.path.dirname(os.path.realpath(__file__)), '/')
 	full_file_path='{}{}'.format(full_script_path, lst_args["file"])
 
-	print(full_file_path)
+	print('full_script_path:{}'.format(full_script_path))
 
 	with open(full_file_path) as f:
 		lines = f.read().splitlines()
@@ -85,7 +85,14 @@ def main_tf(lst_args, in_queue):
 	noise_probability = 0.15 #in range [0, 1.0]
 
 	template = cv2.imread('{}{}'.format(full_script_path, 'template.png'))
-	logger = fishlog.FishLog(lst_args["log"])
+
+	full_root_script_path =  full_script_path[:full_script_path.find('tracker_client')]
+	log_folder = '{}data/log/'.format(full_root_script_path)
+	print('log:{}'.format(log_folder))
+
+	logger = fishlog.FishLog(log_folder, lst_args["log"])
+
+
 
 	out=[]
 	width=[]
