@@ -255,7 +255,7 @@ def handle_client_connection(client_socket):
     #print('-->{}'.format(app.Pin[pin_num_str]))
 
     spin_res = feed.spin(int(app.Pin[pin_num_str]), int(app.step_num), int(app.Pin_en))
-    app.onTxtUpdate('{}'.format(spin_res), False)
+    app.onTxtUpdate('{}.'.format(spin_res), False)
 
 def while_true_func(server):
     global exit_var, connected, first_accp_conn, line_counter, line_dir
@@ -264,7 +264,7 @@ def while_true_func(server):
     while not exit_var:
         if line_counter>=30:
             line_dir*=-1
-            line_counter=0
+            line_counter=-1
 
         if line_dir>0:
             app.onTxtUpdate(".", False)

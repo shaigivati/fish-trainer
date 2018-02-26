@@ -8,18 +8,16 @@ class FishLog:
     track_count=0
     feed_count={'left':0,'right':0}
     
-    def __init__(self, fish_name):
+    def __init__(self, log_folder, fish_name):
         '''file name- fish_name+date+time, open new file, init counters to 0'''
         
         self.fish_name=fish_name
         print 'start logging data'
         # Open a file
-        curr_dir = os.path.dirname(os.path.abspath(__file__))
-        last_slh_index = curr_dir.find('Fish_traning')+13
-        data_dir = '{}{}'.format(curr_dir[0:last_slh_index], 'data/log/')
-        filename='{}{}{}{}'.format(data_dir, strftime("%Y-%m-%d %H%M%S", gmtime()), '_'+fish_name, ".txt") # time+name
 
-        print filename
+        filename='{}{}{}{}'.format(log_folder, strftime("%Y-%m-%d %H%M%S", gmtime()), '_'+fish_name, ".txt") # time+name
+        print ('log file:{}'.format(filename))
+
         self.fo = open(filename, 'w')
         
     def add_tracked_point(self,x,y):
