@@ -131,24 +131,6 @@ class MainWindowApp(Tkinter.Tk):
         #print 'last_char_index:{}'.format(last_char_index)
         self.txt.delete(last_char_index, Tkinter.END)
 
-    def onConnect(self):
-        # Echo client program
-
-        HOST = '192.168.1.7'  # The remote host
-        PORT = 50007  # The same port as used by the server
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        try:
-            s.connect((HOST, PORT))
-            s.send(self.i)
-            data = s.recv(1024)
-            s.close()
-            self.logger.info(_('Received %s'), repr(data))
-            print ('!{}!'.format(repr(data)))
-        except socket.error, v:
-            errorcode = v[0]
-            self.logger.info(_("%s (%i)"), os.strerror(errorcode), errorcode)
-
-
 
     def onConnectServer(self):
         self.root.after(100, self.ConnectLoop())
@@ -245,6 +227,7 @@ def handle_client_connection(client_socket):
     global exit_var, line_counter, line_dir
     request = client_socket.recv(1024)
     str_tmp = 'Received {}'.format(repr(request))
+    print ('!{}!'.format(repr(data)))
     app.onTxtUpdate('{}'.format(str_tmp), False)
     l.info(str_tmp)
     line_counter = -1
