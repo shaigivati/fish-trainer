@@ -36,13 +36,13 @@ l.setLevel(logging.INFO)
 cl = CumulativeLogger.CumulativeLogger()
 l.info(_('Program started.'))
 Config = ConfigParser.ConfigParser()
-feed = feeder.Feeder()
+feed = feeder.Feeder
 
 
 class MainWindowApp(Tkinter.Tk):
 
     def __init__(self, log):
-
+        global feed
         self.log = log
         self.logger = logging.getLogger(self.__class__.__name__)
         #cumL = CumulativeLogger.__name__
@@ -57,6 +57,7 @@ class MainWindowApp(Tkinter.Tk):
         self.Pin['2L'] = ConfigSectionMap("Tank")['tank 2 left pin']
         self.Pin['2R'] = ConfigSectionMap("Tank")['tank 2 right pin']
 
+        feed = feeder.Feeder({self.Pin_en, self.Pin['1L'], self.Pin['1R'], self.Pin['2L'], self.Pin['2R']})
         #self.Pin={'1L':1 , '1R':2 , '2L':3 , '2R':4}
         #print ('[1,left]:{}, [1,right]:{}, [2,left]:{}, [2,right]:{}'.format(self.Pin['1L'], self.Pin['1R'], self.Pin['2L'], self.Pin['2R']))
         self.i=0
