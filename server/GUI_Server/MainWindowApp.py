@@ -8,6 +8,8 @@ import socket
 import threading
 import sys
 import ConfigParser
+import ast
+import feeder
 
 def ConfigSectionMap(section):
     dict1 = {}
@@ -34,6 +36,7 @@ l.setLevel(logging.INFO)
 cl = CumulativeLogger.CumulativeLogger()
 l.info(_('Program started.'))
 Config = ConfigParser.ConfigParser()
+feed = feeder.Feeder()
 
 
 class MainWindowApp(Tkinter.Tk):
@@ -46,10 +49,16 @@ class MainWindowApp(Tkinter.Tk):
 
         Config.read('GUI_config.txt')
         self.step_num = ConfigSectionMap("Motor settings")['steps']
+        self.Pin_en = ConfigSectionMap("Motor settings")['enable pin']
 
-        self.Pin_1_L = ConfigSectionMap("Tank")['tank 1 left pin']
-        self.Pin_1_R = ConfigSectionMap("Tank")['tank 1 right pin']
+        self.Pin={}
+        self.Pin['1L'] = ConfigSectionMap("Tank")['tank 1 left pin']
+        self.Pin['1R'] = ConfigSectionMap("Tank")['tank 1 right pin']
+        self.Pin['2L'] = ConfigSectionMap("Tank")['tank 2 left pin']
+        self.Pin['2R'] = ConfigSectionMap("Tank")['tank 2 right pin']
 
+        #self.Pin={'1L':1 , '1R':2 , '2L':3 , '2R':4}
+        #print ('[1,left]:{}, [1,right]:{}, [2,left]:{}, [2,right]:{}'.format(self.Pin['1L'], self.Pin['1R'], self.Pin['2L'], self.Pin['2R']))
         self.i=0
 
     def run(self):
@@ -226,16 +235,26 @@ def get_ip():
 def handle_client_connection(client_socket):
     global exit_var, line_counter, line_dir
     request = client_socket.recv(1024)
-    str_tmp = 'Received {}'.format(repr(request))
-    print ('!{}!'.format(request))
+    client_socket.send(request)             #echo
+    str_tmp = 'Received {}'.format(request)
     app.onTxtUpdate('{}'.format(str_tmp), False)
+    dict_data = ast.literal_eval(request)
+    #app.onTxtUpdate('id:{}, side:{}'.format(dict_data['id'], dict_data['side']))
+    recv_id = dict_data['id']
+    recv_side = dict_data['side']
+
     l.info(str_tmp)
     line_counter = -1
     line_dir = 1
-    if request=='Close': exit_var=True
-    client_socket.send(request)
+    if request == 'Close': exit_var=True
+
     client_socket.close()
 
+    pin_num_str = '{}'.format('{}{}'.format(recv_id, (recv_side[0:1]).upper())) #create 1L/1R str
+    #print('-->{}'.format(app.Pin[pin_num_str]))
+
+    spin_res = feed.spin(int(app.Pin[pin_num_str]), int(app.step_num), int(app.Pin_en))
+    app.onTxtUpdate('{}'.format(spin_res), False)
 
 def while_true_func(server):
     global exit_var, connected, first_accp_conn, line_counter, line_dir

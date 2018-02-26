@@ -188,7 +188,7 @@ def main_tf(lst_args, in_queue):
 				if (feed_side != None):
 					print "id:",id," side:",feed_side
 					fish_client = FishClient()
-					fish_client.send(id, feed_side)
+					fish_client.send(id+1, feed_side)
 					logger.add_feed(feed_side)
 
 
