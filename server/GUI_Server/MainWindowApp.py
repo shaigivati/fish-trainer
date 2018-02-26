@@ -227,7 +227,7 @@ def handle_client_connection(client_socket):
     global exit_var, line_counter, line_dir
     request = client_socket.recv(1024)
     str_tmp = 'Received {}'.format(repr(request))
-    print ('!{}!'.format(repr(request)))
+    print ('!{}!'.format(request))
     app.onTxtUpdate('{}'.format(str_tmp), False)
     l.info(str_tmp)
     line_counter = -1
