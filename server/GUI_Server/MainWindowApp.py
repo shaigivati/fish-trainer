@@ -143,7 +143,7 @@ class MainWindowApp(Tkinter.Tk):
             data = s.recv(1024)
             s.close()
             self.logger.info(_('Received %s'), repr(data))
-            if not data == None: print "do!"
+            print ('!{}!'.format(data))
         except socket.error, v:
             errorcode = v[0]
             self.logger.info(_("%s (%i)"), os.strerror(errorcode), errorcode)
