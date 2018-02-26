@@ -1,0 +1,11 @@
+[Motor settings]
+steps = 320
+
+[Tank]
+tank 1 left pin = 37
+tank 1 right pin = 38
+tank 2 left pin = 0
+tank 2 right pin = 0
+
+[Others]
+main = 66

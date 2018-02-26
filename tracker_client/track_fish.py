@@ -51,8 +51,12 @@ def main_tf(lst_args, in_queue):
 	#print "main:",lst_args
 	time_to_sleep=1 #sec
 	i_msg = 99  # TAL
+	full_script_path='{}{}'.format(os.path.dirname(os.path.realpath(__file__)), '/')
+	full_file_path='{}{}'.format(full_script_path, lst_args["file"])
 
-	with open(lst_args["file"]) as f:
+	print(full_file_path)
+
+	with open(full_file_path) as f:
 		lines = f.read().splitlines()
 
 	fish= []
@@ -80,7 +84,7 @@ def main_tf(lst_args, in_queue):
 	#Probability to get a faulty measurement
 	noise_probability = 0.15 #in range [0, 1.0]
 
-	template = cv2.imread('template.png')
+	template = cv2.imread('{}{}'.format(full_script_path, 'template.png'))
 	logger = fishlog.FishLog(lst_args["log"])
 
 	out=[]
@@ -111,7 +115,6 @@ def main_tf(lst_args, in_queue):
 
 
 	while(True):
-
 		#if n == None:
 			#break
 		#time.sleep(0.01)
@@ -205,6 +208,9 @@ def main_tf(lst_args, in_queue):
 		#video_capture.release()
 	#print("Bye...")
 
+
+
+
 counter = Counter()
 
 if __name__ == '__main__':
@@ -226,4 +232,5 @@ if __name__ == '__main__':
 	print(args)
 	in_queue = multiprocessing.Queue()
 	in_queue.put(1)
+
 	main_tf(args,in_queue)

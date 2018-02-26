@@ -21,7 +21,16 @@ import sys
 import threading
 import time
 import subprocess
-
+import multiprocessing
+import os
+import cv2
+import numpy as np
+from deepgaze.color_detection import BackProjectionColorDetector
+from deepgaze.mask_analysis import BinaryMaskAnalyser
+from deepgaze.motion_tracking import ParticleFilter
+from tracker_client.fish_tank import Tank
+from tracker_client.fish_client import FishClient
+from tools import fishlog
 
 Config = ConfigParser.ConfigParser()
 
@@ -500,7 +509,7 @@ class GUIClass(Tk):
         Arg2 = ConfigSectionMap("Fish")['argument2']
         Args = '{} {}'.format(Arg1, Arg2)
 
-        print Args
+        #print Args
 
         self.txtLogFolder.insert('0', self.LogFolderName)
         self.txtServerIP.insert('0', ServerIP)
@@ -537,9 +546,23 @@ class GUIClass(Tk):
 
     def onRunTraining(self):
         sys.stdout.flush()
-        TrackInfo = ThreadingProcess('../track_fish.py', '-f=tank_config.txt', '-log=F999DAY1').run()
-        app.txtMainLog.insert(END, TrackInfo)
-        app.txtMainLog.see(END)
+
+        #multi_tf = multiprocessing.Pool(processes=4)
+        #multi_tf.apply_async(track_fish, args=('tank_config.txt', 'F9DAY2', ))
+        #multi_tf_p = multi_tf.Process(name='TF', target=track_fish, args=('tank_config.txt', 'F9DAY2', ))
+        #multi_tf_p.start()
+        #track_fish('tank_config.txt', 'F9DAY2')
+        tf_sub = subprocess.Popen([track_fish, 'tank_config.txt', 'F9DAY2'])
+        #tf_sub.communicate()
+        #track_fish_thread = threading.Thread(name='TF', target=track_fish, args=('tank_config.txt', 'F9DAY2', ))
+        #track_fish_thread.start()
+        #track_fish_process = multiprocessing.Process(name='TF', target=track_fish, args=('tank_config.txt', 'F9DAY2', ))
+        #track_fish_process.daemon = False
+        #track_fish_process.start()
+
+        #TrackInfo = ThreadingProcess('../track_fish.py', '-f=tank_config.txt', '-log=F999DAY1').run()
+        #app.txtMainLog.insert(END, TrackInfo)
+        #app.txtMainLog.see(END)
 
     def onSendtest(self):
         print('ClientGUI_support.onSendtest')
@@ -578,22 +601,225 @@ class ThreadingProcess(object):
         #thread.daemon = True                            # Daemonize thread
         #thread.start()                                  # Start the execution
 
+
+    def runTrack(self, process):
+        try:
+
+            str_name = [sys.executable, self.file_name, self.arg0, self.arg1, self.arg2]
+            process = subprocess.Popen(str_name, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            output, error_output = process.communicate()
+            print(process.stdout.readline())
+        except:
+            print 'Err - Check (.py) call file'
+            if output=='': output=error_output
+
+        #return output
+
     def run(self):
-        print self.file_name
+        #print self.file_name
         #while True:
         #    print('Doing something imporant in the background')
         #file = '/Users/talzoor/PycharmProjects/test/fish_stat.py'
-        arguments = ''
-        if not self.arg0=='': arguments='{} {}'.format(arguments, self.arg0)
+        #try:
+            #process = subprocess.Popen(['python', self.file_name, self.arg0, self.arg1, self.arg2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        str_name=['python', self.file_name, self.arg0, self.arg1, self.arg2]
+            #process = subprocess.Popen(['python', self.file_name, self.arg0, self.arg1, self.arg2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        log = None
+        process = multiprocessing.Process(name='1', target=self.runTrack, args=(log, ))
+        process.daemon=False
+
+        process.start()
+
+        return process
+            #output, error_output = process.communicate()
+
+        #except:
+        #    print 'Err - Check (fish_stat.py) call file'
+
+        #if output=='': output=error_output
+        #return output
+
+
+class Counter(object):
+    def __init__(self, start=0):
+        self.lock = threading.Lock()
+        self.value = start
+
+    def increment(self):
+        logging.debug('Waiting for a lock')
+        self.lock.acquire()
         try:
-            process = subprocess.Popen(['python', self.file_name, self.arg0, self.arg1, self.arg2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            output, error_output = process.communicate()
+            logging.debug('Acquired a lock')
+            self.value = self.value + 1
+        finally:
+            logging.debug('Released a lock')
+            self.lock.release()
 
-        except:
-            print 'Err - Check (fish_stat.py) call file'
+def track_fish(arg1, arg2):
+    #def main_tf(lst_args, in_queue):
+    lst_args = {"file": arg1, "log": arg2}
+    global counter
+    counter=Counter()
+    time_to_sleep = 1  # sec
+    i_msg = 99  # TAL
+    full_script_path = '{}{}'.format(os.path.dirname(os.path.realpath(__file__)), '/')
+    full_file_path = '{}{}'.format(full_script_path, lst_args["file"])
 
-        if output=='': output=error_output
-        return output
+    #print(full_file_path)
+
+    with open(full_file_path) as f:
+        lines = f.read().splitlines()
+
+    fish = []
+    for line in lines:
+        fish.append(eval(line))
+
+    print ('fish:{}'.format(fish))
+
+    # if a video path was not supplied, grab the reference to the webcam
+    try:
+        cv2.VideoCapture().release()
+        if not lst_args.get("video", False):
+            video_capture = cv2.VideoCapture(0)
+            #video_capture = cv2.VideoCapture.open(0)
+
+        # otherwise, grab a reference to the video file
+        else:
+            video_capture = cv2.VideoCapture(lst_args["video"])
+    except:
+        pass
+
+    cv_open = video_capture.isOpened()
+    while (not cv_open):
+        print ('capopen:{}'.format(cv_open))
+        cv2.VideoCapture(0).release()
+        time.sleep(1)
+        video_capture = cv2.VideoCapture(0)
+
+    # Filter parameters
+    tot_particles = 3000
+    # Standard deviation which represent how to spread the particles
+    # in the prediction phase.
+    std = 25
+    # Probability to get a faulty measurement
+    noise_probability = 0.15  # in range [0, 1.0]
+
+    template = cv2.imread('{}{}'.format(full_script_path, 'template.png'))
+    logger = fishlog.FishLog(lst_args["log"])
+
+    out = []
+    width = []
+    height = []
+    my_mask_analyser = []
+    my_back_detector = []
+    my_particle = []
+    tank = []
+
+    id = 0
+    for fishy in fish:
+        width.append(fishy['right'] - fishy['left']);
+        height.append(fishy['lower'] - fishy['upper']);
+
+        print 'width: {0}, height: {1}'.format(width[id], height[id])
+
+        # Declaring the binary mask analyser object
+        my_mask_analyser.append(BinaryMaskAnalyser())
+        # Defining the deepgaze color detector object
+        my_back_detector.append(BackProjectionColorDetector())
+        my_back_detector[id].setTemplate(template)  # Set the template
+
+        my_particle.append(ParticleFilter(width[id], height[id], tot_particles))
+        tank.append(Tank(id, width[id]))
+        id = id + 1
+
+    while (True):
+
+        # if n == None:
+        # break
+        # time.sleep(0.01)
+        try:
+            #if not in_queue.empty():
+            #    n = in_queue.get()
+            #    print n
+            #    if int(n) == 5: break
+            # Capture frame-by-frame
+
+            ret, frame = video_capture.read()
+            if (frame is None):
+                print 'No Image'
+            # break #check for empty frames
+
+            id = 0
+            for fishy in fish:
+                frame_cut = frame[fishy['upper']:fishy['lower'], fishy['left']:fishy['right']]
+
+                # Return the binary mask from the backprojection algorithm
+                frame_mask = my_back_detector[id].returnMask(frame_cut, morph_opening=True, blur=True,
+                                                             kernel_size=5, iterations=2)
+
+                if (my_mask_analyser[id].returnNumberOfContours(frame_mask) > 0):
+                    # Use the binary mask to find the contour with largest area
+                    # and the center of this contour which is the point we
+                    # want to track with the particle filter
+                    x_rect, y_rect, w_rect, h_rect = my_mask_analyser[id].returnMaxAreaRectangle(frame_mask)
+                    x_center = None  # TAL
+                    y_center = None  # TAL
+                    x_center, y_center = my_mask_analyser[id].returnMaxAreaCenter(frame_mask)
+
+                    # Adding noise to the coords
+                    coin = np.random.uniform()
+                    if (coin >= 1.0 - noise_probability):
+                        x_noise = int(np.random.uniform(-300, 300))
+                        y_noise = int(np.random.uniform(-300, 300))
+                    else:
+                        x_noise = 0
+                        y_noise = 0
+                    x_rect += x_noise
+                    y_rect += y_noise
+                    x_center += x_noise
+                    y_center += y_noise
+
+                # Predict the position of the target
+                my_particle[id].predict(x_velocity=0, y_velocity=0, std=std)
+
+                # Drawing the particles.
+                my_particle[id].drawParticles(frame_cut)
+
+                # Estimate the next position using the internal model
+                x_estimated, y_estimated, _, _ = my_particle[id].estimate()
+
+                cv2.circle(frame_cut, (x_estimated, y_estimated), 3, [0, 255, 0], 5)  # GREEN dot
+
+                cv2.imshow("image", frame_cut)
+
+                cv2.waitKey(1)
+
+                # Update the filter with the last measurements
+                # while (x_center is None or y_center is None): #TAL
+                #	time.sleep(time_to_sleep)
+                #	print("Waiting for fish")
+
+                my_particle[id].update(x_center, y_center)
+
+                logger.add_tracked_point(x_center, y_center)
+
+                # Resample the particles
+                my_particle[id].resample()
+
+                feed_side = tank[id].decide(x_estimated)
+                if (feed_side != None):
+                    print "id:", id, " side:", feed_side
+                    fish_client = FishClient()
+                    fish_client.send(id, feed_side)
+                    logger.add_feed(feed_side)
+
+                id = id + 1
+        except NameError:  # TAL
+            if (i_msg > 100):
+                print "There is fish ?..", "Cnr:", counter.value
+                i_msg = 0
+            i_msg += 1
+
 
 if __name__ == '__main__':
     vp_start_gui()

@@ -7,7 +7,20 @@ import os
 import socket
 import threading
 import sys
+import ConfigParser
 
+def ConfigSectionMap(section):
+    dict1 = {}
+    options = Config.options(section)
+    for option in options:
+        try:
+            dict1[option] = Config.get(section, option)
+            if dict1[option] == -1:
+                DebugPrint("skip: %s" % option)
+        except:
+            print("exception on %s!" % option)
+            dict1[option] = None
+    return dict1
 
 _ = gettext.gettext
 exit_var = False
@@ -20,6 +33,8 @@ l = logging.getLogger()
 l.setLevel(logging.INFO)
 cl = CumulativeLogger.CumulativeLogger()
 l.info(_('Program started.'))
+Config = ConfigParser.ConfigParser()
+
 
 class MainWindowApp(Tkinter.Tk):
 
@@ -28,6 +43,13 @@ class MainWindowApp(Tkinter.Tk):
         self.log = log
         self.logger = logging.getLogger(self.__class__.__name__)
         #cumL = CumulativeLogger.__name__
+
+        Config.read('GUI_config.txt')
+        self.step_num = ConfigSectionMap("Motor settings")['steps']
+
+        self.Pin_1_L = ConfigSectionMap("Tank")['tank 1 left pin']
+        self.Pin_1_R = ConfigSectionMap("Tank")['tank 1 right pin']
+
         self.i=0
 
     def run(self):
@@ -121,6 +143,7 @@ class MainWindowApp(Tkinter.Tk):
             data = s.recv(1024)
             s.close()
             self.logger.info(_('Received %s'), repr(data))
+            if not data == None: print "do!"
         except socket.error, v:
             errorcode = v[0]
             self.logger.info(_("%s (%i)"), os.strerror(errorcode), errorcode)
