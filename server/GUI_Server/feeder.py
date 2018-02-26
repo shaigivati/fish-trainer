@@ -17,7 +17,7 @@ class Feeder:
         for pin in pins:
             print ('pin:{} '.format(pin), end='')
             print ('')
-            GPIO.setup(pin, GPIO.OUT)
+            GPIO.setup(int(pin), GPIO.OUT)
 
     ##Define a function named Blink()
     def spin(self, pin_num, steps, en_pin):
