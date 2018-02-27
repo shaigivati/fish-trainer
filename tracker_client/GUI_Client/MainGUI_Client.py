@@ -117,7 +117,7 @@ class GUIClass(Tk):
         self.btnRunTraining.configure(text='''Run traning''')
         self.btnRunTraining.configure(width=89)
 
-        self.txtFishNo = Entry(self.frmTraining)
+        self.txtFishNo = Text(self.frmTraining)
         self.txtFishNo.place(relx=0.01, rely=0.48, height=27, relwidth=0.12)
         self.txtFishNo.configure(background="white")
         self.txtFishNo.configure(font="TkFixedFont")
@@ -138,7 +138,7 @@ class GUIClass(Tk):
         self.Label2.configure(highlightcolor="black")
         self.Label2.configure(text='''Training day''')
 
-        self.txtTrainingDay = Entry(self.frmTraining)
+        self.txtTrainingDay = Text(self.frmTraining)
         self.txtTrainingDay.place(relx=0.13, rely=0.48, height=27, relwidth=0.12)
 
         self.txtTrainingDay.configure(background="white")
@@ -273,7 +273,7 @@ class GUIClass(Tk):
         self.btnStatRun.configure(text='''Run''')
         self.btnStatRun.configure(width=141)
 
-        self.txtLogFolder = Entry(self.frmStat)
+        self.txtLogFolder = Text(self.frmStat)
         self.txtLogFolder.place(relx=0.18, rely=0.1, height=27, relwidth=0.8)
         self.txtLogFolder.configure(background="white")
         self.txtLogFolder.configure(font="TkFixedFont")
@@ -537,7 +537,7 @@ class GUIClass(Tk):
 
         #print Args
 
-        self.txtLogFolder.insert('0', self.LogFolderName)
+        self.txtLogFolder.insert('0.0', self.LogFolderName)
         self.txtServerIP.insert('0', ServerIP)
         self.txtArgs.insert('0.0', Args)
         self.txtStatDaysBack.insert('0.0', self.Stat_days)
@@ -586,7 +586,8 @@ class GUIClass(Tk):
         sys.stdout.flush()
 
         stop_traning=False
-        therad_track_fish = threading.Thread(target=track_fish, args=('tank_config.txt', 'F9DAY2'))
+        log_name = 'F{}DAY{}'.format(app.txtFishNo.get('0.0', 'end-1c'), app.txtTrainingDay.get('0.0', 'end-1c'))
+        therad_track_fish = threading.Thread(target=track_fish, args=('tank_config.txt', log_name))
         therad_track_fish.start()
 
         #tf_sub = subprocess.Popen(track_fish('tank_config.txt', 'F9DAY2'))
@@ -834,9 +835,9 @@ def track_fish(arg1, arg2):
 
                 feed_side = tank[id].decide(x_estimated)
                 if (feed_side != None):
-                    print "id:", id, " side:", feed_side
+                    print "id:", id+1, " side:", feed_side
                     fish_client = FishClient()
-                    fish_client.send(id, feed_side)
+                    fish_client.send(id+1, feed_side)
                     logger.add_feed(feed_side)
 
                 id = id + 1
@@ -845,6 +846,7 @@ def track_fish(arg1, arg2):
                 print "There is fish ?..", "Cnr:", counter.value
                 i_msg = 0
             i_msg += 1
+    return True
 
 
 if __name__ == '__main__':
