@@ -832,6 +832,8 @@ def track_fish(arg1, arg2):
                 logger.add_tracked_point(x_center, y_center)
 
                 # Resample the particles
+                #branch check
+                
                 my_particle[id].resample()
 
                 feed_side = tank[id].decide(x_estimated)
