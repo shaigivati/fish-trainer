@@ -96,15 +96,17 @@ class GUIClass(Tk):
 
         self.frmTraining = Frame(top)
         self.frmTraining.place(relx=0.02, rely=0.53, relheight=0.1
-                , relwidth=0.96)
+                               , relwidth=0.96)
         self.frmTraining.configure(relief=GROOVE)
         self.frmTraining.configure(borderwidth="2")
         self.frmTraining.configure(relief=GROOVE)
         self.frmTraining.configure(background="#d9d9d9")
+        self.frmTraining.configure(highlightbackground="#d9d9d9")
+        self.frmTraining.configure(highlightcolor="black")
         self.frmTraining.configure(width=760)
 
         self.btnRunTraining = Button(self.frmTraining)
-        self.btnRunTraining.place(relx=0.86, rely=0.1, height=64, width=97)
+        self.btnRunTraining.place(relx=0.76, rely=0.1, height=64, width=89)
         self.btnRunTraining.configure(activebackground="#d9d9d9")
         self.btnRunTraining.configure(activeforeground="#000000")
         self.btnRunTraining.configure(background="#d9d9d9")
@@ -113,37 +115,43 @@ class GUIClass(Tk):
         self.btnRunTraining.configure(highlightbackground="#d9d9d9")
         self.btnRunTraining.configure(highlightcolor="black")
         self.btnRunTraining.configure(text='''Run traning''')
-        self.btnRunTraining.configure(width=97)
+        self.btnRunTraining.configure(width=89)
 
         self.txtFishNo = Entry(self.frmTraining)
-        self.txtFishNo.place(relx=0.01, rely=0.48,height=27, relwidth=0.12)
+        self.txtFishNo.place(relx=0.01, rely=0.48, height=27, relwidth=0.12)
         self.txtFishNo.configure(background="white")
         self.txtFishNo.configure(font="TkFixedFont")
         self.txtFishNo.configure(foreground="#000000")
+        self.txtFishNo.configure(highlightbackground="#d9d9d9")
+        self.txtFishNo.configure(highlightcolor="black")
         self.txtFishNo.configure(insertbackground="black")
-        self.txtFishNo.configure(width=92)
+        self.txtFishNo.configure(selectbackground="#c4c4c4")
+        self.txtFishNo.configure(selectforeground="black")
 
         self.Label2 = Label(self.frmTraining)
-        self.Label2.place(relx=0.16, rely=0.13, height=24, width=85)
+        self.Label2.place(relx=0.13, rely=0.1, height=24, width=85)
+        self.Label2.configure(activebackground="#f9f9f9")
+        self.Label2.configure(activeforeground="black")
         self.Label2.configure(background="#d9d9d9")
         self.Label2.configure(foreground="#000000")
+        self.Label2.configure(highlightbackground="#d9d9d9")
+        self.Label2.configure(highlightcolor="black")
         self.Label2.configure(text='''Training day''')
-        self.Label2.configure(width=85)
 
         self.txtTrainingDay = Entry(self.frmTraining)
-        self.txtTrainingDay.place(relx=0.16, rely=0.48, height=27, relwidth=0.12)
+        self.txtTrainingDay.place(relx=0.13, rely=0.48, height=27, relwidth=0.12)
 
         self.txtTrainingDay.configure(background="white")
         self.txtTrainingDay.configure(font="TkFixedFont")
         self.txtTrainingDay.configure(foreground="#000000")
+        self.txtTrainingDay.configure(highlightbackground="#d9d9d9")
+        self.txtTrainingDay.configure(highlightcolor="black")
         self.txtTrainingDay.configure(insertbackground="black")
-        self.txtTrainingDay.configure(width=92)
-
-        self.radVal = IntVar()
-        self.radVal.set(0)
+        self.txtTrainingDay.configure(selectbackground="#c4c4c4")
+        self.txtTrainingDay.configure(selectforeground="black")
 
         self.radF = Radiobutton(self.frmTraining)
-        self.radF.place(relx=0.29, rely=0.19, relheight=0.27, relwidth=0.11)
+        self.radF.place(relx=0.27, rely=0.19, relheight=0.27, relwidth=0.11)
         self.radF.configure(activebackground="#d9d9d9")
         self.radF.configure(activeforeground="#000000")
         self.radF.configure(background="#d9d9d9")
@@ -151,12 +159,10 @@ class GUIClass(Tk):
         self.radF.configure(highlightbackground="#d9d9d9")
         self.radF.configure(highlightcolor="black")
         self.radF.configure(justify=LEFT)
-        self.radF.configure(text='Feed')
-        self.radF.configure(width=80)
-        self.radF.configure(variable=self.radVal, value=0)
+        self.radF.configure(text='''Feed''')
 
         self.radN = Radiobutton(self.frmTraining)
-        self.radN.place(relx=0.29, rely=0.58, relheight=0.27, relwidth=0.13)
+        self.radN.place(relx=0.27, rely=0.58, relheight=0.27, relwidth=0.13)
         self.radN.configure(activebackground="#d9d9d9")
         self.radN.configure(activeforeground="#000000")
         self.radN.configure(background="#d9d9d9")
@@ -165,18 +171,19 @@ class GUIClass(Tk):
         self.radN.configure(highlightcolor="black")
         self.radN.configure(justify=LEFT)
         self.radN.configure(text='''No feed''')
-        self.radN.configure(width=99)
-        self.radN.configure(variable=self.radVal, value=1)
-
 
         self.Label1 = Label(self.frmTraining)
         self.Label1.place(relx=0.01, rely=0.13, height=24, width=57)
+        self.Label1.configure(activebackground="#f9f9f9")
+        self.Label1.configure(activeforeground="black")
         self.Label1.configure(background="#d9d9d9")
         self.Label1.configure(foreground="#000000")
+        self.Label1.configure(highlightbackground="#d9d9d9")
+        self.Label1.configure(highlightcolor="black")
         self.Label1.configure(text='''Fish no.''')
 
         self.txtArgs = Text(self.frmTraining)
-        self.txtArgs.place(relx=0.45, rely=0.48, relheight=0.39, relwidth=0.39)
+        self.txtArgs.place(relx=0.39, rely=0.48, relheight=0.39, relwidth=0.35)
         self.txtArgs.configure(background="white")
         self.txtArgs.configure(font="TkTextFont")
         self.txtArgs.configure(foreground="black")
@@ -186,14 +193,30 @@ class GUIClass(Tk):
         self.txtArgs.configure(selectbackground="#c4c4c4")
         self.txtArgs.configure(selectforeground="black")
         self.txtArgs.configure(undo="1")
-        self.txtArgs.configure(width=298)
+        self.txtArgs.configure(width=266)
         self.txtArgs.configure(wrap=WORD)
 
         self.Label10 = Label(self.frmTraining)
-        self.Label10.place(relx=0.45, rely=0.19, height=24, width=76)
+        self.Label10.place(relx=0.39, rely=0.19, height=24, width=76)
+        self.Label10.configure(activebackground="#f9f9f9")
+        self.Label10.configure(activeforeground="black")
         self.Label10.configure(background="#d9d9d9")
         self.Label10.configure(foreground="#000000")
+        self.Label10.configure(highlightbackground="#d9d9d9")
+        self.Label10.configure(highlightcolor="black")
         self.Label10.configure(text='''Arguments''')
+
+        self.btnStopTraning = Button(self.frmTraining)
+        self.btnStopTraning.place(relx=0.88, rely=0.1, height=62, width=79)
+        self.btnStopTraning.configure(activebackground="#d9d9d9")
+        self.btnStopTraning.configure(activeforeground="#000000")
+        self.btnStopTraning.configure(background="#d9d9d9")
+        self.btnStopTraning.configure(foreground="#000000")
+        self.btnStopTraning.configure(highlightbackground="#d9d9d9")
+        self.btnStopTraning.configure(highlightcolor="black")
+        self.btnStopTraning.configure(text='''Stop traning''')
+        self.btnStopTraning.configure(command=self.onStopTraining)
+        self.btnStopTraning.configure(width=79)
 
         self.btnExit = Button(top)
         self.btnExit.place(relx=0.74, rely=0.95, height=32, width=177)
@@ -549,6 +572,14 @@ class GUIClass(Tk):
 
         exit_var=True
         sys.exit(1)
+
+
+
+    def onStopTraining(self):
+        global stop_traning
+        sys.stdout.flush()
+        stop_traning=True
+        app.txtMainLog.insert(END, 'Stopped!')
 
     def onRunTraining(self):
         global stop_traning
