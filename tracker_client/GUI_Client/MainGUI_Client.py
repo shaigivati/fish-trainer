@@ -52,7 +52,7 @@ def vp_start_gui():
     global val, w, root, app
     root = Tk()
     app = GUIClass(root)
-    app.onRunTraining()
+    #app.onRunTraining()
 
     root.wm_attributes("-topmost", 1)
     root.focus_force()
@@ -620,24 +620,19 @@ class ThreadingProcess(object):
         #while True:
         #    print('Doing something imporant in the background')
         #file = '/Users/talzoor/PycharmProjects/test/fish_stat.py'
-        #try:
-            #process = subprocess.Popen(['python', self.file_name, self.arg0, self.arg1, self.arg2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        str_name=['python', self.file_name, self.arg0, self.arg1, self.arg2]
-            #process = subprocess.Popen(['python', self.file_name, self.arg0, self.arg1, self.arg2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        log = None
-        process = multiprocessing.Process(name='1', target=self.runTrack, args=(log, ))
-        process.daemon=False
+        try:
+            process = subprocess.Popen(['python', self.file_name, self.arg0, self.arg1, self.arg2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        #str_name=['python', self.file_name, self.arg0, self.arg1, self.arg2]
+        #process = subprocess.Popen(['python', self.file_name, self.arg0, self.arg1, self.arg2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        #log = None
+        #process = multiprocessing.Process(name='1', target=self.runTrack, args=(log, ))
+            output, error_output = process.communicate()
 
-        process.start()
+        except:
+            print 'Err - Check (fish_stat.py) call file'
 
-        return process
-            #output, error_output = process.communicate()
-
-        #except:
-        #    print 'Err - Check (fish_stat.py) call file'
-
-        #if output=='': output=error_output
-        #return output
+        if output=='': output=error_output
+        return output
 
 
 class Counter(object):

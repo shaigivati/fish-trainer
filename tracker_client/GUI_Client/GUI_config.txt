@@ -4,7 +4,8 @@ days back = 100
 arg = 1
 
 [Communication]
-server ip = 132.73.194.80 #132.72.58.148
+server ip = 132.73.194.80
+#132.72.58.148
 
 
 [Motor]
