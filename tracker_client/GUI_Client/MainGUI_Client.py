@@ -688,6 +688,7 @@ def track_fish(arg1, arg2):
     full_file_path = '{}{}'.format(full_script_path, lst_args["file"])
 
     #print(full_file_path)
+    #
 
     with open(full_file_path) as f:
         lines = f.read().splitlines()
