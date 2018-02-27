@@ -60,15 +60,16 @@ def get_information(directory, days_back, int_relevant_input):
     printing_date_from=(2112,12,31)
     printing_date_till=(0,0,0)
     #printing_days=[[31,12],[0,0]]
-        
+
     toolbar_width=40
     files_count=len(os.listdir(directory))
+
     progress_bar_count1=files_count
     progress_bar_count2=0
     p_b_div=files_count/toolbar_width
     #print(p_b_div)
+    if p_b_div == 0: p_b_div=1
     toolbar_width =files_count/p_b_div
-
     # setup toolbar
     sys.stdout.write("\t[%s]" % (" " * toolbar_width))
     str_to_add="       (" + str(files_count) + " files)"
@@ -394,6 +395,7 @@ def main(dir='', int_days_input=100, int_relevant_input=1):
 
     #dir = "/Users/talzoor/Documents/FishLabInfo/log"
     get_information(dir, int_days_input, int_relevant_input)
+
 
 if __name__ == '__main__':
     main()

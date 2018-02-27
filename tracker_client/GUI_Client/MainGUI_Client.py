@@ -33,6 +33,9 @@ from tracker_client.fish_client import FishClient
 from tools import fishlog
 
 Config = ConfigParser.ConfigParser()
+#Global vars
+exit_var=False
+stop_traning=False
 
 def ConfigSectionMap(section):
     dict1 = {}
@@ -54,7 +57,7 @@ def vp_start_gui():
     app = GUIClass(root)
     #app.onRunTraining()
 
-    root.wm_attributes("-topmost", 1)
+    #root.wm_attributes("-topmost", 1)
     root.focus_force()
     root.mainloop()
 
@@ -540,29 +543,23 @@ class GUIClass(Tk):
         sys.stdout.flush()
 
     def onExit(self):
+        global exit_var
         print('ClientGUI_support.onExit')
         sys.stdout.flush()
+
+        exit_var=True
         sys.exit(1)
 
     def onRunTraining(self):
+        global stop_traning
         sys.stdout.flush()
 
-        #multi_tf = multiprocessing.Pool(processes=4)
-        #multi_tf.apply_async(track_fish, args=('tank_config.txt', 'F9DAY2', ))
-        #multi_tf_p = multi_tf.Process(name='TF', target=track_fish, args=('tank_config.txt', 'F9DAY2', ))
-        #multi_tf_p.start()
-        #track_fish('tank_config.txt', 'F9DAY2')
-        tf_sub = subprocess.Popen([track_fish, 'tank_config.txt', 'F9DAY2'])
-        #tf_sub.communicate()
-        #track_fish_thread = threading.Thread(name='TF', target=track_fish, args=('tank_config.txt', 'F9DAY2', ))
-        #track_fish_thread.start()
-        #track_fish_process = multiprocessing.Process(name='TF', target=track_fish, args=('tank_config.txt', 'F9DAY2', ))
-        #track_fish_process.daemon = False
-        #track_fish_process.start()
+        stop_traning=False
+        therad_track_fish = threading.Thread(target=track_fish, args=('tank_config.txt', 'F9DAY2'))
+        therad_track_fish.start()
 
-        #TrackInfo = ThreadingProcess('../track_fish.py', '-f=tank_config.txt', '-log=F999DAY1').run()
-        #app.txtMainLog.insert(END, TrackInfo)
-        #app.txtMainLog.see(END)
+        #tf_sub = subprocess.Popen(track_fish('tank_config.txt', 'F9DAY2'))
+
 
     def onSendtest(self):
         print('ClientGUI_support.onSendtest')
@@ -622,10 +619,6 @@ class ThreadingProcess(object):
         #file = '/Users/talzoor/PycharmProjects/test/fish_stat.py'
         try:
             process = subprocess.Popen(['python', self.file_name, self.arg0, self.arg1, self.arg2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        #str_name=['python', self.file_name, self.arg0, self.arg1, self.arg2]
-        #process = subprocess.Popen(['python', self.file_name, self.arg0, self.arg1, self.arg2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        #log = None
-        #process = multiprocessing.Process(name='1', target=self.runTrack, args=(log, ))
             output, error_output = process.communicate()
 
         except:
@@ -651,8 +644,10 @@ class Counter(object):
             self.lock.release()
 
 def track_fish(arg1, arg2):
+    global exit_var, stop_traning
     #def main_tf(lst_args, in_queue):
     lst_args = {"file": arg1, "log": arg2}
+    print('file:{}, log:{}'.format(lst_args['file'], lst_args['log']))
     global counter
     counter=Counter()
     time_to_sleep = 1  # sec
@@ -700,7 +695,12 @@ def track_fish(arg1, arg2):
     noise_probability = 0.15  # in range [0, 1.0]
 
     template = cv2.imread('{}{}'.format(full_script_path, 'template.png'))
-    logger = fishlog.FishLog(lst_args["log"])
+
+    full_root_script_path = full_script_path[:full_script_path.find('tracker_client')]
+    log_folder = '{}data/log/'.format(full_root_script_path)
+    print('log:{}'.format(log_folder))
+
+    logger = fishlog.FishLog(log_folder, lst_args["log"])
 
     out = []
     width = []
@@ -727,7 +727,7 @@ def track_fish(arg1, arg2):
         tank.append(Tank(id, width[id]))
         id = id + 1
 
-    while (True):
+    while (not exit_var and not stop_traning):
 
         # if n == None:
         # break
