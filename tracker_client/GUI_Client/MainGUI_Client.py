@@ -689,6 +689,7 @@ def track_fish(arg1, arg2):
 
     #print(full_file_path)
 
+
     with open(full_file_path) as f:
         lines = f.read().splitlines()
 
@@ -810,7 +811,7 @@ def track_fish(arg1, arg2):
                 my_particle[id].predict(x_velocity=0, y_velocity=0, std=std)
 
                 # Drawing the particles.
-                my_particle[id].drawParticles(frame_cut)
+                #my_particle[id].drawParticles(frame_cut)
 
                 # Estimate the next position using the internal model
                 x_estimated, y_estimated, _, _ = my_particle[id].estimate()
@@ -831,6 +832,8 @@ def track_fish(arg1, arg2):
                 logger.add_tracked_point(x_center, y_center)
 
                 # Resample the particles
+                #branch check
+                
                 my_particle[id].resample()
 
                 feed_side = tank[id].decide(x_estimated)
