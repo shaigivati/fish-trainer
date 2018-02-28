@@ -863,7 +863,7 @@ def track_fish(arg1, arg2):
 
                 # Estimate the next position using the internal model
                 x_estimated, y_estimated, _, _ = my_particle[id].estimate()
-                
+
                 cv2.circle(frame_cut, (x_estimated, y_estimated), 3, [0, 255, 0], 5)  # GREEN dot
 
                 cv2.imshow("image", frame_cut)
@@ -898,7 +898,7 @@ def track_fish(arg1, arg2):
                 id = id + 1
         except NameError:  # TAL
             if (i_msg > 100):
-                str_temp = 'There is fish ?..", "Cnr:{}'.format(counter.value)
+                str_temp = 'There is fish ?... Cnr:{}'.format(counter.value)
                 print_and_update_main_log(str_temp)
                 i_msg = 0
             i_msg += 1
