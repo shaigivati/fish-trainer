@@ -833,7 +833,7 @@ def track_fish(arg1, arg2):
 
                 # Resample the particles
                 #branch check
-                
+
                 my_particle[id].resample()
 
                 feed_side = tank[id].decide(x_estimated)
