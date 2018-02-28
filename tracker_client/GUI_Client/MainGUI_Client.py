@@ -88,6 +88,10 @@ class GUIClass(Tk):
         _compcolor = '#d9d9d9' # X11 color: 'gray85'
         _ana1color = '#d9d9d9' # X11 color: 'gray85'
         _ana2color = '#d9d9d9' # X11 color: 'gray85'
+        font12 = "-family {TkDefaultFont} -size 20 " \
+                 "-weight bold -slant roman -underline 0 -overstrike 0"
+        font9 = "-family {.SF NS Text} -size 13 -weight normal -slant " \
+                "roman -underline 0 -overstrike 0"
 
         top.geometry("793x800+292+31")
         top.title("Fish traning GUI - Client")
@@ -522,6 +526,24 @@ class GUIClass(Tk):
         self.frmLogClear.configure(text='''Clear''')
         self.frmLogClear.configure(width=70)
 
+        self.Label14 = Label(self.frmLog)
+        self.Label14.place(relx=0.15, rely=0.03, height=24, width=87)
+        self.Label14.configure(background="#d9d9d9")
+        self.Label14.configure(foreground="#000000")
+        self.Label14.configure(text='''Time runing:''')
+
+        self.str_time = StringVar()
+
+        self.Label15 = Label(self.frmLog)
+        self.Label15.place(relx=0.27, rely=0.03, height=24, width=209)
+        self.Label15.configure(background="#d9d9d9")
+        self.Label15.configure(font=font12)
+        self.Label15.configure(foreground="#0000fe")
+        self.Label15.configure(text='__:__')
+        self.Label15.configure(width=209)
+        self.Label15.configure(textvariable=self.str_time)
+
+
         self.fillValue()
 
     def fillValue(self):
@@ -675,19 +697,31 @@ class Counter(object):
             logging.debug('Released a lock')
             self.lock.release()
 
+def print_and_update_main_log(str_to_print, new_line=True):
+    str_temp='{}'.format(str_to_print)
+    print (str_temp)
+    if new_line: str_temp='{}\n'.format(str_temp)
+    app.txtMainLog.insert(END, str_temp)
+    app.txtMainLog.see(END)
+
+def make_two_digit_num(int_to_check):
+    str_temp='{}'.format(int_to_check)
+    if int_to_check<10: str_temp='0{}'.format(int_to_check)
+    return str_temp
+
 def track_fish(arg1, arg2):
-    global exit_var, stop_traning
     #def main_tf(lst_args, in_queue):
-    lst_args = {"file": arg1, "log": arg2}
-    print('file:{}, log:{}'.format(lst_args['file'], lst_args['log']))
-    global counter
+    global exit_var, stop_traning, counter
     counter=Counter()
-    time_to_sleep = 1  # sec
-    i_msg = 99  # TAL
+    feed_total=0
+
+    lst_args = {"file": arg1, "log": arg2}
+    str_temp = 'file:{}, log:{}'.format(lst_args['file'], lst_args['log'])
+    print_and_update_main_log(str_temp)
+
+    i_msg = 99  # TAL ('no fish' msg)
     full_script_path = '{}{}'.format(os.path.dirname(os.path.realpath(__file__)), '/')
     full_file_path = '{}{}'.format(full_script_path, lst_args["file"])
-
-    #print(full_file_path)
 
 
     with open(full_file_path) as f:
@@ -697,7 +731,8 @@ def track_fish(arg1, arg2):
     for line in lines:
         fish.append(eval(line))
 
-    print ('fish:{}'.format(fish))
+    str_temp = 'tank:{}'.format(fish)
+    print_and_update_main_log(str_temp)
 
     # if a video path was not supplied, grab the reference to the webcam
     try:
@@ -731,7 +766,9 @@ def track_fish(arg1, arg2):
 
     full_root_script_path = full_script_path[:full_script_path.find('tracker_client')]
     log_folder = '{}data/log/'.format(full_root_script_path)
-    print('log:{}'.format(log_folder))
+
+    str_temp = 'log folder:{}'.format(log_folder)
+    print_and_update_main_log(str_temp)
 
     logger = fishlog.FishLog(log_folder, lst_args["log"])
 
@@ -748,7 +785,8 @@ def track_fish(arg1, arg2):
         width.append(fishy['right'] - fishy['left']);
         height.append(fishy['lower'] - fishy['upper']);
 
-        print 'width: {0}, height: {1}'.format(width[id], height[id])
+        str_temp = 'width: {0}, height: {1}'.format(width[id], height[id])
+        print_and_update_main_log(str_temp)
 
         # Declaring the binary mask analyser object
         my_mask_analyser.append(BinaryMaskAnalyser())
@@ -760,7 +798,17 @@ def track_fish(arg1, arg2):
         tank.append(Tank(id, width[id]))
         id = id + 1
 
+        was =0
+        now = int(time.time())
+        start_time = now
     while (not exit_var and not stop_traning):
+        now = int(time.time())
+        if not now == was:
+            min, sec = divmod(now-start_time, 60)
+            str_temp = '{}:{}'.format(make_two_digit_num(min), make_two_digit_num(sec))
+            #print_and_update_main_log(str_temp)
+            app.str_time.set(str_temp)
+            was = now
 
         # if n == None:
         # break
@@ -815,7 +863,7 @@ def track_fish(arg1, arg2):
 
                 # Estimate the next position using the internal model
                 x_estimated, y_estimated, _, _ = my_particle[id].estimate()
-
+                
                 cv2.circle(frame_cut, (x_estimated, y_estimated), 3, [0, 255, 0], 5)  # GREEN dot
 
                 cv2.imshow("image", frame_cut)
@@ -838,7 +886,11 @@ def track_fish(arg1, arg2):
 
                 feed_side = tank[id].decide(x_estimated)
                 if (feed_side != None):
-                    print "id:", id+1, " side:", feed_side
+                    feed_total+=1
+
+                    str_temp = 'id:{} side:{} --> Total:{}'.format(id+1, feed_side, feed_total)
+                    print_and_update_main_log(str_temp)
+
                     fish_client = FishClient()
                     fish_client.send(id+1, feed_side)
                     logger.add_feed(feed_side)
@@ -846,7 +898,8 @@ def track_fish(arg1, arg2):
                 id = id + 1
         except NameError:  # TAL
             if (i_msg > 100):
-                print "There is fish ?..", "Cnr:", counter.value
+                str_temp = 'There is fish ?..", "Cnr:{}'.format(counter.value)
+                print_and_update_main_log(str_temp)
                 i_msg = 0
             i_msg += 1
     return True
