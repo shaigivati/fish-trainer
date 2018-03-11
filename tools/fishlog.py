@@ -2,6 +2,7 @@
 import datetime
 from time import gmtime, strftime
 import os
+import errno
 
 class FishLog:
     line_number=0
@@ -12,11 +13,26 @@ class FishLog:
         '''file name- fish_name+date+time, open new file, init counters to 0'''
         
         self.fish_name=fish_name
-        print 'start logging data'
+        FolderOK = os.path.exists(log_folder)
+        if (FolderOK):
+            strNOT=''
+        else:
+            strNOT=' NOT'
+
+        print 'start logging data, folder{} ok'.format(strNOT)
+
+        if not FolderOK:  #create folder
+            try:
+                os.makedirs(log_folder)
+            except OSError as e:
+                if e.errno != errno.EEXIST:
+                    raise
+
         # Open a file
 
         filename='{}{}{}{}'.format(log_folder, strftime("%Y-%m-%d %H%M%S", gmtime()), '_'+fish_name, ".txt") # time+name
         print ('log file:{}'.format(filename))
+
 
         self.fo = open(filename, 'w')
         
