@@ -38,15 +38,16 @@ def click_and_crop(event, x, y, flags, param):
         refPt.append((x, y))
         cropping = False
 
-
-
+        # arrange points left-right up-down
         ordered=[(min(refPt[0][0],refPt[1][0]),min(refPt[0][1],refPt[1][1]))]
         ordered.append((max(refPt[0][0],refPt[1][0]),max(refPt[0][1],refPt[1][1])))
 
-        crop_img = image[ordered[0][1]:ordered[1][1], ordered[0][0]:ordered[1][0]]  # Crop from x, y, w, h -> 100, 200, 300, 400
-        # NOTE: its img[y: y + h, x: x + w] and *not* img[x: x + w, y: y + h]
-        cv2.imwrite("template.png", crop_img)
-        cv2.waitKey(0)
+        fish.append({'upper': ordered[0][1], 'lower': ordered[1][1], 'left': ordered[0][0], 'right': ordered[1][0]})
+
+        # draw a rectangle around the region of interest
+        cv2.rectangle(image, ordered[0], ordered[1],
+                      (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)), 2)
+        cv2.imshow("image", image)
 
 
 # construct the argument parser and parse the arguments
@@ -105,11 +106,12 @@ while True:
 
 if len(refPt) == 2:
 
-    #thefile = open('test.txt', 'w')
+    thefile = open('tank_config.txt', 'w')
 
     for fishy in fish:
         print fishy
         thefile.write("%s\n" % fishy)
+
 
 # close all open windows
 cv2.destroyAllWindows()

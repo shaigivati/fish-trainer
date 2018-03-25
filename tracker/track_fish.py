@@ -10,7 +10,7 @@ fish = []
 video_capture = None
 
 
-def init_tracking(tank_config='tank_config.txt',video=None):
+def init_tracking(tank_config='../tracker/tank_config.txt',video=None):
     global video_capture
 
     with open(tank_config) as f:
@@ -52,6 +52,7 @@ def track_loop(cb):
             fgmask = fgbg[id].apply(frame_cut)
             fgmask = cv2.erode(fgmask, None, iterations=2)
             mask = cv2.dilate(fgmask, None, iterations=2)
+            cv2.imshow("image" + str(id), frame_cut)
             cv2.imshow("mask"+str(id), fgmask)
             cv2.waitKey(1)
 
@@ -85,7 +86,7 @@ if __name__ == '__main__':
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("-v", "--video", help="path to the (optional) video file")
-    ap.add_argument("-f", "--file", required=True, help="path to scene file")
+    ap.add_argument("-f", "--file", help="path to scene file")
     args = vars(ap.parse_args())
     init_tracking(args["file"])
     track_loop(None)

@@ -192,11 +192,11 @@ class MainWindowApp(Tkinter.Tk):
 
         #self.txt.delete(0.0,100.0)
         #self.txt.insert(Tkinter.END, self.log.getText())
-        if not str_to_add=="":
-            if str_to_add=="/del":
+        if not str_to_add == "":
+            if str_to_add == "/del":
                 self.txt_del_last_char()
             else:
-                if new_line==True:
+                if new_line == True:
                     self.txt.insert(Tkinter.END, '{}{}'.format(str_to_add, "\n"))
                 else:
                     self.txt.insert(Tkinter.END, '{}'.format(str_to_add))
@@ -236,7 +236,7 @@ def get_ip():
 def handle_client_connection(client_socket):
     global exit_var, line_counter, line_dir
     request = client_socket.recv(1024)
-    client_socket.send(request)             #echo
+    client_socket.send(request)            #echo
     str_tmp = 'Received {}'.format(request)
     app.onTxtUpdate('{}'.format(str_tmp), False)
     dict_data = ast.literal_eval(request)
@@ -250,12 +250,11 @@ def handle_client_connection(client_socket):
     if request == 'Close': exit_var=True
 
     client_socket.close()
-
-    pin_num_str = '{}'.format('{}{}'.format(recv_id, (recv_side[0:1]).upper())) #create 1L/1R str
-    #print('-->{}'.format(app.Pin[pin_num_str]))
-
-    spin_res = feed.spin(int(app.Pin[pin_num_str]), int(app.step_num), int(app.Pin_en))
-    app.onTxtUpdate('{}.'.format(spin_res), False)
+    if not recv_id == "test":
+        pin_num_str = '{}'.format('{}{}'.format(recv_id, (recv_side[0:1]).upper())) #create 1L/1R str
+        #print('-->{}'.format(app.Pin[pin_num_str]))
+        spin_res = feed.spin(int(app.Pin[pin_num_str]), int(app.step_num), int(app.Pin_en))
+        app.onTxtUpdate('{}.'.format(spin_res), False)
 
 def while_true_func(server):
     global exit_var, connected, first_accp_conn, line_counter, line_dir
