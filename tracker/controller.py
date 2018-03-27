@@ -4,6 +4,7 @@ import track_fish
 from tracker.tcp_client import FishClient
 from tracker.fish_tank import Tank
 from tools import fishlog
+
 import argparse
 import os
 
@@ -16,13 +17,17 @@ import os
 
 class Controller:
     def __init__(self, name='test'):
+        global total_feed
+        total_feed=0
+
         width = track_fish.init_tracking()
 
         # init logger
         full_script_path = '{}{}'.format(os.path.dirname(os.path.realpath(__file__)), '/')
         full_root_script_path = full_script_path[:full_script_path.find('tracker')]
         log_folder = '{}data/log/'.format(full_root_script_path)
-        print('log:{}'.format(log_folder))
+        #print('log:{}'.format(log_folder))
+        #print_and_update_main_log('log:{}'.format(log_folder))
         self.logger = fishlog.FishLog(log_folder, name)
 
         #init tank
@@ -33,13 +38,17 @@ class Controller:
             id = id + 1
 
     def do(self,x,y,fish_id):
+        global total_feed
         self.logger.add_tracked_point(x, y)
         feed_side = self.tank[fish_id].decide(x)
         if feed_side is not None:
-            print(feed_side, fish_id)
+            total_feed += 1
+            print('{}\t,{}\t - \tTotal:{}'.format(fish_id, feed_side, total_feed))
             fish_client = FishClient()
             fish_client.send(fish_id + 1, feed_side)
             fish_client.kill()
+
+
             #fish_client.send(fish_id, feed_side)
             self.logger.add_feed(feed_side)
 
