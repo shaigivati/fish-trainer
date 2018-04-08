@@ -31,14 +31,15 @@ def init_tracking(tank_config='tank_config.txt',video=None):
         fgbg.append(cv2.bgsegm.createBackgroundSubtractorMOG())
         width.append(fishy['right'] - fishy['left'])
         height.append(fishy['lower'] - fishy['upper'])
-        print 'width: {0}, height: {1}'.format(width[id], height[id])
+        tmp_str = 'width: {0}, height: {1}'.format(width[id], height[id])
+        print tmp_str
 
         id = id + 1
 
     return width
 
 
-def track_loop(cb):
+def track_loop(cb): #cb is an object that has a do() function in the calling script
     while True:
         # Capture frame-by-frame
         ret, frame = video_capture.read()
@@ -66,7 +67,6 @@ def track_loop(cb):
                 if radius > max_rad:
                     largest_cntr = cntr
                     max_rad = radius
-
             # check if largest_cntr is set
             if len(cnts) > 0:
                 ((x, y), radius) = cv2.minEnclosingCircle(largest_cntr)
@@ -76,6 +76,7 @@ def track_loop(cb):
 
                 if cb is not None:
                     cb.do(x, y, id)
+
 
             id = id + 1
         # TBD - inclear where to put

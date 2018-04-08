@@ -16,9 +16,12 @@ import os
 
 
 class Controller:
-    def __init__(self, name='test'):
+    def __init__(self, cb_obj, name='test'):
         global total_feed
-        total_feed=0
+        total_feed = 0
+        attrs = vars(cb_obj)
+        print ', '.join("%s: %s" % item for item in attrs.items())
+        self.cb_obj = cb_obj
 
         width = track_fish.init_tracking()
 
@@ -38,12 +41,16 @@ class Controller:
             id = id + 1
 
     def do(self,x,y,fish_id):
+
         global total_feed
+
         self.logger.add_tracked_point(x, y)
         feed_side = self.tank[fish_id].decide(x)
         if feed_side is not None:
             total_feed += 1
-            print('{}\t,{}\t - \tTotal:{}'.format(fish_id, feed_side, total_feed))
+            str_to_print = '{}\t,{}\t - \tTotal:{}'.format(fish_id, feed_side, total_feed)
+            print(str_to_print)
+            self.cb_obj.print_and_update_main_log(str_to_print)
             fish_client = FishClient()
             fish_client.send(fish_id + 1, feed_side)
             fish_client.kill()

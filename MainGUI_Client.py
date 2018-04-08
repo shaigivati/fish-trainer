@@ -604,8 +604,6 @@ class GUIClass(Tk):
         exit_var=True
         sys.exit(1)
 
-
-
     def onStopTraining(self):
         global stop_traning
         sys.stdout.flush()
@@ -613,13 +611,14 @@ class GUIClass(Tk):
         app.txtMainLog.insert(END, 'Stopped!')
 
     def onRunTraining(self):
+
         global stop_traning
         sys.stdout.flush()
 
         stop_traning=False
         log_name = 'F{}DAY{}'.format(app.txtFishNo.get('0.0', 'end-1c'), app.txtTrainingDay.get('0.0', 'end-1c'))
 
-        controller = Controller(log_name)
+        controller = Controller(app, log_name)
         thread_track_fish = threading.Thread(target=track_fish.track_loop, args=(controller,))
 
         thread_track_fish.daemon=True
@@ -658,6 +657,12 @@ class GUIClass(Tk):
         app.txtStatLog.see(END)
         #print "HERE:{}".format(StatInfo)
 
+    def print_and_update_main_log(self, str_to_print, new_line=True):
+        str_temp = '{}'.format(str_to_print)
+        print (str_temp)
+        if new_line: str_temp = '{}\n'.format(str_temp)
+        app.txtMainLog.insert(END, str_temp)
+        app.txtMainLog.see(END)
 
     def __call__(self):
         print "RUN Command"
@@ -721,12 +726,7 @@ class Counter(object):
             logging.debug('Released a lock')
             self.lock.release()
 
-def print_and_update_main_log(str_to_print, new_line=True):
-    str_temp='{}'.format(str_to_print)
-    print (str_temp)
-    if new_line: str_temp='{}\n'.format(str_temp)
-    app.txtMainLog.insert(END, str_temp)
-    app.txtMainLog.see(END)
+
 
 def make_two_digit_num(int_to_check):
     str_temp='{}'.format(int_to_check)
