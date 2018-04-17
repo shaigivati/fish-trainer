@@ -10,7 +10,7 @@ fish = []
 video_capture = None
 
 #tank_config='../tracker/tank_config.txt'
-def init_tracking(tank_config='tank_config.txt',video=None):
+def init_tracking(tank_config='tracker/tank_config.txt',video=None):
     global video_capture
 
     with open(tank_config) as f:

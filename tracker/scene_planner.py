@@ -11,6 +11,7 @@ TBD - create templates
 import argparse
 import cv2
 import random
+import os
 
 # initialize the list of reference points and boolean indicating
 # whether cropping is being performed or not
@@ -115,9 +116,11 @@ def SP_Main():
     # from the image and display it
 
     if len(refPt) == 2:
-
-        thefile = open('tank_config.txt', 'w')
-
+        full_script_path = '{}{}'.format(os.path.dirname(os.path.realpath(__file__)), '/')
+        full_root_script_path = full_script_path[:12+full_script_path.find('fish-trainer')]
+        file_path='{}\\tracker\{}'.format(full_root_script_path,'tank_config.txt')
+        thefile = open(file_path, 'w')
+        print (file_path)
         for fishy in fish:
             print fishy
             thefile.write("%s\n" % fishy)

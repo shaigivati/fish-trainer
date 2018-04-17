@@ -25,8 +25,10 @@ class FishLog:
         self.fo.write(str(self.track_count)+' ') #
         self.fo.write(str(datetime.datetime.now().time())+' ') #
         self.fo.write('track'+' ') #
-        self.fo.write(str(x)+' ') #
-        self.fo.write(str(y)+' ') #
+
+        self.fo.write("{0:.2f} ".format(round(x, 2))) #self.fo.write(str(x)+' ') #
+        self.fo.write("{0:.2f}".format(round(y, 2))) #self.fo.write(str(y)+' ') #
+
         self.fo.write('\n') #
         self.line_number=self.line_number+1
         self.track_count=self.track_count+1
