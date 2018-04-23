@@ -50,37 +50,33 @@ def ConfigSectionMap(section):
 
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
-    global val, w, root, app
+    global val, w, root
     root = Tk()
     ClientGUI_support.set_Tk_var()
-    top = Fish_traning_GUI_Client (root)
+    top = Fish_traning_GUI___Client (root)
     ClientGUI_support.init(root, top)
-    app = GUIClass(root)
-    #app.onRunTraining()
-
-    #root.wm_attributes("-topmost", 1)
-
-    root.focus_force()
     root.mainloop()
 
 w = None
-
-def create_Fish_traning_GUI_Client(root, *args, **kwargs):
+def create_Fish_traning_GUI___Client(root, *args, **kwargs):
     '''Starting point when module is imported by another program.'''
     global w, w_win, rt
     rt = root
     w = Toplevel (root)
+    ClientGUI_support.set_Tk_var()
     top = Fish_traning_GUI___Client (w)
     ClientGUI_support.init(w, top, *args, **kwargs)
     return (w, top)
 
-def destroy_Fish_traning_GUI_Client():
+def destroy_Fish_traning_GUI___Client():
     global w
     w.destroy()
     w = None
 
 
-class GUIClass(Tk):
+
+
+class Fish_traning_GUI___Client:
     #def __init__(self, top):
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
