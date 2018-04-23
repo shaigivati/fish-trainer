@@ -7,6 +7,8 @@
 
 
 import sys
+import subprocess
+
 
 try:
     from Tkinter import *
@@ -26,8 +28,8 @@ def set_Tk_var():
     FeedVar = StringVar()
 
 def onLogClear():
-    print('ClientGUI_support.onLogClear')
     sys.stdout.flush()
+    w.txtMainLog.delete('0.0',END)
 
 
 def Feed():
@@ -62,25 +64,30 @@ def onRunTraining():
     print('ClientGUI_support.onRunTraining')
     sys.stdout.flush()
 
-def onStopTraining(top):
-    global stop_traning
+def onStopTraining():
+    global stop_traning, w
     sys.stdout.flush()
     stop_traning=True
-    #app.txtMainLog.insert(END, 'Stopped!')
-    top.print_and_update_main_log("test")
-    #print_and_update_main_log
+
+    w.print_and_update_main_log("Stopped!")
+
 
 def onSendtest():
     print('ClientGUI_support.onSendtest')
     sys.stdout.flush()
 
 def onStatClear():
-    print('ClientGUI_support.onStatClear')
     sys.stdout.flush()
+    w.txtStatLog.delete('0.0', END)
 
 def onStatRun():
-    print('ClientGUI_support.onStatRun')
+    global w
     sys.stdout.flush()
+    _StatInfo = ThreadingProcess('fish_stat.py', w.LogFolderName, w.txtStatDaysBack.get('0.0', END),
+    w.txtStatArgs.get('0.0', END)).run()
+    w.txtStatLog.insert(END, _StatInfo)
+    w.txtStatLog.see(END)
+    # print "HERE:{}".format(StatInfo)
 
 def init(top, gui, *args, **kwargs):
     global w, top_level, root
@@ -93,6 +100,66 @@ def destroy_window():
     global top_level
     top_level.destroy()
     top_level = None
+
+class ThreadingProcess(object):
+
+    def __init__(self, file_name, arg0='', arg1='', arg2=''):
+        self.interval = 1
+        self.file_name = file_name
+        self.arg0 = arg0
+        self.arg1 = arg1
+        self.arg2 = arg2
+
+        #thread = threading.Thread(target=self.run(), args=args)
+        #thread.daemon = True                            # Daemonize thread
+        #thread.start()                                  # Start the execution
+
+
+    def runTrack(self, process):
+        try:
+
+            str_name = [sys.executable, self.file_name, self.arg0, self.arg1, self.arg2]
+            process = subprocess.Popen(str_name, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            output, error_output = process.communicate()
+            print(process.stdout.readline())
+        except:
+            print 'Err - Check (.py) call file'
+            if output=='': output=error_output
+
+        #return output
+
+    def run(self):
+        #print self.file_name
+        #while True:
+        #    print('Doing something imporant in the background')
+        #file = '/Users/talzoor/PycharmProjects/test/fish_stat.py'
+        try:
+            process = subprocess.Popen(['python', self.file_name, self.arg0, self.arg1, self.arg2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            output, error_output = process.communicate()
+
+        except:
+            print 'Err - Check (fish_stat.py) call file'
+
+        if output=='': output=error_output
+        return output
+
+
+class Counter(object):
+    def __init__(self, start=0):
+        self.lock = threading.Lock()
+        self.value = start
+
+    def increment(self):
+        logging.debug('Waiting for a lock')
+        self.lock.acquire()
+        try:
+            logging.debug('Acquired a lock')
+            self.value = self.value + 1
+        finally:
+            logging.debug('Released a lock')
+            self.lock.release()
+
+
 
 if __name__ == '__main__':
     import ClientGUI

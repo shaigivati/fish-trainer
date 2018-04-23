@@ -16,7 +16,6 @@ import ConfigParser
 import sys
 import threading
 import time
-import subprocess
 import multiprocessing
 import os
 import cv2
@@ -737,7 +736,7 @@ class Fish_traning_GUI___Client:
         fish_client.send('test', 0)
         fish_client.kill()
 
-    def onTankConfig(self):
+    #def onTankConfig(self):
         print('ClientGUI_support.onTankConfig')
         sys.stdout.flush()
         thread_track_fish = threading.Thread(target=scene_planner.SP_Main, args=())
@@ -745,89 +744,27 @@ class Fish_traning_GUI___Client:
 
 
 
-    def onStatClear(self):
-        sys.stdout.flush()
-        app.txtStatLog.delete('0.0',END)
+    #def onStatClear(self):
 
-    def onLogClear(self):
-        sys.stdout.flush()
-        app.txtMainLog.delete('0.0',END)
 
-    def onStatRun(self):
-        sys.stdout.flush()
-        StatInfo = ThreadingProcess('fish_stat.py', self.LogFolderName, self.txtStatDaysBack.get('0.0', END), self.txtStatArgs.get('0.0', END)).run()
-        app.txtStatLog.insert(END, StatInfo)
-        app.txtStatLog.see(END)
-        #print "HERE:{}".format(StatInfo)
+    #def onLogClear(self):
+
+
+    #def onStatRun(self):
+
 
     def print_and_update_main_log(self, str_to_print, new_line=True):
+        global w, top
         str_temp = '{}'.format(str_to_print)
         print (str_temp)
         if new_line: str_temp = '{}\n'.format(str_temp)
-        app.txtMainLog.insert(END, str_temp)
-        app.txtMainLog.see(END)
+        self.txtMainLog.insert(END, str_temp)
+        self.txtMainLog.see(END)
+
 
     def __call__(self):
         print "RUN Command"
 
-
-class ThreadingProcess(object):
-
-    def __init__(self, file_name, arg0='', arg1='', arg2=''):
-        self.interval = 1
-        self.file_name = file_name
-        self.arg0 = arg0
-        self.arg1 = arg1
-        self.arg2 = arg2
-
-        #thread = threading.Thread(target=self.run(), args=args)
-        #thread.daemon = True                            # Daemonize thread
-        #thread.start()                                  # Start the execution
-
-
-    def runTrack(self, process):
-        try:
-
-            str_name = [sys.executable, self.file_name, self.arg0, self.arg1, self.arg2]
-            process = subprocess.Popen(str_name, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            output, error_output = process.communicate()
-            print(process.stdout.readline())
-        except:
-            print 'Err - Check (.py) call file'
-            if output=='': output=error_output
-
-        #return output
-
-    def run(self):
-        #print self.file_name
-        #while True:
-        #    print('Doing something imporant in the background')
-        #file = '/Users/talzoor/PycharmProjects/test/fish_stat.py'
-        try:
-            process = subprocess.Popen(['python', self.file_name, self.arg0, self.arg1, self.arg2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            output, error_output = process.communicate()
-
-        except:
-            print 'Err - Check (fish_stat.py) call file'
-
-        if output=='': output=error_output
-        return output
-
-
-class Counter(object):
-    def __init__(self, start=0):
-        self.lock = threading.Lock()
-        self.value = start
-
-    def increment(self):
-        logging.debug('Waiting for a lock')
-        self.lock.acquire()
-        try:
-            logging.debug('Acquired a lock')
-            self.value = self.value + 1
-        finally:
-            logging.debug('Released a lock')
-            self.lock.release()
 
 
 
