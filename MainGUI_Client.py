@@ -193,6 +193,7 @@ class Fish_traning_GUI___Client:
         self.btnStopTraning.configure(activebackground="#d9d9d9")
         self.btnStopTraning.configure(activeforeground="#000000")
         self.btnStopTraning.configure(background="#d9d9d9")
+        self.btnStopTraning.configure(command=ClientGUI_support.onStopTraining)
         self.btnStopTraning.configure(foreground="#000000")
         self.btnStopTraning.configure(highlightbackground="#d9d9d9")
         self.btnStopTraning.configure(highlightcolor="black")
