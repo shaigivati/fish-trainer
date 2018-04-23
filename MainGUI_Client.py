@@ -27,8 +27,10 @@ from tracker.controller import Controller
 from tracker import track_fish
 from tracker import scene_planner
 from tools import fishlog
+from tracker import ClientGUI_support
 
 Config = ConfigParser.ConfigParser()
+
 #Global vars
 exit_var=False
 stop_traning=False
@@ -50,6 +52,9 @@ def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root, app
     root = Tk()
+    ClientGUI_support.set_Tk_var()
+    top = Fish_traning_GUI___Client (root)
+    ClientGUI_support.init(root, top)
     app = GUIClass(root)
     #app.onRunTraining()
 
