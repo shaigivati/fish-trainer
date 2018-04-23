@@ -53,7 +53,7 @@ def vp_start_gui():
     global val, w, root, app
     root = Tk()
     ClientGUI_support.set_Tk_var()
-    top = Fish_traning_GUI___Client (root)
+    top = Fish_traning_GUI___Client(root)
     ClientGUI_support.init(root, top)
     app = GUIClass(root)
     #app.onRunTraining()
