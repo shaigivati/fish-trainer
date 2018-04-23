@@ -8,6 +8,12 @@
 
 import sys
 import subprocess
+import threading
+from tracker import scene_planner
+from tracker.controller import Controller
+from tracker import track_fish
+from tracker.tcp_client import FishClient
+
 
 
 try:
@@ -61,24 +67,41 @@ def onExit():
     sys.exit(1)
 
 def onRunTraining():
-    print('ClientGUI_support.onRunTraining')
+    global stop_traning
     sys.stdout.flush()
+
+    stop_traning = False
+    log_name = []
+    log_name.append('F{}DAY{}'.format(w.txtFishNo1.get('0.0', 'end-1c'), w.txtTrainingDay1.get('0.0', 'end-1c')))
+
+    controller = Controller(w, log_name)
+    thread_track_fish = threading.Thread(target=track_fish.track_loop, args=(controller,))
+
+    thread_track_fish.daemon = True
+    thread_track_fish.start()
 
 def onStopTraining():
     global stop_traning, w
     sys.stdout.flush()
     stop_traning=True
-
     w.print_and_update_main_log("Stopped!")
-
 
 def onSendtest():
     print('ClientGUI_support.onSendtest')
     sys.stdout.flush()
+    fish_client = FishClient()
+    fish_client.send('test', 0)
+    fish_client.kill()
 
 def onStatClear():
     sys.stdout.flush()
     w.txtStatLog.delete('0.0', END)
+
+def onTankConfig():
+        print('ClientGUI_support.onTankConfig')
+        sys.stdout.flush()
+        thread_track_fish = threading.Thread(target=scene_planner.SP_Main, args=())
+        thread_track_fish.start()
 
 def onStatRun():
     global w

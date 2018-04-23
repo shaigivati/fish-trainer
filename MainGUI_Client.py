@@ -14,17 +14,13 @@ except ImportError:
 
 import ConfigParser
 import sys
-import threading
 import time
 import multiprocessing
 import os
 import cv2
 import numpy as np
 from tracker.fish_tank import Tank
-from tracker.tcp_client import FishClient
-from tracker.controller import Controller
-from tracker import track_fish
-from tracker import scene_planner
+
 from tools import fishlog
 from tracker import ClientGUI_support
 
@@ -683,75 +679,6 @@ class Fish_traning_GUI___Client:
         self.txtStatArgs.insert('0.0', self.Stat_arg)
         temp_run_arg = "{} {} {} {}".format('fish_stat.py', self.LogFolderName, self.Stat_days, self.Stat_arg)
         self.txtStatRunArgs.insert('0.0', temp_run_arg)
-
-    def Feed(self):
-        print('ClientGUI_support.Feed')
-        sys.stdout.flush()
-
-    def on1L(self):
-        print('ClientGUI_support.on1L')
-        sys.stdout.flush()
-
-    def on1R(self):
-        print('ClientGUI_support.on1R')
-        sys.stdout.flush()
-
-    def on2L(self):
-        print('ClientGUI_support.on2L')
-        sys.stdout.flush()
-
-    def on2R(self):
-        print('ClientGUI_support.on2R')
-        sys.stdout.flush()
-
-
-
-    def onStopTraining(self):
-        global stop_traning
-        sys.stdout.flush()
-        stop_traning=True
-        app.txtMainLog.insert(END, 'Stopped!')
-
-    def onRunTraining(self):
-
-        global stop_traning
-        sys.stdout.flush()
-
-        stop_traning=False
-        log_name=[]
-        log_name.append('F{}DAY{}'.format(app.txtFishNo.get('0.0', 'end-1c'), app.txtTrainingDay.get('0.0', 'end-1c')))
-
-        controller = Controller(app, log_name)
-        thread_track_fish = threading.Thread(target=track_fish.track_loop, args=(controller,))
-
-        thread_track_fish.daemon=True
-        thread_track_fish.start()
-
-        #tf_sub = subprocess.Popen(track_fish('tank_config.txt', 'F9DAY2'))
-
-
-    def onSendtest(self):
-        print('ClientGUI_support.onSendtest')
-        sys.stdout.flush()
-        fish_client = FishClient()
-        fish_client.send('test', 0)
-        fish_client.kill()
-
-    #def onTankConfig(self):
-        print('ClientGUI_support.onTankConfig')
-        sys.stdout.flush()
-        thread_track_fish = threading.Thread(target=scene_planner.SP_Main, args=())
-        thread_track_fish.start()
-
-
-
-    #def onStatClear(self):
-
-
-    #def onLogClear(self):
-
-
-    #def onStatRun(self):
 
 
     def print_and_update_main_log(self, str_to_print, new_line=True):
