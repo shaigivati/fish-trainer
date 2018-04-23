@@ -4,14 +4,12 @@ from time import gmtime, strftime
 import os
 
 class FishLog:
-    line_number=0
-    track_count=0
-    feed_count={'left':0,'right':0}
-    
     def __init__(self, log_folder, fish_name):
         '''file name- fish_name+date+time, open new file, init counters to 0'''
-        
-        self.fish_name=fish_name
+        self.line_number = 0
+        self.track_count = 0
+        self.feed_count = {'left': 0, 'right': 0}
+        self.fish_name = fish_name
         print 'start logging data'
         # Open a file
 

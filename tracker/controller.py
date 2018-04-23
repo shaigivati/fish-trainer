@@ -16,7 +16,7 @@ import os
 
 
 class Controller:
-    def __init__(self, cb_obj=None, name='test'):
+    def __init__(self, cb_obj=None, name=['test']):
         global total_feed
         global time_counter
         total_feed = 0
@@ -32,18 +32,17 @@ class Controller:
         log_folder = '{}data/log/'.format(full_root_script_path)
         #print('log:{}'.format(log_folder))
         #print_and_update_main_log('log:{}'.format(log_folder))
-        self.logger=[]
-
+        self.logger = []
 
         #init tank
         self.tank = []
         id = 0
         for size in width:
             self.tank.append(Tank(id, size))
-            self.logger.append(fishlog.FishLog(log_folder, "{}.({})".format(name, str(id))))
+            self.logger.append(fishlog.FishLog(log_folder, "{}.({})".format(name[id], str(id))))
             id = id + 1
 
-    def do(self,x,y,fish_id):
+    def do(self, x, y, fish_id):
         global total_feed
 
         self.logger[fish_id].add_tracked_point(x, y)
@@ -60,7 +59,6 @@ class Controller:
             fish_client = FishClient()
             fish_client.send(fish_id + 1, feed_side)
             fish_client.kill()
-
 
             #fish_client.send(fish_id, feed_side)
             self.logger[fish_id].add_feed(feed_side)

@@ -616,7 +616,8 @@ class GUIClass(Tk):
         sys.stdout.flush()
 
         stop_traning=False
-        log_name = 'F{}DAY{}'.format(app.txtFishNo.get('0.0', 'end-1c'), app.txtTrainingDay.get('0.0', 'end-1c'))
+        log_name=[]
+        log_name.append('F{}DAY{}'.format(app.txtFishNo.get('0.0', 'end-1c'), app.txtTrainingDay.get('0.0', 'end-1c')))
 
         controller = Controller(app, log_name)
         thread_track_fish = threading.Thread(target=track_fish.track_loop, args=(controller,))
