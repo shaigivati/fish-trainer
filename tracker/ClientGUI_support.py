@@ -51,12 +51,24 @@ def on2R():
     sys.stdout.flush()
 
 def onExit():
+    global exit_var
     print('ClientGUI_support.onExit')
     sys.stdout.flush()
+
+    exit_var = True
+    sys.exit(1)
 
 def onRunTraining():
     print('ClientGUI_support.onRunTraining')
     sys.stdout.flush()
+
+def onStopTraining(top):
+    global stop_traning
+    sys.stdout.flush()
+    stop_traning=True
+    #app.txtMainLog.insert(END, 'Stopped!')
+    top.print_and_update_main_log("test")
+    #print_and_update_main_log
 
 def onSendtest():
     print('ClientGUI_support.onSendtest')

@@ -703,13 +703,7 @@ class Fish_traning_GUI___Client:
         print('ClientGUI_support.on2R')
         sys.stdout.flush()
 
-    def onExit(self):
-        global exit_var
-        print('ClientGUI_support.onExit')
-        sys.stdout.flush()
 
-        exit_var=True
-        sys.exit(1)
 
     def onStopTraining(self):
         global stop_traning
