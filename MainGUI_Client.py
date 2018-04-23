@@ -586,6 +586,7 @@ class Fish_traning_GUI___Client:
         self.btnTankConf.configure(activebackground="#d9d9d9")
         self.btnTankConf.configure(activeforeground="#000000")
         self.btnTankConf.configure(background="#d9d9d9")
+        self.btnTankConf.configure(command=ClientGUI_support.onTankConfig)
         self.btnTankConf.configure(foreground="#000000")
         self.btnTankConf.configure(highlightbackground="#d9d9d9")
         self.btnTankConf.configure(highlightcolor="black")
