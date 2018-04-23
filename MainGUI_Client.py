@@ -77,19 +77,18 @@ def destroy_Fish_traning_GUI___Client():
 
 
 class Fish_traning_GUI___Client:
-    #def __init__(self, top):
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
         _fgcolor = '#000000'  # X11 color: 'black'
-        _compcolor = '#d9d9d9'  # X11 color: 'gray85'
-        _ana1color = '#d9d9d9'  # X11 color: 'gray85'
-        _ana2color = '#d9d9d9'  # X11 color: 'gray85'
-        font12 = "-family {Abadi MT Condensed Extra Bold} -size 20 " \
-                 "-weight bold -slant roman -underline 0 -overstrike 0"
-        font9 = "-family {.SF NS Text} -size 13 -weight normal -slant " \
-                "roman -underline 0 -overstrike 0"
+        _compcolor = '#d9d9d9' # X11 color: 'gray85'
+        _ana1color = '#d9d9d9' # X11 color: 'gray85'
+        _ana2color = '#d9d9d9' # X11 color: 'gray85'
+        font12 = "-family {Abadi MT Condensed Extra Bold} -size 20 "  \
+            "-weight bold -slant roman -underline 0 -overstrike 0"
+        font9 = "-family {.SF NS Text} -size 13 -weight normal -slant "  \
+            "roman -underline 0 -overstrike 0"
 
         top.geometry("891x800+281+53")
         top.title("Fish traning GUI - Client")
@@ -97,9 +96,11 @@ class Fish_traning_GUI___Client:
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
 
+
+
         self.frmTraining = Frame(top)
         self.frmTraining.place(relx=0.01, rely=0.47, relheight=0.16
-                               , relwidth=0.97)
+                , relwidth=0.97)
         self.frmTraining.configure(relief=GROOVE)
         self.frmTraining.configure(borderwidth="2")
         self.frmTraining.configure(relief=GROOVE)
@@ -214,7 +215,7 @@ class Fish_traning_GUI___Client:
 
         self.txtTrainingDay1 = Text(self.frmTraining)
         self.txtTrainingDay1.place(relx=0.14, rely=0.24, relheight=0.24
-                                   , relwidth=0.09)
+                , relwidth=0.09)
         self.txtTrainingDay1.configure(background="white")
         self.txtTrainingDay1.configure(font=font9)
         self.txtTrainingDay1.configure(foreground="black")
@@ -244,7 +245,7 @@ class Fish_traning_GUI___Client:
 
         self.txtTrainingDay2 = Text(self.frmTraining)
         self.txtTrainingDay2.place(relx=0.14, rely=0.55, relheight=0.24
-                                   , relwidth=0.09)
+                , relwidth=0.09)
         self.txtTrainingDay2.configure(background="white")
         self.txtTrainingDay2.configure(font=font9)
         self.txtTrainingDay2.configure(foreground="black")
@@ -290,6 +291,7 @@ class Fish_traning_GUI___Client:
         self.btnExit.configure(highlightcolor="black")
         self.btnExit.configure(text='''Exit''')
 
+
         self.frmStat = Frame(top)
         self.frmStat.place(relx=0.02, rely=0.01, relheight=0.33, relwidth=0.97)
         self.frmStat.configure(relief=GROOVE)
@@ -332,17 +334,6 @@ class Fish_traning_GUI___Client:
         self.btnStatRun.configure(highlightcolor="black")
         self.btnStatRun.configure(text='''Run''')
 
-        self.txtLogFolder = Entry(self.frmStat)
-        self.txtLogFolder.place(relx=0.46, rely=0.03, height=27, relwidth=0.52)
-        self.txtLogFolder.configure(background="white")
-        self.txtLogFolder.configure(font="TkFixedFont")
-        self.txtLogFolder.configure(foreground="#000000")
-        self.txtLogFolder.configure(highlightbackground="#d9d9d9")
-        self.txtLogFolder.configure(highlightcolor="black")
-        self.txtLogFolder.configure(insertbackground="#000000")
-        self.txtLogFolder.configure(selectbackground="#c4c4c4")
-        self.txtLogFolder.configure(selectforeground="black")
-
         self.Label9 = Label(self.frmStat)
         self.Label9.place(relx=0.36, rely=0.03, height=24, width=89)
         self.Label9.configure(activebackground="#f9f9f9")
@@ -355,7 +346,7 @@ class Fish_traning_GUI___Client:
 
         self.txtStatLog = Text(self.frmStat)
         self.txtStatLog.place(relx=0.01, rely=0.15, relheight=0.63
-                              , relwidth=0.97)
+                , relwidth=0.97)
         self.txtStatLog.configure(background="white")
         self.txtStatLog.configure(font="TkTextFont")
         self.txtStatLog.configure(foreground="black")
@@ -380,7 +371,7 @@ class Fish_traning_GUI___Client:
 
         self.txtStatDaysBack = Text(self.frmStat)
         self.txtStatDaysBack.place(relx=0.19, rely=0.81, relheight=0.09
-                                   , relwidth=0.08)
+                , relwidth=0.08)
         self.txtStatDaysBack.configure(background="white")
         self.txtStatDaysBack.configure(font=font9)
         self.txtStatDaysBack.configure(foreground="black")
@@ -405,7 +396,7 @@ class Fish_traning_GUI___Client:
 
         self.txtStatArgs = Text(self.frmStat)
         self.txtStatArgs.place(relx=0.33, rely=0.81, relheight=0.09
-                               , relwidth=0.09)
+                , relwidth=0.09)
         self.txtStatArgs.configure(background="white")
         self.txtStatArgs.configure(font=font9)
         self.txtStatArgs.configure(foreground="black")
@@ -430,7 +421,7 @@ class Fish_traning_GUI___Client:
 
         self.txtStatRunArgs = Text(self.frmStat)
         self.txtStatRunArgs.place(relx=0.19, rely=0.9, relheight=0.09
-                                  , relwidth=0.44)
+                , relwidth=0.44)
         self.txtStatRunArgs.configure(background="white")
         self.txtStatRunArgs.configure(font=font9)
         self.txtStatRunArgs.configure(foreground="black")
@@ -442,6 +433,21 @@ class Fish_traning_GUI___Client:
         self.txtStatRunArgs.configure(undo="1")
         self.txtStatRunArgs.configure(width=378)
         self.txtStatRunArgs.configure(wrap=WORD)
+
+        self.txtLogFolder = Text(self.frmStat)
+        self.txtLogFolder.place(relx=0.46, rely=0.03, relheight=0.09
+                , relwidth=0.51)
+        self.txtLogFolder.configure(background="white")
+        self.txtLogFolder.configure(font=font9)
+        self.txtLogFolder.configure(foreground="black")
+        self.txtLogFolder.configure(highlightbackground="#d9d9d9")
+        self.txtLogFolder.configure(highlightcolor="black")
+        self.txtLogFolder.configure(insertbackground="black")
+        self.txtLogFolder.configure(selectbackground="#c4c4c4")
+        self.txtLogFolder.configure(selectforeground="black")
+        self.txtLogFolder.configure(undo="1")
+        self.txtLogFolder.configure(width=442)
+        self.txtLogFolder.configure(wrap=WORD)
 
         self.frmCom = Frame(top)
         self.frmCom.place(relx=0.02, rely=0.35, relheight=0.11, relwidth=0.97)
@@ -464,7 +470,7 @@ class Fish_traning_GUI___Client:
         self.Label4.configure(text='''Communication''')
 
         self.txtServerIP = Entry(self.frmCom)
-        self.txtServerIP.place(relx=0.02, rely=0.62, height=27, relwidth=0.18)
+        self.txtServerIP.place(relx=0.02, rely=0.62,height=27, relwidth=0.18)
         self.txtServerIP.configure(background="white")
         self.txtServerIP.configure(font="TkFixedFont")
         self.txtServerIP.configure(foreground="#000000")
@@ -565,7 +571,7 @@ class Fish_traning_GUI___Client:
         self.Label7.configure(text='''Steps number''')
 
         self.txtStepNum = Entry(self.frmCom)
-        self.txtStepNum.place(relx=0.67, rely=0.62, height=27, relwidth=0.09)
+        self.txtStepNum.place(relx=0.67, rely=0.62,height=27, relwidth=0.09)
         self.txtStepNum.configure(background="white")
         self.txtStepNum.configure(font="TkFixedFont")
         self.txtStepNum.configure(foreground="#000000")
@@ -608,7 +614,7 @@ class Fish_traning_GUI___Client:
 
         self.txtMainLog = Text(self.frmLog)
         self.txtMainLog.place(relx=0.01, rely=0.14, relheight=0.75
-                              , relwidth=0.98)
+                , relwidth=0.98)
         self.txtMainLog.configure(background="white")
         self.txtMainLog.configure(font="TkTextFont")
         self.txtMainLog.configure(foreground="black")
@@ -652,7 +658,6 @@ class Fish_traning_GUI___Client:
         self.Label15.configure(highlightbackground="#d9d9d9")
         self.Label15.configure(highlightcolor="black")
         self.Label15.configure(text='''00:00''')
-        self.Label15.configure(textvariable=self.str_time)
 
 
         self.fillValue()
