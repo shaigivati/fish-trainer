@@ -1,11 +1,11 @@
 [Motor settings]
 steps = 320
-enable pin = 36
+enable pin = 27
 
 
 [Tank]
-tank 1 left pin = 38
-tank 1 right pin = 37
+tank 1 left pin = 24
+tank 1 right pin = 25
 tank 2 left pin = 0
 tank 2 right pin = 0
 
