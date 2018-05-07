@@ -1,4 +1,0 @@
-[Motor settings]
-steps = 320
-enable pin 1 = 27
-enable pin 2 = 4
