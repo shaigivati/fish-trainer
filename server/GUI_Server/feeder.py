@@ -30,7 +30,7 @@ class Feeder:
             print(i)
 
 
-        print ('{0}'.format(self.program_step.get(1,1)[1])
+        print ('{0}'.format(self.program_step.get(1,1)[1]))
         print ('end')
         return 'ok'
 
