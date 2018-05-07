@@ -13,7 +13,7 @@ class Feeder:
         global time_to_sleep
         time_to_sleep=0.25/1000.0 #(0.005) - 5ms
         print('feeder init -- ', end='')
-        GPIO.setmode(GPIO.BOARD) ## Use board pin numbering
+        GPIO.setmode(GPIO.BCM) ## Use board pin numbering
         for pin in pins:
             print ('pin:{} '.format(pin), end='')
             print ('')
