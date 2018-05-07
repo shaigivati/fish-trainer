@@ -1,6 +1,8 @@
 from __future__ import print_function
 import RPi.GPIO as GPIO ## Import GPIO library
 import time ## Import 'time' library. Allows us to use 'sleep'
+from collections import defaultdict
+
 import sys
 
 time_to_sleep=0
@@ -12,13 +14,22 @@ class Feeder:
     def __init__(self, pins):
         global time_to_sleep
         time_to_sleep=0.25/1000.0 #(0.005) - 5ms
-        print('feeder init -- ', end='')
+        print('feeder init --', end='')
         GPIO.setmode(GPIO.BCM) ## Use board pin numbering
+        self.program_step = defaultdict(list) #for later use
         for pin in pins:
-            print ('pin:{} '.format(pin), end='')
-            print ('')
+            print (' pin:{0} '.format(pin), end='')
+            #print ('')
             if not int(pin) == 0:
                 GPIO.setup(int(pin), GPIO.OUT)
+
+    def add_program_step(self, step_no, step_action, step_value):
+        self.program_step[step_no].append(step_action , step_value)
+        print ('added, program_step now:')
+        for i in self.program_step.items()
+            print(i)
+        print 'end'
+        return 'ok'
 
     ##Define a function named Blink()
     def spin(self, pin_num, steps, en_pin):
@@ -36,6 +47,9 @@ class Feeder:
         time.sleep(time_to_sleep)## sleep back Wait
         print ("Done",end='') ## When loop is complete, print "Done"
         return 'Done'
+
+    def spin_program(self, pin_num, pin_direction, en_pin):
+        pass
 
     def destruct():
         GPIO.cleanup()

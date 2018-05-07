@@ -49,7 +49,7 @@ class MainWindowApp(Tkinter.Tk):
 
         Config.read('GUI_config.txt')
         self.step_num = ConfigSectionMap("Motor settings")['steps']
-        self.Pin_en = ConfigSectionMap("Motor settings")['enable pin']
+        self.Pin_en = ConfigSectionMap("Motor settings")['enable pin 1']
 
         self.Pin={}
         self.Pin['1L'] = ConfigSectionMap("Tank")['tank 1 left pin']
@@ -58,6 +58,9 @@ class MainWindowApp(Tkinter.Tk):
         self.Pin['2R'] = ConfigSectionMap("Tank")['tank 2 right pin']
 
         feed = feeder.Feeder({self.Pin_en, self.Pin['1L'], self.Pin['1R'], self.Pin['2L'], self.Pin['2R']})
+        add_step = feed.add_program_step(1,'right',100)
+        add_step = feed.add_program_step(2, 'left', 100)
+        add_step = feed.add_program_step(3, 'wait', 100)
         #self.Pin={'1L':1 , '1R':2 , '2L':3 , '2R':4}
         #print ('[1,left]:{}, [1,right]:{}, [2,left]:{}, [2,right]:{}'.format(self.Pin['1L'], self.Pin['1R'], self.Pin['2L'], self.Pin['2R']))
         self.i=0
@@ -251,10 +254,10 @@ def handle_client_connection(client_socket):
 
     client_socket.close()
     if not recv_id == "test":
-        pin_num_str = '{}'.format('{}{}'.format(recv_id, (recv_side[0:1]).upper())) #create 1L/1R str
+        pin_num_str = '{0}{1}'.format(recv_id, (recv_side[0:1]).upper()) #create 1L/1R str
         #print('-->{}'.format(app.Pin[pin_num_str]))
         spin_res = feed.spin(int(app.Pin[pin_num_str]), int(app.step_num), int(app.Pin_en))
-        app.onTxtUpdate('{}.'.format(spin_res), False)
+        app.onTxtUpdate('{0}.'.format(spin_res), False)
 
 def while_true_func(server):
     global exit_var, connected, first_accp_conn, line_counter, line_dir
@@ -274,7 +277,7 @@ def while_true_func(server):
         sys.stdout.flush()
         try:
             client_sock, address = server.accept()
-            str_tmp = '\nAccepted connection from {}:{}'.format(address[0], address[1])
+            str_tmp = '\nAccepted connection from {0}:{1}'.format(address[0], address[1])
 
             if first_accp_conn:
                 app.onTxtUpdate(str_tmp)
