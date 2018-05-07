@@ -5,6 +5,7 @@
 #    Feb 24, 2018 06:27:58 PM
 #    Apr 23, 2018 08:54:50 PM
 
+thread_track_fish = None
 
 import sys
 import subprocess
@@ -62,12 +63,12 @@ def onExit():
     global exit_var
     print('ClientGUI_support.onExit')
     sys.stdout.flush()
-
+    onStopTraining()
     exit_var = True
     sys.exit(1)
 
 def onRunTraining():
-    global stop_traning
+    global stop_traning, thread_track_fish
     sys.stdout.flush()
 
     stop_traning = False
@@ -75,16 +76,34 @@ def onRunTraining():
     log_name.append('F{}DAY{}'.format(w.txtFishNo1.get('0.0', 'end-1c'), w.txtTrainingDay1.get('0.0', 'end-1c')))
 
     controller = Controller(w, log_name)
+
     thread_track_fish = threading.Thread(target=track_fish.track_loop, args=(controller,))
 
     thread_track_fish.daemon = True
+    #print('thread_track_fish:{0}'.format(thread_track_fish))
     thread_track_fish.start()
+    #print('thread_track_fish:{0}'.format(thread_track_fish))
+
+
 
 def onStopTraining():
-    global stop_traning, w
+    global stop_traning, w, thread_track_fish
     sys.stdout.flush()
-    stop_traning=True
+    if track_fish.stop_training==False:
+        track_fish.stop_training=True
+    else:
+        track_fish.stop_training=False
+
     w.print_and_update_main_log("Stopped!")
+    w.print_and_update_main_log(track_fish.stop_training)
+    #print('thread_track_fish:{0}'.format(thread_track_fish))
+    if thread_track_fish==None:
+        print 'No thread'
+    else:
+        print thread_track_fish
+        thread_track_fish.join()
+
+    #print('thread_track_fish:{0}'.format(thread_track_fish))
 
 def onSendtest():
     print('ClientGUI_support.onSendtest')

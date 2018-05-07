@@ -2,16 +2,17 @@
 
 import cv2
 
-width = []
-height = []
-tank = []
-fgbg = []
-fish = []
+stop_training=False
 video_capture = None
 
 #tank_config='../tracker/tank_config.txt'
 def init_tracking(tank_config='tracker/tank_config.txt',video=None):
-    global video_capture
+    global video_capture, fish, width, height, tank, fgbg
+    fish = []
+    width = []
+    height = []
+    tank = []
+    fgbg = []
 
     with open(tank_config) as f:
         lines = f.read().splitlines()
@@ -38,9 +39,14 @@ def init_tracking(tank_config='tracker/tank_config.txt',video=None):
 
     return width
 
+def __del__():  #Destroy
+    print ('track_fish closed')
+    cv2.destroyAllWindows()
 
 def track_loop(cb): #cb is an object that has a do() function in the calling script
-    while True:
+    global stop_training
+    #while True:
+    while stop_training==False:
         # Capture frame-by-frame
         ret, frame = video_capture.read()
         if frame is None:
@@ -81,7 +87,9 @@ def track_loop(cb): #cb is an object that has a do() function in the calling scr
             id = id + 1
         # TBD - inclear where to put
         # if cv2.waitKey(1) & 0xFF == ord('q'): break #Exit when Q is pressed
-
+    #print ('track_fish closed')
+    __del__()
+    return 0
 
 if __name__ == '__main__':
     import argparse

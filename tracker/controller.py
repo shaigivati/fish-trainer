@@ -13,13 +13,13 @@ import os
 # - create seperate log file for each fish
 # - insert fish client send and test with feeder
 # -
-
+total_feed = []
 
 class Controller:
-    def __init__(self, cb_obj=None, name=['test']):
+    def __init__(self, cb_obj=None, name=['test1', 'test2']):
         global total_feed
         global time_counter
-        total_feed = 0
+
         time_counter = 0
 
         self.cb_obj = cb_obj
@@ -39,8 +39,15 @@ class Controller:
         id = 0
         for size in width:
             self.tank.append(Tank(id, size))
+            print ('id:{0}'.format(id))
             self.logger.append(fishlog.FishLog(log_folder, "{}.({})".format(name[id], str(id))))
+            total_feed.append(0)
+            #print ('ttl_feed:{0} id:{1}'.format(total_feed[id],id))
             id = id + 1
+
+
+    def __del__(self):  #Destroy
+        print ('Controller closed')
 
     def do(self, x, y, fish_id):
         global total_feed
@@ -51,8 +58,8 @@ class Controller:
         #self.time_count()
 
         if feed_side is not None:
-            total_feed += 1
-            str_to_print = '{}\t,{}\t - \tTotal:{}'.format(fish_id, feed_side, total_feed)
+            total_feed[fish_id] += 1
+            str_to_print = '{}\t,{}\t - \tTotal:{}'.format(fish_id, feed_side, total_feed[fish_id])
 
             if self.cb_obj is not None:
                 self.cb_obj.print_and_update_main_log(str_to_print)
