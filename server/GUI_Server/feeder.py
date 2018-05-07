@@ -28,7 +28,7 @@ class Feeder:
         print ('added, program_step now:')
         for i in self.program_step.items():
             print(i)
-        print ('{0}:{1}-{2}'.format(self.program_step[1, 1], self.program_step[1,2], self.program_step[1,3]))
+        print ('{0}:{1}-{2}'.format(self.program_step[1, [1]], self.program_step[1,2], self.program_step[1,3]))
         print ('end')
         return 'ok'
 
