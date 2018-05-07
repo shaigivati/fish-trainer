@@ -24,7 +24,7 @@ class Feeder:
                 GPIO.setup(int(pin), GPIO.OUT)
 
     def add_program_step(self, step_no, step_action, step_value):
-        self.program_step[step_no].append(step_action , step_value)
+        self.program_step[step_no].append([step_action , step_value])
         print ('added, program_step now:')
         for i in self.program_step.items():
             print(i)
