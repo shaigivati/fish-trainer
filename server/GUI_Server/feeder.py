@@ -73,6 +73,7 @@ class Feeder:
         GPIO.output(en_pin, False) #pull slp pin to HIGH
         GPIO.output(pin_dir, False)
         print("Done")
+        return "Done"
 
     def destruct():
         GPIO.cleanup()
