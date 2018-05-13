@@ -31,7 +31,9 @@ class Feeder:
         for i in self.program_step.items():
             print(i)
 
-        print ('0:{0}'.format(self.program_step.get(1, 1)[0]))
+        for i in self.program_step.items():
+            print ('{0}:{1}'.format(i, self.program_step.get(i, 1)[0]))
+
         print ('end')
         return 'ok'
 
