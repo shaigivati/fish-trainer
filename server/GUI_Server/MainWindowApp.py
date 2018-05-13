@@ -49,15 +49,19 @@ class MainWindowApp(Tkinter.Tk):
 
         Config.read('GUI_config.txt')
         self.step_num = ConfigSectionMap("Motor settings")['steps']
-        self.Pin_en = ConfigSectionMap("Motor settings")['enable pin 1']
+        self.Pin_en = {}
+        self.Pin_en[1] = ConfigSectionMap("Motor settings")['enable pin 1']
+        self.Pin_en[2] = ConfigSectionMap("Motor settings")['enable pin 2']
 
         self.Pin={}
         self.Pin['1L'] = ConfigSectionMap("Tank")['tank 1 left pin']
         self.Pin['1R'] = ConfigSectionMap("Tank")['tank 1 right pin']
         self.Pin['2L'] = ConfigSectionMap("Tank")['tank 2 left pin']
         self.Pin['2R'] = ConfigSectionMap("Tank")['tank 2 right pin']
+        self.Pin['2LD'] = ConfigSectionMap("Tank")['tank 2 left direction pin']
+        self.Pin['2RD'] = ConfigSectionMap("Tank")['tank 2 right direction pin']
 
-        feed = feeder.Feeder({self.Pin_en, self.Pin['1L'], self.Pin['1R'], self.Pin['2L'], self.Pin['2R']})
+        feed = feeder.Feeder({self.Pin_en[1], self.Pin['1L'], self.Pin['1R'], self.Pin_en[2], self.Pin['2L'], self.Pin['2R'], self.Pin['2LD'], self.Pin['2RD']})
         add_step = feed.add_program_step(1,'right',100)
         add_step = feed.add_program_step(2, 'left', 200)
         add_step = feed.add_program_step(3, 'wait', 300)
@@ -113,6 +117,13 @@ class MainWindowApp(Tkinter.Tk):
         global exit_var
         global kill_all
         global connected
+
+        pin_num_str = '{0}{1}'.format(2, 'L') #create 1L/1R str
+        pin_dir_str = '{0}{1}{2}'.format(2, 'L', 'D') #create 1L/1R str
+
+        feed.spin_program(pin_num_str, pin_dir_str, app.Pin_en[2])
+        return 0
+
         """ Process 'Exit' command """
         exit_var=True
         kill_all=True
@@ -256,7 +267,7 @@ def handle_client_connection(client_socket):
     if not recv_id == "test":
         pin_num_str = '{0}{1}'.format(recv_id, (recv_side[0:1]).upper()) #create 1L/1R str
         #print('-->{}'.format(app.Pin[pin_num_str]))
-        spin_res = feed.spin(int(app.Pin[pin_num_str]), int(app.step_num), int(app.Pin_en))
+        spin_res = feed.spin(int(app.Pin[pin_num_str]), int(app.step_num), int(app.Pin_en[1]))
         app.onTxtUpdate('{0}.'.format(spin_res), False)
 
 def while_true_func(server):

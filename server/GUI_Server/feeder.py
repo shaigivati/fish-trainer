@@ -27,10 +27,7 @@ class Feeder:
         self.program_step[step_no].append(step_action)
         self.program_step[step_no].append(step_value)
 
-        print ('added, program_step now:')
-        for i in self.program_step.items():
-            print(i)
-
+        print ("items:")
         for item in self.program_step.items():
             print ('{0}:{1}-{2}'.format(item[0], item[1][0], item[1][1]))
 
@@ -55,7 +52,9 @@ class Feeder:
         return 'Done'
 
     def spin_program(self, pin_num, pin_direction, en_pin):
-        pass
+        print('pin:{0}, direction:{1}, en:{}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
+        for item in self.program_step.items():
+            print('{0}:{1}-{2}'.format(item[0], item[1][0], item[1][1]))
 
     def destruct():
         GPIO.cleanup()
