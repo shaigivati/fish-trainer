@@ -53,9 +53,15 @@ def on1R():
 
 def on2L():
     print('ClientGUI_support.on2L')
+    pin_num_str = '{0}{1}'.format(2, 'L')  # create 1L/1R str
+    pin_dir_str = '{0}{1}{2}'.format(2, 'L', 'D')  # create 1L/1R str
+
+    feed.spin_program(int(app.Pin[pin_num_str]), int(app.Pin[pin_dir_str]), int(app.Pin_en[2]))
+
     sys.stdout.flush()
 
 def on2R():
+
     print('ClientGUI_support.on2R')
     sys.stdout.flush()
 
