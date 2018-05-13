@@ -123,7 +123,7 @@ class MainWindowApp(Tkinter.Tk):
 
         feed.spin_program(int(app.Pin[pin_num_str]), int((app.Pin[pin_dir_str]), int(app.Pin_en[2]))
 
-        if (False):
+        if False:
         """ Process 'Exit' command """
             exit_var=True
             kill_all=True
