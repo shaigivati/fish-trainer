@@ -29,7 +29,7 @@ class Feeder:
 
         print ("items:")
         for item in self.program_step.items():
-            print ('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1]), item[1][2]))
+            print ('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1], item[1][2]))
 
         print ('end')
         return 'ok'
@@ -55,7 +55,7 @@ class Feeder:
 
         print('pin:{0}, direction:{1}, en:{2}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
         for item in self.program_step.items():
-            print('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1]), item[1][2]))
+            print('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1], item[1][2]))
 
     def destruct():
         GPIO.cleanup()
