@@ -122,17 +122,17 @@ class MainWindowApp(Tkinter.Tk):
         pin_dir_str = '{0}{1}{2}'.format(2, 'L', 'D') #create 1L/1R str
 
         feed.spin_program(int(app.Pin[pin_num_str]), int((app.Pin[pin_dir_str]), int(app.Pin_en[2]))
-        return 0
 
+        if (False):
         """ Process 'Exit' command """
-        exit_var=True
-        kill_all=True
-        connected=False
-        #self.ConnectLoop()
+            exit_var=True
+            kill_all=True
+            connected=False
+            #self.ConnectLoop()
 
-        self.root.quit()
+            self.root.quit()
 
-        sys.exit(1)
+            sys.exit(1)
 
     def onViewLog(self):
         #ViewLog.ViewLog(self.root, self.log)
