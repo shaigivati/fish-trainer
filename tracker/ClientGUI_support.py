@@ -54,14 +54,14 @@ def on1R():
 def on2L():
     print('ClientGUI_support.on2L')
     fish_client = FishClient()
-    fish_client.send('2L', 0)
+    fish_client.send('2', 'L')
     fish_client.kill()
     sys.stdout.flush()
 
 def on2R():
     print('ClientGUI_support.on2R')
     fish_client = FishClient()
-    fish_client.send('2R', 0)
+    fish_client.send('2', 'R')
     fish_client.kill()
     sys.stdout.flush()
 
