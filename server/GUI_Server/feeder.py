@@ -54,7 +54,7 @@ class Feeder:
     def spin_program(self, pin_num, pin_direction, en_pin):
 
         print('pin:{0}, direction:{1}, en:{2}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
-        self.raw_spin(pin_num, pin_direction, en_pin, 5000, 'R', 1.0)
+        self.raw_spin(pin_num, pin_direction, en_pin, 2000, 'R', 0.1)
         for item in self.program_step.items():
             print('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1], item[1][2]))
 
@@ -68,7 +68,7 @@ class Feeder:
             GPIO.output(pin_num, True)## Switch on pin
             time.sleep(acceleration)## Wait
             GPIO.output(pin_num, False)## Switch off pin
-            time.sleep(acceleration)## Wait
+            ##time.sleep(acceleration)## Wait
         print ("")
         GPIO.output(en_pin, False) #pull slp pin to HIGH
         GPIO.output(pin_dir, False)
