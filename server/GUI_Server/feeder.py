@@ -54,12 +54,13 @@ class Feeder:
     def spin_program(self, pin_num, pin_direction, en_pin):
 
         print('pin:{0}, direction:{1}, en:{2}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
-        self.raw_spin(pin_num, pin_direction, en_pin, 5000, 'R', 1000)
+        self.raw_spin(pin_num, pin_direction, en_pin, 5000, 'R', 10)
         for item in self.program_step.items():
             print('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1], item[1][2]))
 
     def raw_spin(self, pin_num, pin_dir, en_pin, steps, direction, accl):
         acceleration = accl/1000
+        print ("accl:{0}".format(acceleration))
         GPIO.output(en_pin, True) #pull slp pin to HIGH
         GPIO.output(pin_dir, direction == 'L')    #HIGH for 'L', LOW for else
         for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
