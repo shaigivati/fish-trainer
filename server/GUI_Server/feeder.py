@@ -59,16 +59,16 @@ class Feeder:
             print('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1], item[1][2]))
 
     def raw_spin(self, pin_num, pin_dir, en_pin, steps, direction, accl):
-
+        acceleration=accl/1000
         GPIO.output(en_pin,True) #pull slp pin to HIGH
         GPIO.output(pin_dir, direction == 'L')    #HIGH for 'L', LOW for else
         for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
             GPIO.output(pin_num,True)## Switch on pin
-            time.sleep(accl)## Wait
+            time.sleep(acceleration)## Wait
             GPIO.output(pin_num,False)## Switch off pin
-            time.sleep(accl)## Wait
+            time.sleep(acceleration)## Wait
         GPIO.output(en_pin,False) #pull slp pin to HIGH
-
+        print("Done")
 
     def destruct():
         GPIO.cleanup()
