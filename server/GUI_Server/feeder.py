@@ -38,15 +38,15 @@ class Feeder:
     def spin(self, pin_num, steps, en_pin):
         print ('pin {0}-->'.format(str(pin_num)),end='') ## Print current loop
         print ('steps:{0}, en:{1}'.format(steps, en_pin))
-        GPIO.output(en_pin,True) #pull slp pin to HIGH
+        GPIO.output(en_pin, True) #pull slp pin to HIGH
         time.sleep(time_to_sleep)## slp shutdwon Wait
         for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
-            GPIO.output(pin_num,True)## Switch on pin
+            GPIO.output(pin_num, True)## Switch on pin
             time.sleep(time_to_sleep)## Wait
-            GPIO.output(pin_num,False)## Switch off pin
+            GPIO.output(pin_num, False)## Switch off pin
             time.sleep(time_to_sleep)## Wait
         time.sleep(time_to_sleep)
-        GPIO.output(en_pin,False) #pull slp pin to HIGH
+        GPIO.output(en_pin, False) #pull slp pin to HIGH
         time.sleep(time_to_sleep)## sleep back Wait
         print ("Done",end='') ## When loop is complete, print "Done"
         return 'Done'
@@ -54,12 +54,12 @@ class Feeder:
     def spin_program(self, pin_num, pin_direction, en_pin):
 
         print('pin:{0}, direction:{1}, en:{2}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
-        self.raw_spin(pin_num, pin_direction, en_pin, 2000, 'L', 100)
+        self.raw_spin(pin_num, pin_direction, en_pin, 5000, 'L', 100)
         for item in self.program_step.items():
             print('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1], item[1][2]))
 
     def raw_spin(self, pin_num, pin_dir, en_pin, steps, direction, accl):
-        acceleration=accl/1000
+        acceleration = accl/1000
         GPIO.output(en_pin, True) #pull slp pin to HIGH
         GPIO.output(pin_dir, direction == 'L')    #HIGH for 'L', LOW for else
         for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
@@ -70,6 +70,7 @@ class Feeder:
             time.sleep(acceleration)## Wait
         print ("")
         GPIO.output(en_pin, False) #pull slp pin to HIGH
+        GPIO.output(pin_dir, False)
         print("Done")
 
     def destruct():
