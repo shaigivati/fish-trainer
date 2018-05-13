@@ -22,13 +22,14 @@ class Feeder:
             if not int(pin) == 0:
                 GPIO.setup(int(pin), GPIO.OUT)
 
-    def add_program_step(self, step_no, step_action, step_value):
+    def add_program_step(self, step_no, step_action, step_value, step_accl=0):
         self.program_step[step_no].append(step_action)
         self.program_step[step_no].append(step_value)
+        self.program_step[step_no].append(step_accl)
 
         print ("items:")
         for item in self.program_step.items():
-            print ('{0}:{1}-{2}'.format(item[0], item[1][0], item[1][1]))
+            print ('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1]), item[1][2]))
 
         print ('end')
         return 'ok'
@@ -54,7 +55,7 @@ class Feeder:
 
         print('pin:{0}, direction:{1}, en:{2}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
         for item in self.program_step.items():
-            print('{0}:{1}-{2}'.format(item[0], item[1][0], item[1][1]))
+            print('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1]), item[1][2]))
 
     def destruct():
         GPIO.cleanup()
