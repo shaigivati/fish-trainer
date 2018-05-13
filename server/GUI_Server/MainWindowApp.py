@@ -121,7 +121,7 @@ class MainWindowApp(Tkinter.Tk):
         pin_num_str = '{0}{1}'.format(2, 'L') #create 1L/1R str
         pin_dir_str = '{0}{1}{2}'.format(2, 'L', 'D') #create 1L/1R str
 
-        feed.spin_program(pin_num_str, pin_dir_str, app.Pin_en[2])
+        feed.spin_program(int(app.Pin[pin_num_str]), int((app.Pin[pin_dir_str]), int(app.Pin_en[2]))
         return 0
 
         """ Process 'Exit' command """
