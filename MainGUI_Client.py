@@ -670,6 +670,8 @@ class Fish_traning_GUI___Client:
         Arg2 = ConfigSectionMap("Fish")['argument2']
         Args = '{} {}'.format(Arg1, Arg2)
 
+        self.txtStepNum.insert('0', 320)
+
         #print Args
 
         self.txtLogFolder.insert('0.0', self.LogFolderName)

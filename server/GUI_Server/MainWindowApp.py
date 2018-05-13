@@ -260,18 +260,27 @@ def handle_client_connection(client_socket):
 
     client_socket.close()
     print ("rec_id:{0}".format(recv_id))
-    if not recv_id == "test":
-        if recv_id == "1":
-            pin_num_str = '{0}{1}'.format(recv_id, (recv_side[0:1]).upper()) #create 1L/1R str
-            #print('-->{}'.format(app.Pin[pin_num_str]))
-            spin_res = feed.spin(int(app.Pin[pin_num_str]), int(app.step_num), int(app.Pin_en[1]))
-            app.onTxtUpdate('{0}.'.format(spin_res), False)
-        if recv_id == "2":
-            pin_num_str = '{0}{1}'.format(recv_id, (recv_side[0:1]).upper())
-            pin_dir_str = '{0}{1}'.format(pin_num_str, 'D')  # create 1L/1R str
-            print ("recv_id={0}, side:{1}".format(pin_num_str[0], pin_num_str[1]))
-            feed.spin_program(int(app.Pin[pin_num_str]), int(app.Pin[pin_dir_str]), int(app.Pin_en[2]))
 
+    if recv_id == "1":
+        pin_num_str = '{0}{1}'.format(recv_id, (recv_side[0:1]).upper()) #create 1L/1R str
+        #print('-->{}'.format(app.Pin[pin_num_str]))
+        spin_res = feed.spin(int(app.Pin[pin_num_str]), int(app.step_num), int(app.Pin_en[1]))
+        app.onTxtUpdate('{0}.'.format(spin_res), False)
+    if recv_id == "2":
+        pin_num_str = '{0}{1}'.format(recv_id, (recv_side[0:1]).upper())
+        pin_dir_str = '{0}{1}'.format(pin_num_str, 'D')  # create 1L/1R str
+        print ("recv_id={0}, side:{1}".format(pin_num_str[0], pin_num_str[1]))
+        feed.spin_program(int(app.Pin[pin_num_str]), int(app.Pin[pin_dir_str]), int(app.Pin_en[2]))
+    if recv_id == "test_1":
+        pin_num_str = '{0}{1}'.format(1, (recv_side[0:1]).upper())  # create 1L/1R str
+        spin_res = feed.spin(int(app.Pin[pin_num_str]), int(app.step_num), int(app.Pin_en[1]))
+        app.onTxtUpdate('{0}.'.format(spin_res), False)
+    if recv_id == "test_2":
+        pin_num_str = '{0}{1}'.format(2, (recv_side[0:1]).upper())  # create 1L/1R str
+        pin_dir_str = '{0}{1}'.format(pin_num_str, 'D')  # create 1L/1R str
+        # print('-->{}'.format(app.Pin[pin_num_str]))
+        feed.spin_program(int(app.Pin[pin_num_str]), int(app.Pin[pin_dir_str]), int(app.Pin_en[2]))
+        app.onTxtUpdate('{0}.'.format(spin_res), False)
 
 def while_true_func(server):
     global exit_var, connected, first_accp_conn, line_counter, line_dir

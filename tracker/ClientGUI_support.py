@@ -45,23 +45,31 @@ def Feed():
 
 def on1L():
     print('ClientGUI_support.on1L')
+    fish_client = FishClient()
+    fish_client.send('test_1', 'L')
+    fish_client.kill()
     sys.stdout.flush()
 
 def on1R():
     print('ClientGUI_support.on1R')
+    fish_client = FishClient()
+    fish_client.send('test_1', 'R')
+    fish_client.kill()
     sys.stdout.flush()
 
 def on2L():
     print('ClientGUI_support.on2L')
+
     fish_client = FishClient()
-    fish_client.send('2', 'L')
+    fish_client.send('test_2', 'L')
     fish_client.kill()
+
     sys.stdout.flush()
 
 def on2R():
     print('ClientGUI_support.on2R')
     fish_client = FishClient()
-    fish_client.send('2', 'R')
+    fish_client.send('test_2', 'R')
     fish_client.kill()
     sys.stdout.flush()
 
@@ -115,7 +123,7 @@ def onSendtest():
     print('ClientGUI_support.onSendtest')
     sys.stdout.flush()
     fish_client = FishClient()
-    fish_client.send('test', 0)
+    fish_client.send('test_com', 0)
     fish_client.kill()
 
 def onStatClear():
