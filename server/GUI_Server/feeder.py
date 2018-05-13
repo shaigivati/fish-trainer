@@ -36,8 +36,8 @@ class Feeder:
 
     ##Define a function named Blink()
     def spin(self, pin_num, steps, en_pin):
-        print ('pin {}-->'.format(str(pin_num)),end='') ## Print current loop
-        print ('steps:{}, en:{}'.format(steps, en_pin))
+        print ('pin {0}-->'.format(str(pin_num)),end='') ## Print current loop
+        print ('steps:{0}, en:{1}'.format(steps, en_pin))
         GPIO.output(en_pin,True) #pull slp pin to HIGH
         time.sleep(time_to_sleep)## slp shutdwon Wait
         for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
@@ -52,7 +52,7 @@ class Feeder:
         return 'Done'
 
     def spin_program(self, pin_num, pin_direction, en_pin):
-        print('pin:{0}, direction:{1}, en:{}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
+        print('pin:{0}, direction:{1}, en:{2}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
         for item in self.program_step.items():
             print('{0}:{1}-{2}'.format(item[0], item[1][0], item[1][1]))
 
