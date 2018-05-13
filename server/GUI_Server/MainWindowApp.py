@@ -121,8 +121,6 @@ class MainWindowApp(Tkinter.Tk):
         pin_num_str = '{0}{1}'.format(2, 'L') #create 1L/1R str
         pin_dir_str = '{0}{1}{2}'.format(2, 'L', 'D') #create 1L/1R str
 
-        print ('0:{0}, 1:{1}, 2:{2}'.format(int(app.Pin[pin_num_str]), int(app.Pin[pin_dir_str]), int(app.Pin_en[2])))
-
         feed.spin_program(int(app.Pin[pin_num_str]), int(app.Pin[pin_dir_str]), int(app.Pin_en[2]))
 
         return 0

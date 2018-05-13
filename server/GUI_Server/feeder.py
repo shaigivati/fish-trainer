@@ -2,7 +2,7 @@ from __future__ import print_function
 import RPi.GPIO as GPIO ## Import GPIO library
 import time ## Import 'time' library. Allows us to use 'sleep'
 from collections import defaultdict
-
+import motor
 import sys
 
 time_to_sleep=0
@@ -13,6 +13,7 @@ time_to_sleep=0
 class Feeder:
     def __init__(self, pins):
         global time_to_sleep
+        self.motor = motor.Motor
         time_to_sleep=0.25/1000.0 #(0.005) - 5ms
         print('feeder init --', end='')
         GPIO.setmode(GPIO.BCM) ## Use board pin numbering
@@ -52,6 +53,7 @@ class Feeder:
         return 'Done'
 
     def spin_program(self, pin_num, pin_direction, en_pin):
+        self.motor.move_to(90)
         print('pin:{0}, direction:{1}, en:{2}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
         for item in self.program_step.items():
             print('{0}:{1}-{2}'.format(item[0], item[1][0], item[1][1]))
