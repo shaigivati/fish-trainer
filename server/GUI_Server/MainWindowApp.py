@@ -123,16 +123,16 @@ class MainWindowApp(Tkinter.Tk):
 
         feed.spin_program(int(app.Pin[pin_num_str]), int((app.Pin[pin_dir_str]), int(app.Pin_en[2])))
 
-        if False:
+        return 0
         """ Process 'Exit' command """
-            exit_var=True
-            kill_all=True
-            connected=False
-            #self.ConnectLoop()
+        exit_var=True
+        kill_all=True
+        connected=False
+        #self.ConnectLoop()
 
-            self.root.quit()
+        self.root.quit()
 
-            sys.exit(1)
+        sys.exit(1)
 
     def onViewLog(self):
         #ViewLog.ViewLog(self.root, self.log)
