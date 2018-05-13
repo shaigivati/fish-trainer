@@ -59,7 +59,7 @@ class Feeder:
             print('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1], item[1][2]))
 
     def raw_spin(self, pin_num, pin_dir, en_pin, steps, direction, accl):
-        acceleration = accl/1000
+        acceleration = float(accl/1000)
         print ("accl:{0}".format(acceleration))
         GPIO.output(en_pin, True) #pull slp pin to HIGH
         GPIO.output(pin_dir, direction == 'L')    #HIGH for 'L', LOW for else
