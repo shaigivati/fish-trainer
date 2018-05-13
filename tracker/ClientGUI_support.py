@@ -53,16 +53,16 @@ def on1R():
 
 def on2L():
     print('ClientGUI_support.on2L')
-    pin_num_str = '{0}{1}'.format(2, 'L')  # create 1L/1R str
-    pin_dir_str = '{0}{1}{2}'.format(2, 'L', 'D')  # create 1L/1R str
-
-    feed.spin_program(int(app.Pin[pin_num_str]), int(app.Pin[pin_dir_str]), int(app.Pin_en[2]))
-
+    fish_client = FishClient()
+    fish_client.send('2L', 0)
+    fish_client.kill()
     sys.stdout.flush()
 
 def on2R():
-
     print('ClientGUI_support.on2R')
+    fish_client = FishClient()
+    fish_client.send('2R', 0)
+    fish_client.kill()
     sys.stdout.flush()
 
 def onExit():
