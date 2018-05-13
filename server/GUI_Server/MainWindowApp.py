@@ -268,7 +268,7 @@ def handle_client_connection(client_socket):
             app.onTxtUpdate('{0}.'.format(spin_res), False)
         if recv_id == "2":
             pin_num_str = '{0}{1}'.format(recv_id, (recv_side[0:1]).upper())
-            pin_dir_str = '{0}{1}{2}'.format(2, 'L', 'D')  # create 1L/1R str
+            pin_dir_str = '{0}{1}'.format(pin_num_str, 'D')  # create 1L/1R str
             print ("recv_id={0}, side:{1}".format(pin_num_str[0], pin_num_str[1]))
             feed.spin_program(int(app.Pin[pin_num_str]), int(app.Pin[pin_dir_str]), int(app.Pin_en[2]))
 
