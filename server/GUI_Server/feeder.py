@@ -32,7 +32,7 @@ class Feeder:
             print(i)
 
         for item in self.program_step.items():
-            print ('{0}:{1}'.format(item[0], self.program_step.get(1, 1)[0]))
+            print ('{0}:{1}'.format(item[0], item[1][0]))
 
         print ('end')
         return 'ok'
