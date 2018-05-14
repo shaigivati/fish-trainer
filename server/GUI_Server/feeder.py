@@ -64,7 +64,7 @@ class Feeder:
             if item[1][0] == 'wait':
                 time.sleep(item[1][1])
             else:
-                direction = (item[1][0])[0:1]
+                direction = ((item[1][0])[0:1]).upper()
                 print(direction)
         return 'Done'
 
