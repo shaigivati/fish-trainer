@@ -52,10 +52,12 @@ class Feeder:
         print ("Done",end='') ## When loop is complete, print "Done"
         return 'Done'
 
-    def spin_program(self, pin_num, pin_direction, en_pin):
+    def spin_program(self, pin_num, pin_direction, en_pin, steps=0):
 
         print('pin:{0}, direction:{1}, en:{2}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
-        self.raw_spin(pin_num, pin_direction, en_pin, 360*self.one_deg, 'R', 0.05)
+        steps_to_do = 360 * self.one_deg
+        if not steps == 0: steps_to_do = steps
+        self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, 'R', 0.05)
         for item in self.program_step.items():
             print('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1], item[1][2]))
         return 'Done'
