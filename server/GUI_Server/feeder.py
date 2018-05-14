@@ -67,7 +67,7 @@ class Feeder:
                     time.sleep(item[1][1])
                 else:
                     direction = ((item[1][0])[0:1]).upper() #'L' or 'R'
-                    steps_to_do = item[1][1]
+                    steps_to_do = item[1][1] * 360
                     self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, direction, item[1][2])
 
         return 'Done'
