@@ -672,6 +672,7 @@ class Fish_traning_GUI___Client:
 
         self.txtStepNum.insert('0', 320)
 
+
         #print Args
 
         self.txtLogFolder.insert('0.0', self.LogFolderName)

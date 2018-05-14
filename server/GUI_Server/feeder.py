@@ -57,6 +57,7 @@ class Feeder:
         self.raw_spin(pin_num, pin_direction, en_pin, 20000, 'R', 0.05)
         for item in self.program_step.items():
             print('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1], item[1][2]))
+        return 'Done'
 
     def raw_spin(self, pin_num, pin_dir, en_pin, steps, direction, accl):
         acceleration = float(accl/1000)
@@ -73,7 +74,7 @@ class Feeder:
         GPIO.output(en_pin, False) #pull slp pin to HIGH
         GPIO.output(pin_dir, False)
         print("Done")
-        return "Done"
+        return 'Done'
 
     def destruct():
         GPIO.cleanup()
