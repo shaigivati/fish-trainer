@@ -62,8 +62,8 @@ class MainWindowApp(Tkinter.Tk):
         self.Pin['2RD'] = ConfigSectionMap("Tank")['tank 2 right direction pin']
 
         feed = feeder.Feeder({self.Pin_en[1], self.Pin['1L'], self.Pin['1R'], self.Pin_en[2], self.Pin['2L'], self.Pin['2R'], self.Pin['2LD'], self.Pin['2RD']})
-        add_step = feed.add_program_step(1, 'right', 90)
-        add_step = feed.add_program_step(2, 'left', 180)
+        add_step = feed.add_program_step(1, 'right', 90, 1)
+        add_step = feed.add_program_step(2, 'left', 180, 1)
         add_step = feed.add_program_step(3, 'wait', 1)
         add_step = feed.add_program_step(4, 'right', 90)
 
