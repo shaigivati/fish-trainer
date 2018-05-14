@@ -4,10 +4,10 @@ import track_fish
 from tracker.tcp_client import FishClient
 from tracker.fish_tank import Tank
 from tools import fishlog
+from time_counter import TimeCounter
 
 import argparse
 import os
-
 
 # TODO:
 # - create seperate log file for each fish
@@ -18,10 +18,9 @@ total_feed = []
 class Controller:
     def __init__(self, cb_obj=None, name=['test1', 'test2']):
         global total_feed
-        global time_counter
+        global time_counter, str_time_start, str_time, old_str_time
 
-        time_counter = 0
-
+        self.time_count = TimeCounter()
         self.cb_obj = cb_obj
 
         width = track_fish.init_tracking()
@@ -49,13 +48,18 @@ class Controller:
     def __del__(self):  #Destroy
         print ('Controller closed')
 
+    def time(self):
+        time_str = self.time_count.get_time_diff()
+        if time_str:
+            #print (time_str)
+            self.cb_obj.update_time(time_str)
+
     def do(self, x, y, fish_id):
         global total_feed
 
         self.logger[fish_id].add_tracked_point(x, y)
         feed_side = self.tank[fish_id].decide(x)
 
-        #self.time_count()
 
         if feed_side is not None:
             total_feed[fish_id] += 1
@@ -70,9 +74,6 @@ class Controller:
             #fish_client.send(fish_id, feed_side)
             self.logger[fish_id].add_feed(feed_side)
 
-    def time_count(self):
-        global time_counter
-        print(time_counter)
 
 
 # ap = argparse.ArgumentParser()

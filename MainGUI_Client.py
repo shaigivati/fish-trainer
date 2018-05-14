@@ -646,7 +646,7 @@ class Fish_traning_GUI___Client:
         self.Label14.configure(text='''Time runing:''')
 
         self.Label15 = Label(self.frmLog)
-        self.Label15.place(relx=0.24, rely=0.03, height=24, width=121)
+        self.Label15.place(relx=0.24, rely=0.03, height=24, width=180)
         self.Label15.configure(activebackground="#f9f9f9")
         self.Label15.configure(activeforeground="black")
         self.Label15.configure(background="#d9d9d9")
@@ -691,6 +691,8 @@ class Fish_traning_GUI___Client:
         self.txtMainLog.insert(END, str_temp)
         self.txtMainLog.see(END)
 
+    def update_time(self, time_str):
+        self.Label15.configure(text=time_str)
 
     def __call__(self):
         print "RUN Command"
