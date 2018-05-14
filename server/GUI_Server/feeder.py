@@ -23,7 +23,7 @@ class Feeder:
             if not int(pin) == 0:
                 GPIO.setup(int(pin), GPIO.OUT)
 
-    def add_program_step(self, step_no, step_action, step_value, step_accl=0):
+    def add_program_step(self, step_no, step_action, step_value, step_accl=0.25):
         self.program_step[step_no].append(step_action)
         self.program_step[step_no].append(step_value)
         self.program_step[step_no].append(step_accl)
@@ -68,7 +68,7 @@ class Feeder:
                 else:
                     direction = ((item[1][0])[0:1]).upper() #'L' or 'R'
                     steps_to_do = item[1][1]
-                    self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, direction, 0.25)
+                    self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, direction, item[1][2])
 
         return 'Done'
 
