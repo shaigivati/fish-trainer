@@ -66,17 +66,17 @@ class MainWindowApp(Tkinter.Tk):
         add_step = feed.add_program_step(2, 'wait', 0.8)
         add_step = feed.add_program_step(3, 'right', 20, 0.5)
         add_step = feed.add_program_step(4, 'wait', 0.4)
-        add_step = feed.add_program_step(5, 'left', 40, 0.5)
+        add_step = feed.add_program_step(5, 'left', 30, 0.5)
         add_step = feed.add_program_step(6, 'wait', 0.4)
-        add_step = feed.add_program_step(7, 'right', 40, 0.5)
+        add_step = feed.add_program_step(7, 'right', 30, 0.5)
 
         add_step = feed.add_program_step(8, 'wait', 1.4)
-        add_step = feed.add_program_step(9, 'left', 70)
-        add_step = feed.add_program_step(10, 'wait', 1)
+        add_step = feed.add_program_step(9, 'left', 90 + 20)
+        add_step = feed.add_program_step(10, 'wait', 0.5)
         add_step = feed.add_program_step(11, 'right', 20)
-        add_step = feed.add_program_step(12, 'wait', 0.4)
+        add_step = feed.add_program_step(12, 'wait', 0.2)
         add_step = feed.add_program_step(13, 'left', 20)
-        add_step = feed.add_program_step(14, 'wait', 1)
+        add_step = feed.add_program_step(14, 'wait', 0.6)
         add_step = feed.add_program_step(15, 'right', 180+90)
 
         #self.Pin={'1L':1 , '1R':2 , '2L':3 , '2R':4}
