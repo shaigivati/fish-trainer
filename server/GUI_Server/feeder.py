@@ -12,7 +12,7 @@ time_to_sleep=0
 class Feeder:
     def __init__(self, pins):
         global time_to_sleep
-        self.one_deg = 1600/360
+        self.one_deg = 1600.0/360.0
         time_to_sleep=0.25/1000.0 #(0.005) - 5ms
         print('feeder init --', end='')
         GPIO.setmode(GPIO.BCM) ## Use board pin numbering
@@ -55,7 +55,7 @@ class Feeder:
     def spin_program(self, pin_num, pin_direction, en_pin, steps=0):
 
         print('pin:{0}, direction:{1}, en:{2}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
-        steps_to_do = 360 * self.one_deg
+        steps_to_do = int(360.0 * self.one_deg)
         print (steps_to_do)
         if not steps == 0: steps_to_do = steps
         self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, 'R', 0.25)
