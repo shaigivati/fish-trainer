@@ -54,13 +54,18 @@ class Feeder:
 
     def spin_program(self, pin_num, pin_direction, en_pin, steps=0):
 
-        print('pin:{0}, direction:{1}, en:{2}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
+        #print('pin:{0}, direction:{1}, en:{2}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
         steps_to_do = int(360.0 * self.one_deg)
-        print (steps_to_do)
         if not steps == 0: steps_to_do = steps
-        self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, 'R', 0.25)
+
+        #self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, 'R', 0.25)
         for item in self.program_step.items():
             print('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1], item[1][2]))
+            if item[1][0] == 'wait':
+                time.sleep(item[1][1])
+            else:
+                direction = (item[1][0])[0:1]
+                print(direction)
         return 'Done'
 
     def raw_spin(self, pin_num, pin_dir, en_pin, steps, direction, accl):
