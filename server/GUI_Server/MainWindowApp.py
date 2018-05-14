@@ -287,13 +287,13 @@ def handle_client_connection(client_socket):
         pin_dir_str = '{0}{1}'.format(pin_num_str, 'D')  # create 1L/1R str
         # print('-->{}'.format(app.Pin[pin_num_str]))
         spin_res = feed.spin_program(int(app.Pin[pin_num_str]), int(app.Pin[pin_dir_str]), int(app.Pin_en[2]))
-        app.onTxtUpdate('{0}.'.format(spin_res), False)
+        app.onTxtUpdate('{0}.'.format(spin_res), True)
     if recv_id == "test_2R":
         pin_num_str = '2R'
         pin_dir_str = '{0}{1}'.format(pin_num_str, 'D')  # create 1L/1R str
         # print('-->{}'.format(app.Pin[pin_num_str]))
         spin_res = feed.spin_program(int(app.Pin[pin_num_str]), int(app.Pin[pin_dir_str]), int(app.Pin_en[2]))
-        app.onTxtUpdate('{0}.'.format(spin_res), False)
+        app.onTxtUpdate('{0}.'.format(spin_res), True)
 
 def while_true_func(server):
     global exit_var, connected, first_accp_conn, line_counter, line_dir
