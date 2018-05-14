@@ -62,13 +62,22 @@ class MainWindowApp(Tkinter.Tk):
         self.Pin['2RD'] = ConfigSectionMap("Tank")['tank 2 right direction pin']
 
         feed = feeder.Feeder({self.Pin_en[1], self.Pin['1L'], self.Pin['1R'], self.Pin_en[2], self.Pin['2L'], self.Pin['2R'], self.Pin['2LD'], self.Pin['2RD']})
-        add_step = feed.add_program_step(1, 'right', 360, 0.2)
-        add_step = feed.add_program_step(3, 'wait', 0.5)
-        add_step = feed.add_program_step(2, 'left', 180, 0.5)
-        add_step = feed.add_program_step(3, 'wait', 1)
-        add_step = feed.add_program_step(4, 'right', 90)
-        add_step = feed.add_program_step(5, 'wait', 2)
-        add_step = feed.add_program_step(6, 'right', 90)
+        add_step = feed.add_program_step(1, 'right', (360+180), 0.2)
+        add_step = feed.add_program_step(2, 'wait', 0.8)
+        add_step = feed.add_program_step(3, 'left', 40, 0.5)
+        add_step = feed.add_program_step(4, 'wait', 1)
+        add_step = feed.add_program_step(5, 'right', 40, 0.5)
+        add_step = feed.add_program_step(6, 'wait', 1)
+        add_step = feed.add_program_step(7, 'left', 40, 0.5)
+
+        add_step = feed.add_program_step(8, 'wait', 2)
+        add_step = feed.add_program_step(9, 'left', 50)
+        add_step = feed.add_program_step(10, 'wait', 1)
+        add_step = feed.add_program_step(11, 'right', 20)
+        add_step = feed.add_program_step(12, 'wait', 1)
+        add_step = feed.add_program_step(13, 'left', 20)
+        add_step = feed.add_program_step(14, 'wait', 2)
+        add_step = feed.add_program_step(15, 'right', 180+90)
 
         #self.Pin={'1L':1 , '1R':2 , '2L':3 , '2R':4}
         #print ('[1,left]:{}, [1,right]:{}, [2,left]:{}, [2,right]:{}'.format(self.Pin['1L'], self.Pin['1R'], self.Pin['2L'], self.Pin['2R']))
