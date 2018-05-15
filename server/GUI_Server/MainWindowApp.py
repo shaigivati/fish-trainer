@@ -62,7 +62,7 @@ class MainWindowApp(Tkinter.Tk):
         self.Pin['2RD'] = ConfigSectionMap("Tank")['tank 2 right direction pin']
 
         feed = feeder.Feeder({self.Pin_en[1], self.Pin['1L'], self.Pin['1R'], self.Pin_en[2], self.Pin['2L'], self.Pin['2R'], self.Pin['2LD'], self.Pin['2RD']})
-        add_step = feed.add_program_step(9, 'wait', 1)
+        add_step = feed.add_program_step(9, 'wait', 3)
         add_step = feed.add_program_step(10, 'left', (360+180), 0.1)
         add_step = feed.add_program_step(11, 'wait', 0.2)
         add_step = feed.add_program_step(12, 'right', 60 , 0.3)
@@ -221,7 +221,7 @@ class MainWindowApp(Tkinter.Tk):
                 self.txt_del_last_char()
             else:
                 if new_line == True:
-                    self.txt.insert(Tkinter.END, '{}{}'.format(str_to_add, "\n"))
+                    self.txt.insert(Tkinter.END, '{}{}'.format("\n",str_to_add))
                 else:
                     self.txt.insert(Tkinter.END, '{}'.format(str_to_add))
         self.txt.see(Tkinter.END)
