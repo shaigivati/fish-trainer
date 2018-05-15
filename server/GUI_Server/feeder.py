@@ -80,7 +80,7 @@ class Feeder:
         print ('steps:{0}, 5%:{1}'.format(steps, int(0.05*steps)))
         for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
             print (self.accl_calc(i, steps, 100))
-            if i/10 == 0: print (".", end='')
+            #if i/10 == 0: print (".", end='')
             GPIO.output(pin_num, True)## Switch on pin
             time.sleep(acceleration/2)## Wait
             GPIO.output(pin_num, False)## Switch off pin
@@ -97,9 +97,9 @@ class Feeder:
             if i == steps: i -= 1
 
             if i < steps/2: #accelrate
-                accl = accl_target*(steps/i)/100.0
+                accl = float(accl_target*(steps/i)/accl_target)
             else:   #decelrate
-                accl = accl_target*(steps/(steps-i))/100.0
+                accl = accl_target*(steps/(steps-i))/accl_target
         except ZeroDivisionError as error:
             print ("Error: ZeroDivisionError")
             accl=accl_target
