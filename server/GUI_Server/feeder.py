@@ -92,10 +92,17 @@ class Feeder:
         return 'Done'
 
     def accl_calc(self, i, steps, accl_target):
-        if i < steps/2: #accelrate
-            accl = accl_target*(steps/i)/100.0
-        else:   #decelrate
-            accl = accl_target*(steps/(steps-i))/100.0
+        try:
+            if i == 0: i = 1
+            if i == steps: i -= 1
+
+            if i < steps/2: #accelrate
+                accl = accl_target*(steps/i)/100.0
+            else:   #decelrate
+                accl = accl_target*(steps/(steps-i))/100.0
+        except ZeroDivisionError as error:
+            print ("Error: ZeroDivisionError")
+            accl=accl_target
         return accl
 
     def destruct():
