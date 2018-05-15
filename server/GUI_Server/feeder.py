@@ -97,9 +97,9 @@ class Feeder:
             if i == steps: i -= 1
 
             if i < steps/2: #accelrate
-                accl = float(accl_target*(steps/i)/accl_target)
+                accl = float(steps*float(accl_target/i)/steps)
             else:   #decelrate
-                accl = accl_target*(steps/(steps-i))/accl_target
+                #accl = accl_target*(steps/(steps-i))/accl_target
         except ZeroDivisionError as error:
             print ("Error: ZeroDivisionError")
             accl=accl_target
