@@ -79,7 +79,7 @@ class Feeder:
         GPIO.output(pin_dir, direction == 'L')    #HIGH for 'L', LOW for else
         print ('steps:{0}, 5%:{1}'.format(steps, int(0.05*steps)))
         for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
-            print (accl_calc(i, steps, 100))
+            print (self.accl_calc(i, steps, 100))
             if i/10 == 0: print (".", end='')
             GPIO.output(pin_num, True)## Switch on pin
             time.sleep(acceleration/2)## Wait
