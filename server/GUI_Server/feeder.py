@@ -77,7 +77,7 @@ class Feeder:
         print ("accl:{0}".format(acceleration))
         GPIO.output(en_pin, True) #pull slp pin to HIGH
         GPIO.output(pin_dir, direction == 'L')    #HIGH for 'L', LOW for else
-        print (range(steps))
+        print ('steps:{0}, 5%:{1}'.format(steps, int(0.05*steps)))
         for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
             if i/10 == 0: print (".", end='')
             GPIO.output(pin_num, True)## Switch on pin
