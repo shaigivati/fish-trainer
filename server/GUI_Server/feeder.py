@@ -2,9 +2,10 @@ from __future__ import print_function
 import RPi.GPIO as GPIO ## Import GPIO library
 import time ## Import 'time' library. Allows us to use 'sleep'
 from collections import defaultdict
-
+import math
 
 time_to_sleep=0
+[equ_a, equ_b, equ_c] = (1/25, -2/25, 1)    #y(x) = a*(x-x0)^2 + b(x-x0) + c
 #pin_enbl = 36
 #pin_left  = 38 #change to 15
 #pin_right = 37 #
@@ -96,13 +97,17 @@ class Feeder:
         _steps = float(steps)
         _accl_target = float(accl_target)
         try:
-            if i == 0: i = 1
-            if i == steps: i -= 1
+            x = i
+            x0 = steps / 2
+            y = equ_a * math.pow((x-x0),2) + equ_b * (x-x0) + equ_c
+            accl = y
+            #if i == 0: i = 1
+            #if i == steps: i -= 1
 
-            if i < steps/2: #accelrate
-                accl = (_steps*(_accl_target/_i)/_steps)
-            else:   #decelrate
-                accl = (_steps * (_accl_target / (_steps - _i)) / _steps)
+            #if i < steps/2: #accelrate
+            #    accl = (_steps*(_accl_target/_i)/_steps)
+            #else:   #decelrate
+            #    accl = (_steps * (_accl_target / (_steps - _i)) / _steps)
                 #accl = accl_target*(steps/(steps-i))/accl_target
         except ZeroDivisionError as error:
             print ("Error: ZeroDivisionError")
