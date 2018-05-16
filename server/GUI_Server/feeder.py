@@ -79,17 +79,16 @@ class Feeder:
         GPIO.output(en_pin, True) #pull slp pin to HIGH
         GPIO.output(pin_dir, direction == 'L')    #HIGH for 'L', LOW for else
         print ('steps:{0}, 5%:{1}'.format(steps, int(0.05*steps)))
-        if False:
-            for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
-                print ('{0},{1:.2f}\t\t'.format(i, self.accl_calc(i, steps, 100)), end='')
-                #if i/10 == 0: print (".", end='')
-                GPIO.output(pin_num, True)## Switch on pin
-                time.sleep(acceleration/2)## Wait
-                GPIO.output(pin_num, False)## Switch off pin
-                time.sleep(acceleration/2)## Wait
-            print ("")
-            GPIO.output(en_pin, False) #pull slp pin to HIGH
-            GPIO.output(pin_dir, False)
+        for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
+            print ('{0},{1:.2f}\t\t'.format(i, self.accl_calc(i, steps, 100)), end='')
+            #if i/10 == 0: print (".", end='')
+            #GPIO.output(pin_num, True)## Switch on pin
+            #time.sleep(acceleration/2)## Wait
+            #GPIO.output(pin_num, False)## Switch off pin
+            #time.sleep(acceleration/2)## Wait
+        print ("")
+        GPIO.output(en_pin, False) #pull slp pin to HIGH
+        GPIO.output(pin_dir, False)
         print("Done")
         return 'Done'
 
