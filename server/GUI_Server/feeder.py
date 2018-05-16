@@ -99,7 +99,7 @@ class Feeder:
         try:
             x = i
             x0 = steps / 2
-            equ_a = steps/4
+            equ_a = 1/(steps/4)
             equ_b = -2 * equ_a
             y = equ_a * math.pow((x-x0),2) + equ_b * (x-x0) + equ_c
             accl = y
