@@ -73,14 +73,14 @@ class Feeder:
 
         return 'Done'
 
-    def raw_spin(self, pin_num, pin_dir, en_pin, steps, direction, accl):
+    def raw_spin(self, pin_num, pin_dir, en_pin, steps, direction, velocity, accl):
         acceleration = float(accl/1000)
         print ("accl:{0}".format(acceleration))
         GPIO.output(en_pin, True) #pull slp pin to HIGH
         GPIO.output(pin_dir, direction == 'L')    #HIGH for 'L', LOW for else
         print ('steps:{0}, 5%:{1}'.format(steps, int(0.05*steps)))
         for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
-            print ('{0},{1:.2f}\t\t'.format(i, self.accl_calc(i, steps, 100)), end='')
+            print ('{0},{1:.2f}\t\t'.format(i, self.velocity_calc(velocity, steps, accl, i)), end='')
             #if i/10 == 0: print (".", end='')
             #GPIO.output(pin_num, True)## Switch on pin
             #time.sleep(acceleration/2)## Wait
@@ -92,28 +92,28 @@ class Feeder:
         print("Done")
         return 'Done'
 
-    def accl_calc(self, i, steps, accl_target):
-        _i = float(i)
-        _steps = float(steps)
-        _accl_target = float(accl_target)
-        try:
-            x = i
-            x0 = steps / 2.0
-            equ_a = 1.0/(steps/4.0)
-            equ_b = -2.0 * equ_a
-            y = equ_a * math.pow((x-x0),4) + equ_b * (x-x0) + equ_c
-            accl = 100.0 * (y / steps)
-            #if i == 0: i = 1
-            #if i == steps: i -= 1
+    def velocity_calc(self, max_velocity, total_steps, percentage, c_step):
+        if (c_step <= total_steps*(percentage/100)):
+            accl_pr = self.accl('up', c_step, percentage, total_steps)
+            velocity = (accl_pr/100)*max_velocity
+        elif (c_step >= total_steps - (total_steps*(percentage/100))):
+            accl_pr = self.accl('down', c_step, percentage, total_steps)
+            velocity = (accl_pr/100)*max_velocity
+        else:
+            velocity = max_velocity
+        return velocity
 
-            #if i < steps/2: #accelrate
-            #    accl = (_steps*(_accl_target/_i)/_steps)
-            #else:   #decelrate
-            #    accl = (_steps * (_accl_target / (_steps - _i)) / _steps)
-                #accl = accl_target*(steps/(steps-i))/accl_target
+    def accl(self, direction, i, percentage, total_steps):
+        func=0
+        try:
+            if direction == 'up':
+                func = math.exp((10 * i) / (2 * percentage))
+            if direction == 'down':
+                func = math.exp((10 * (total_steps - i) ) / (2 * percentage))
+            accl = func
         except ZeroDivisionError as error:
             print ("Error: ZeroDivisionError")
-            accl=accl_target
+            accl = func
         return accl
 
     def destruct():
