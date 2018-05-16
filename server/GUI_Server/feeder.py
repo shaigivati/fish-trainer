@@ -60,7 +60,7 @@ class Feeder:
         steps_to_do = int(360.0 * self.one_deg)
         if not steps == 0:
             steps_to_do = steps
-            self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, 'R', 10, 0.25)
+            self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, 'R', 100, 0.15)
         else:
             #self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, 'R', 0.25)
             for item in self.program_step.items():
