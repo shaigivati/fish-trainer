@@ -78,9 +78,10 @@ class Feeder:
         print ("accl:{0}".format(accl))
         GPIO.output(en_pin, True) #pull slp pin to HIGH
         GPIO.output(pin_dir, direction == 'L')    #HIGH for 'L', LOW for else
-        print ('steps:{0}, {1}%:{2}'.format(steps, accl, int((accl/100)*steps)))
+        print ('steps:{0}, {1}%:{2}'.format(steps, accl, int((accl/100.0)*steps)))
         for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
-            print ('{0},{1:.2f}\t\t'.format(i, self.velocity_calc(velocity, steps, accl, i)), end='')
+            velocity_val = self.velocity_calc(velocity, steps, accl, i)
+            print ('{0},{1:.2f}-{2:.2f}\t\t'.format(i, velocity_val, 1.0/velocity_val), end='')
             #if i/10 == 0: print (".", end='')
             #GPIO.output(pin_num, True)## Switch on pin
             #time.sleep(acceleration/2)## Wait
