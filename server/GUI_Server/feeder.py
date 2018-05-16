@@ -109,10 +109,11 @@ class Feeder:
         func=0
         try:
             if direction == 'up':
-                func = math.exp((10 * i) / (2 * percentage))
+                func = math.exp((10 * 100 * i) / (2 * percentage * total_steps))
             if direction == 'down':
-                func = math.exp((10 * (total_steps - i) ) / (2 * percentage))
+                func = math.exp((10 * 100 * (total_steps - i) ) / (2 * percentage * total_steps))
             accl = func
+            if accl > 100: accl = 100
         except ZeroDivisionError as error:
             print ("Error: ZeroDivisionError")
             accl = func
