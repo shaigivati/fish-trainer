@@ -66,7 +66,7 @@ class Feeder:
             for item in self.program_step.items():
                 print('{0}:{1}-{2} ({3},{4})'.format(item[0], item[1][0], item[1][1], item[1][2], item[1][3]))
                 if item[1][0] == 'wait':
-                    time.sleep(item[1][1])
+                    time.sleep(item[1][1]/10)
                 else:
                     direction = ((item[1][0])[0:1]).upper() #'L' or 'R'
                     steps_to_do = int(item[1][1] * self.one_deg)
