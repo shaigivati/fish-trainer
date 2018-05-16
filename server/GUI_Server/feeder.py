@@ -24,7 +24,7 @@ class Feeder:
             if not int(pin) == 0:
                 GPIO.setup(int(pin), GPIO.OUT)
 
-    def add_program_step(self, step_no, step_action, step_value, step_velocity=10, step_accl=20):
+    def add_program_step(self, step_no, step_action, step_value, step_velocity=40, step_accl=10):
         self.program_step[step_no].append(step_action)
         self.program_step[step_no].append(step_value)
         self.program_step[step_no].append(step_velocity)
