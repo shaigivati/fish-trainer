@@ -98,9 +98,9 @@ class Feeder:
         _accl_target = float(accl_target)
         try:
             x = i
-            x0 = steps / 2
-            equ_a = 1/(steps/4)
-            equ_b = -2 * equ_a
+            x0 = steps / 2.0
+            equ_a = 1.0/(steps/4.0)
+            equ_b = -2.0 * equ_a
             y = equ_a * math.pow((x-x0),2) + equ_b * (x-x0) + equ_c
             accl = y
             #if i == 0: i = 1
