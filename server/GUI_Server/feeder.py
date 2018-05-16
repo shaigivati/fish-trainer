@@ -93,14 +93,14 @@ class Feeder:
         return 'Done'
 
     def velocity_calc(self, max_velocity, total_steps, percentage, c_step):
-        if c_step == 1 or c_step == 99:
-            print(total_steps*(percentage/100.0))
-        if (c_step <= total_steps*(percentage/100)):
+        action_range = total_steps*(percentage/100.0)
+
+        if (c_step <= action_range):
             accl_pr = self.accl('up', c_step, percentage, total_steps)
-            velocity = (accl_pr/100)*max_velocity
-        elif (c_step >= total_steps - (total_steps*(percentage/100))):
+            velocity = (accl_pr/100.0)*max_velocity
+        elif (c_step >= total_steps - action_range):
             accl_pr = self.accl('down', c_step, percentage, total_steps)
-            velocity = (accl_pr/100)*max_velocity
+            velocity = (accl_pr/100.0)*max_velocity
         else:
             velocity = max_velocity
         return velocity
