@@ -24,14 +24,15 @@ class Feeder:
             if not int(pin) == 0:
                 GPIO.setup(int(pin), GPIO.OUT)
 
-    def add_program_step(self, step_no, step_action, step_value, step_accl=0.25):
+    def add_program_step(self, step_no, step_action, step_value, step_velocity=10, step_accl=20):
         self.program_step[step_no].append(step_action)
         self.program_step[step_no].append(step_value)
+        self.program_step[step_no].append(step_velocity)
         self.program_step[step_no].append(step_accl)
 
         print ("items:")
         for item in self.program_step.items():
-            print ('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1], item[1][2]))
+            print ('{0}:{1}-{2} ({3},{4})'.format(item[0], item[1][0], item[1][1], item[1][2], item[1][3]))
 
         print ('end')
         return 'ok'
@@ -59,17 +60,17 @@ class Feeder:
         steps_to_do = int(360.0 * self.one_deg)
         if not steps == 0:
             steps_to_do = steps
-            self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, 'R', 0.25)
+            self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, 'R', 10, 0.25)
         else:
             #self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, 'R', 0.25)
             for item in self.program_step.items():
-                print('{0}:{1}-{2} ({3})'.format(item[0], item[1][0], item[1][1], item[1][2]))
+                print('{0}:{1}-{2} ({3},{4})'.format(item[0], item[1][0], item[1][1], item[1][2], item[1][3]))
                 if item[1][0] == 'wait':
                     time.sleep(item[1][1])
                 else:
                     direction = ((item[1][0])[0:1]).upper() #'L' or 'R'
                     steps_to_do = int(item[1][1] * self.one_deg)
-                    self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, direction, item[1][2])
+                    self.raw_spin(pin_num, pin_direction, en_pin, steps_to_do, direction, item[1][2], item[1][3])
 
         return 'Done'
 
