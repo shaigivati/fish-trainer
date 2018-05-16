@@ -63,7 +63,7 @@ class MainWindowApp(Tkinter.Tk):
 
         feed = feeder.Feeder({self.Pin_en[1], self.Pin['1L'], self.Pin['1R'], self.Pin_en[2], self.Pin['2L'], self.Pin['2R'], self.Pin['2LD'], self.Pin['2RD']})
         add_step = feed.add_program_step(9, 'wait', 3)
-        add_step = feed.add_program_step(10, 'left', (2*360+180), 400, 15)
+        add_step = feed.add_program_step(10, 'left', (2*360+180-20), 400, 15)
         add_step = feed.add_program_step(11, 'wait', 10, 0.2)
         add_step = feed.add_program_step(12, 'right', 60, 100, 2)
         add_step = feed.add_program_step(13, 'wait', 10, 0.4)
@@ -73,7 +73,7 @@ class MainWindowApp(Tkinter.Tk):
 
         #add_step = feed.add_program_step(1, 'left', 3200, 200, 5)
         add_step = feed.add_program_step(1, 'wait', 0.8)
-        add_step = feed.add_program_step(2, 'left', 90 + 60, 200, 5)
+        add_step = feed.add_program_step(2, 'left', 90 + 60 + 20, 200, 5)
         add_step = feed.add_program_step(3, 'wait', 0.5)
         add_step = feed.add_program_step(4, 'right', 20, 100, 4)
         add_step = feed.add_program_step(5, 'wait', 0.2)
