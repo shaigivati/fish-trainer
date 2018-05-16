@@ -75,11 +75,10 @@ class Feeder:
         return 'Done'
 
     def raw_spin(self, pin_num, pin_dir, en_pin, steps, direction, velocity, accl):
-        acceleration = float(accl/1000)
-        print ("accl:{0}".format(acceleration))
+        print ("accl:{0}".format(accl))
         GPIO.output(en_pin, True) #pull slp pin to HIGH
         GPIO.output(pin_dir, direction == 'L')    #HIGH for 'L', LOW for else
-        print ('steps:{0}, 5%:{1}'.format(steps, int(0.05*steps)))
+        print ('steps:{0}, {1}%:{2}'.format(steps, accl, int((accl/100)*steps)))
         for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
             print ('{0},{1:.2f}\t\t'.format(i, self.velocity_calc(velocity, steps, accl, i)), end='')
             #if i/10 == 0: print (".", end='')
@@ -94,6 +93,8 @@ class Feeder:
         return 'Done'
 
     def velocity_calc(self, max_velocity, total_steps, percentage, c_step):
+        if c_step == 1 or c_step == 99:
+            print(total_steps*(percentage/100))
         if (c_step <= total_steps*(percentage/100)):
             accl_pr = self.accl('up', c_step, percentage, total_steps)
             velocity = (accl_pr/100)*max_velocity
