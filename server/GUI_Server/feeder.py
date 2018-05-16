@@ -94,7 +94,7 @@ class Feeder:
 
     def velocity_calc(self, max_velocity, total_steps, percentage, c_step):
         if c_step == 1 or c_step == 99:
-            print(total_steps*(percentage/100))
+            print(total_steps*(percentage/100.0))
         if (c_step <= total_steps*(percentage/100)):
             accl_pr = self.accl('up', c_step, percentage, total_steps)
             velocity = (accl_pr/100)*max_velocity
