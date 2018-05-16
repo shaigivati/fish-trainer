@@ -79,16 +79,17 @@ class Feeder:
         GPIO.output(en_pin, True) #pull slp pin to HIGH
         GPIO.output(pin_dir, direction == 'L')    #HIGH for 'L', LOW for else
         print ('steps:{0}, 5%:{1}'.format(steps, int(0.05*steps)))
-        for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
-            print ('{0},{1:.2f}\t\t'.format(i, self.accl_calc(i, steps, 100)), end='')
-            #if i/10 == 0: print (".", end='')
-            GPIO.output(pin_num, True)## Switch on pin
-            time.sleep(acceleration/2)## Wait
-            GPIO.output(pin_num, False)## Switch off pin
-            time.sleep(acceleration/2)## Wait
-        print ("")
-        GPIO.output(en_pin, False) #pull slp pin to HIGH
-        GPIO.output(pin_dir, False)
+        if False:
+            for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
+                print ('{0},{1:.2f}\t\t'.format(i, self.accl_calc(i, steps, 100)), end='')
+                #if i/10 == 0: print (".", end='')
+                GPIO.output(pin_num, True)## Switch on pin
+                time.sleep(acceleration/2)## Wait
+                GPIO.output(pin_num, False)## Switch off pin
+                time.sleep(acceleration/2)## Wait
+            print ("")
+            GPIO.output(en_pin, False) #pull slp pin to HIGH
+            GPIO.output(pin_dir, False)
         print("Done")
         return 'Done'
 
@@ -101,7 +102,7 @@ class Feeder:
             x0 = steps / 2.0
             equ_a = 1.0/(steps/4.0)
             equ_b = -2.0 * equ_a
-            y = equ_a * math.pow((x-x0),2) + equ_b * (x-x0) + equ_c
+            y = equ_a * math.pow((x-x0),4) + equ_b * (x-x0) + equ_c
             accl = 100.0 * (y / steps)
             #if i == 0: i = 1
             #if i == steps: i -= 1
