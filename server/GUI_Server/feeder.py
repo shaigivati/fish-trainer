@@ -83,10 +83,10 @@ class Feeder:
             velocity_val = self.velocity_calc(velocity, steps, accl, i)
             print ('{0},{1:.2f}-{2:.5f}\t\t'.format(i, velocity_val, 1.0/(100*velocity_val)), end='')
             #if i/10 == 0: print (".", end='')
-            #GPIO.output(pin_num, True)## Switch on pin
-            #time.sleep(acceleration/2)## Wait
-            #GPIO.output(pin_num, False)## Switch off pin
-            #time.sleep(acceleration/2)## Wait
+            GPIO.output(pin_num, True)## Switch on pin
+            time.sleep(velocity_val/2)## Wait
+            GPIO.output(pin_num, False)## Switch off pin
+            time.sleep(velocity_val/2)## Wait
         print ("")
         GPIO.output(en_pin, False) #pull slp pin to HIGH
         GPIO.output(pin_dir, False)
