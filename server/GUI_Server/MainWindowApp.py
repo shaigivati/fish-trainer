@@ -65,7 +65,7 @@ class MainWindowApp(Tkinter.Tk):
 
         add_step = feed.add_program_step(1, 'left', 360*4, 1000, 10)
         add_step = feed.add_program_step(2, 'wait', 20)
-        add_step = feed.add_program_step(3, 'left', 360, 40, 5)
+        add_step = feed.add_program_step(3, 'left', 360, 4, 5)
 
         #add_step = feed.add_program_step(9, 'wait', 3)
         #add_step = feed.add_program_step(10, 'left', (2*360-45), 400, 15)
