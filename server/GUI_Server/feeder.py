@@ -108,7 +108,7 @@ class Feeder:
         return velocity
 
     def accl(self, direction, i, percentage, total_steps):
-        func=0
+        func = 100
         try:
             if direction == 'up':
                 func = math.exp((10.0 * 100.0 * i) / (2.0 * percentage * total_steps))
