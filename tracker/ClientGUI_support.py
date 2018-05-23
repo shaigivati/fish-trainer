@@ -59,17 +59,22 @@ def on1R():
 
 def on2L():
     print('ClientGUI_support.on2L')
+    velocity = w.txtVelocity.get()
+    acceleration = w.txtAccl.get()
 
     fish_client = FishClient(w)
-    fish_client.send('test_2L', w.txtStepNum.get(), 25600/2, 100, 1)
+    fish_client.send('test_2L', w.txtStepNum.get(), 25600/2, velocity, acceleration)
     fish_client.kill()
 
     sys.stdout.flush()
 
 def on2R():
     print('ClientGUI_support.on2R')
+    velocity = w.txtVelocity.get()
+    acceleration = w.txtAccl.get()
+
     fish_client = FishClient(w)
-    fish_client.send('test_2R', w.txtStepNum.get(), 25600/2, 200, 2)
+    fish_client.send('test_2R', w.txtStepNum.get(), 25600/2, velocity, acceleration)
     fish_client.kill()
     sys.stdout.flush()
 
