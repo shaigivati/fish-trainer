@@ -577,6 +577,17 @@ class Fish_traning_GUI___Client:
         self.txtStepNum.configure(selectbackground="#c4c4c4")
         self.txtStepNum.configure(selectforeground="black")
 
+        self.txtVelocity = Entry(self.frmCom)
+        self.txtVelocity.place(relx=0.35, rely=0.35, height=27, relwidth=0.09)
+        self.txtVelocity.configure(background="white")
+        self.txtVelocity.configure(font="TkFixedFont")
+        self.txtVelocity.configure(foreground="#000000")
+        self.txtVelocity.configure(highlightbackground="#d9d9d9")
+        self.txtVelocity.configure(highlightcolor="black")
+        self.txtVelocity.configure(insertbackground="black")
+        self.txtVelocity.configure(selectbackground="#c4c4c4")
+        self.txtVelocity.configure(selectforeground="black")
+
         self.btnTankConf = Button(self.frmCom)
         self.btnTankConf.place(relx=0.34, rely=0.18, height=62, width=103)
         self.btnTankConf.configure(activebackground="#d9d9d9")
