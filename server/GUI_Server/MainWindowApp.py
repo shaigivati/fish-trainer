@@ -274,11 +274,11 @@ def handle_client_connection(client_socket):
     #app.onTxtUpdate('id:{}, side:{}'.format(dict_data['id'], dict_data['side']))
     recv_id = str(dict_data['id'])
     recv_side = dict_data['side']
+    recv_vel, recv_accl, recv_steps = None
     if (recv_id == "test_2L") or (recv_id == "test_2R"):
         recv_vel = dict_data['velocity']
         recv_accl = dict_data['accl']
-
-    print("vel:{0}, accl:{1}".format(recv_vel, recv_accl))
+        recv_steps = dict_data['steps']
 
     l.info(str_tmp)
     line_counter = -1
@@ -321,7 +321,20 @@ def handle_client_connection(client_socket):
         step_no = int(recv_side)
         pin_dir_str = '{0}{1}'.format(pin_num_str, 'D')  # create 1L/1R str
         # print('-->{}'.format(app.Pin[pin_num_str]))
-        spin_res = feed.spin_program(int(app.Pin[pin_num_str]), int(app.Pin[pin_dir_str]), int(app.Pin_en[2]), step_no)
+        if recv_vel is None:
+            spin_res = feed.spin_program(int(app.Pin[pin_num_str]),
+                                         int(app.Pin[pin_dir_str]),
+                                         int(app.Pin_en[2]),
+                                         step_no)
+        else:
+            spin_res = feed.raw_spin(int(app.Pin[pin_num_str]),
+                                     int(app.Pin[pin_dir_str]),
+                                     int(app.Pin_en[2]),
+                                     recv_steps,
+                                     'R',
+                                     recv_vel,
+                                     recv_accl)
+
         app.onTxtUpdate('{0}.'.format(spin_res), True)
 
 def while_true_func(server):
