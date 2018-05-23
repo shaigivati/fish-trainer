@@ -274,7 +274,7 @@ def handle_client_connection(client_socket):
     #app.onTxtUpdate('id:{}, side:{}'.format(dict_data['id'], dict_data['side']))
     recv_id = str(dict_data['id'])
     recv_side = dict_data['side']
-    recv_vel, recv_accl, recv_steps = None
+    recv_vel = recv_accl = recv_steps = None
     if (recv_id == "test_2L") or (recv_id == "test_2R"):
         recv_vel = dict_data['velocity']
         recv_accl = dict_data['accl']
