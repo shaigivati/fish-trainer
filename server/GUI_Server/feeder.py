@@ -56,7 +56,7 @@ class Feeder:
         return 'Done'
 
     def spin_program(self, pin_num, pin_direction, en_pin, steps=0):
-
+        print("spin_program")
         #print('pin:{0}, direction:{1}, en:{2}'.format(str(pin_num), str(pin_direction), str(en_pin)))  ## Print current loop
         steps_to_do = int(360.0 * self.one_deg)
         if not steps == 0:
@@ -76,6 +76,7 @@ class Feeder:
         return 'Done'
 
     def raw_spin(self, pin_num, pin_dir, en_pin, steps, direction, velocity, accl):
+        print("raw_spin")
         print ("accl:{0}".format(accl))
         GPIO.output(en_pin, True) #pull slp pin to HIGH
         GPIO.output(pin_dir, direction == 'L')    #HIGH for 'L', LOW for else
