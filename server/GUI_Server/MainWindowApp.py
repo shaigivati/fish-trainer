@@ -304,23 +304,24 @@ def handle_client_connection(client_socket):
         step_no = int(recv_side)
         spin_res = feed.spin(int(app.Pin[pin_num_str]), step_no, int(app.Pin_en[1]))
         app.onTxtUpdate('{0}.'.format(spin_res), False)
+
     if recv_id == "test_1R":
         pin_num_str = '1R'
         step_no = int(recv_side)
         spin_res = feed.spin(int(app.Pin[pin_num_str]), step_no, int(app.Pin_en[1]))
         app.onTxtUpdate('{0}.'.format(spin_res), False)
-    if recv_id == "test_2L":
-        pin_num_str = '2L'
-        step_no = int(recv_side)
-        pin_dir_str = '{0}{1}'.format(pin_num_str, 'D')  # create 1L/1R str
-        # print('-->{}'.format(app.Pin[pin_num_str]))
-        spin_res = feed.spin_program(int(app.Pin[pin_num_str]), int(app.Pin[pin_dir_str]), int(app.Pin_en[2]), step_no)
-        app.onTxtUpdate('{0}.'.format(spin_res), True)
-    if recv_id == "test_2R":
-        pin_num_str = '2R'
-        step_no = int(recv_side)
-        pin_dir_str = '{0}{1}'.format(pin_num_str, 'D')  # create 1L/1R str
-        # print('-->{}'.format(app.Pin[pin_num_str]))
+
+    if (recv_id == "test_2L") or (recv_id == "test_2R"):
+        if recv_id == "test_2L":
+            pin_num_str = '2L'
+            step_no = int(recv_side)
+            pin_dir_str = '{0}{1}'.format(pin_num_str, 'D')  # create 1L/1R str
+            dir_str = 'L'
+        if recv_id == "test_2R":
+            pin_num_str = '2R'
+            step_no = int(recv_side)
+            pin_dir_str = '{0}{1}'.format(pin_num_str, 'D')  # create 1L/1R str
+            dir_str = 'R'
         if recv_vel is None:
             spin_res = feed.spin_program(int(app.Pin[pin_num_str]),
                                          int(app.Pin[pin_dir_str]),
@@ -331,11 +332,12 @@ def handle_client_connection(client_socket):
                                      int(app.Pin[pin_dir_str]),
                                      int(app.Pin_en[2]),
                                      recv_steps,
-                                     'R',
+                                     dir_str,
                                      recv_vel,
                                      recv_accl)
 
         app.onTxtUpdate('{0}.'.format(spin_res), True)
+
 
 def while_true_func(server):
     global exit_var, connected, first_accp_conn, line_counter, line_dir
