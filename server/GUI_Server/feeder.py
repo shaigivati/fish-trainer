@@ -84,7 +84,7 @@ class Feeder:
             velocity_val = self.velocity_calc(velocity, steps, accl, i)
             if velocity_val < 1: velocity_val = 1
             wait_val = 1.0/(1000.0*velocity_val/2.0)
-            print ('{0},{1:.2f}-{2:.5f}\t\t'.format(i, velocity_val, 1.0/(velocity_val)), end='')
+            #print ('{0},{1:.2f}-{2:.5f}\t\t'.format(i, velocity_val, 1.0/(velocity_val)), end='')
             #if i/10 == 0: print (".", end='')
             GPIO.output(pin_num, True)## Switch on pin
             time.sleep(wait_val)## Wait
