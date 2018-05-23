@@ -13,7 +13,8 @@ time_to_sleep=0
 class Feeder:
     def __init__(self, pins):
         global time_to_sleep
-        self.one_deg = 1600.0/360.0
+        self.one_deg = 25600.0 / 360.0
+        #self.one_deg = 1600.0/360.0
         time_to_sleep=0.25/1000.0 #(0.005) - 5ms
         print('feeder init --', end='')
         GPIO.setmode(GPIO.BCM) ## Use board pin numbering
