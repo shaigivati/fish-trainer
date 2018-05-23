@@ -578,7 +578,7 @@ class Fish_traning_GUI___Client:
         self.txtStepNum.configure(selectforeground="black")
 
         self.txtVelocity = Entry(self.frmCom)
-        self.txtVelocity.place(relx=0.55, rely=0.35, height=27, relwidth=0.09)
+        self.txtVelocity.place(relx=0.55, rely=0.33, height=27, relwidth=0.09)
         self.txtVelocity.configure(background="white")
         self.txtVelocity.configure(font="TkFixedFont")
         self.txtVelocity.configure(foreground="#000000")
@@ -587,6 +587,17 @@ class Fish_traning_GUI___Client:
         self.txtVelocity.configure(insertbackground="black")
         self.txtVelocity.configure(selectbackground="#c4c4c4")
         self.txtVelocity.configure(selectforeground="black")
+
+        self.txtAccl = Entry(self.frmCom)
+        self.txtAccl.place(relx=0.55, rely=0.62, height=27, relwidth=0.09)
+        self.txtAccl.configure(background="white")
+        self.txtAccl.configure(font="TkFixedFont")
+        self.txtAccl.configure(foreground="#000000")
+        self.txtAccl.configure(highlightbackground="#d9d9d9")
+        self.txtAccl.configure(highlightcolor="black")
+        self.txtAccl.configure(insertbackground="black")
+        self.txtAccl.configure(selectbackground="#c4c4c4")
+        self.txtAccl.configure(selectforeground="black")
 
         self.btnTankConf = Button(self.frmCom)
         self.btnTankConf.place(relx=0.34, rely=0.18, height=62, width=103)
