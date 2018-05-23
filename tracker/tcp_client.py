@@ -3,6 +3,7 @@
 import socket
 import json
 
+
 class FishClient:
 
     def __init__(self, cb_obj=None):

@@ -45,14 +45,14 @@ def Feed():
 
 def on1L():
     print('ClientGUI_support.on1L')
-    fish_client = FishClient()
+    fish_client = FishClient(w)
     fish_client.send('test_1L', w.txtStepNum.get())
     fish_client.kill()
     sys.stdout.flush()
 
 def on1R():
     print('ClientGUI_support.on1R')
-    fish_client = FishClient()
+    fish_client = FishClient(w)
     fish_client.send('test_1R', w.txtStepNum.get())
     fish_client.kill()
     sys.stdout.flush()
@@ -60,7 +60,7 @@ def on1R():
 def on2L():
     print('ClientGUI_support.on2L')
 
-    fish_client = FishClient()
+    fish_client = FishClient(w)
     fish_client.send('test_2L', w.txtStepNum.get())
     fish_client.kill()
 
@@ -68,7 +68,7 @@ def on2L():
 
 def on2R():
     print('ClientGUI_support.on2R')
-    fish_client = FishClient()
+    fish_client = FishClient(w)
     fish_client.send('test_2R', w.txtStepNum.get())
     fish_client.kill()
     sys.stdout.flush()
