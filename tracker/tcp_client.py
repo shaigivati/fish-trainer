@@ -16,12 +16,12 @@ class FishClient:
         self.cb_obj = cb_obj
 
     def send(self, id_num, side):
-
-        data=json.dumps({'id':id_num,'side':side})
+        data = json.dumps({'id':id_num,'side':side})
         self.s.send(data)
         data = self.s.recv(self.BUFFER_SIZE)
 
         str_to_print = 'received data:{0}'.format(data)
+        print self.cb_obj
         if self.cb_obj is not None:
             self.cb_obj.print_and_update_main_log(str_to_print)
         print (str_to_print)
