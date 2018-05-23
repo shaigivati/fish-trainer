@@ -25,7 +25,7 @@ class FishClient:
         print self.cb_obj
         if self.cb_obj is not None:
             self.cb_obj.print_and_update_main_log(str_to_print)
-        print (str_to_print)
+        # print (str_to_print)
 
     def kill(self):
         self.s.close()
