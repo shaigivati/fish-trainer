@@ -275,8 +275,9 @@ def handle_client_connection(client_socket):
     recv_id = str(dict_data['id'])
     recv_side = dict_data['side']
     if (recv_id == "test_2L") or (recv_id == "test_2R"):
-        recv_accl = dict_data['accl']
         recv_vel = dict_data['velocity']
+        recv_accl = dict_data['accl']
+
     print("vel:{0}, accl:{1}".format(recv_vel, recv_accl))
 
     l.info(str_tmp)

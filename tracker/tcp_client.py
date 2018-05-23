@@ -16,8 +16,12 @@ class FishClient:
 
         self.cb_obj = cb_obj
 
-    def send(self, id_num, side):
-        data = json.dumps({'id':id_num,'side':side})
+    def send(self, id_num, side, velocity=None, accl=None):
+        if velocity is None:
+            data = json.dumps({'id':id_num,'side':side})
+        else:
+            data = json.dumps({'id':id_num,'side':side, 'velocity':velocity, 'accl':accl})
+
         self.s.send(data)
         data = self.s.recv(self.BUFFER_SIZE)
 
