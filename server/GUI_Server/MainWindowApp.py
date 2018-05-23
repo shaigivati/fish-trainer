@@ -24,6 +24,7 @@ def ConfigSectionMap(section):
             dict1[option] = None
     return dict1
 
+
 _ = gettext.gettext
 exit_var = False
 connected = False

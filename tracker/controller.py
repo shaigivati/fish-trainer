@@ -67,7 +67,7 @@ class Controller:
 
             if self.cb_obj is not None:
                 self.cb_obj.print_and_update_main_log(str_to_print)
-            fish_client = FishClient()
+            fish_client = FishClient(self.cb_obj)
             fish_client.send(fish_id + 1, feed_side)
             fish_client.kill()
 
