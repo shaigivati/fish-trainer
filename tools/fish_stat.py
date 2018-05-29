@@ -104,6 +104,8 @@ def get_information(directory, days_back, int_relevant_input):
                 day_word_place=((file_name.split())[1].split("_"))[1].lower().find("day")
                 dot_sign_place=((file_name.split())[1].split("_"))[1].find(".")
                 fish_no=((file_name.split())[1].split("_"))[1][1:day_word_place]
+                print('FISH NO:{}'.format(fish_no))
+                fish_no=((file_name.split())[1].split("_"))[1][1:day_word_place]
                 traning_day_for_fish=((file_name.split())[1].split("_"))[1][day_word_place+3:dot_sign_place]
 
                 if fish_no.isdigit():

@@ -107,7 +107,7 @@ def get_information(directory, days_back, int_relevant_input):
                 fish_no=((file_name.split())[1].split("_"))[1][1:day_word_place]
                 traning_day_for_fish=((file_name.split())[1].split("_"))[1][day_word_place+3:dot_sign_place]
 
-                if fish_no.isdigit():
+                if not fish_no == '':  # fish_no.isdigit():
                     if not last_printed_day==date_to_check:
                         last_printed_day=date_to_check
                         print_header=True
@@ -142,7 +142,7 @@ def get_information(directory, days_back, int_relevant_input):
                         if word_lower=="note":
                             bool_print=True
                             first_word=True
-                    fish_record = [int(fish_no), int(traning_day_for_fish), int(feeds_counter), [int(file_name_year),int(file_name_month),int(file_name_day)], file_name, fish_note, fish_traning_time_start, fish_traning_time_end]
+                    fish_record = [fish_no, int(traning_day_for_fish), int(feeds_counter), [int(file_name_year),int(file_name_month),int(file_name_day)], file_name, fish_note, fish_traning_time_start, fish_traning_time_end]
                     fish_traning_database.append(fish_record)
 
     print ("")
@@ -150,7 +150,6 @@ def get_information(directory, days_back, int_relevant_input):
     j=0
     old_date=0
     last_printed_day=0
-
 
     for item in sorted(fish_traning_database, key=lambda date: date[3], reverse=True):  # Auto find relevant fish
         if old_date == 0: old_date = item[3][2]
@@ -255,8 +254,8 @@ def get_information(directory, days_back, int_relevant_input):
 
 
 
-        print ("Fish no.\tTraning days\tDays showing\tTotal feed count\tAvg per day\t")
-        print(banner(None, ch='-', length=85))
+        print ("Fish no.\t\tTraning days\t\tDays showing\t\tTotal feed count\t\t\tAvg per day\t\t")
+        print(banner(None, ch='-', length=100))
 
 
         fish_num=sorted(fish_traning_database)[0][0]

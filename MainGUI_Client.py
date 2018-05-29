@@ -676,7 +676,7 @@ class Fish_traning_GUI___Client:
         self.Label15.configure(foreground="#0000fe")
         self.Label15.configure(highlightbackground="#d9d9d9")
         self.Label15.configure(highlightcolor="black")
-        self.Label15.configure(text='''00:00''')
+        self.Label15.configure(text='00:00')
 
 
         self.fillValue()
@@ -715,7 +715,19 @@ class Fish_traning_GUI___Client:
         self.txtMainLog.see(END)
 
     def update_time(self, time_str):
-        self.Label15.configure(text=time_str)
+        _str_time_array = str(time_str).split(':')
+        _str_time_array = list(map(int, _str_time_array))
+
+        _str_hr = _str_time_array[0]
+        _str_min = _str_time_array[1]
+        _str_sec = _str_time_array[2]
+        # time_str = '{}:{}:{}'.format(_str_hr, _str_min, _str_sec)
+
+        if _str_min < 20:
+            self.Label15.configure(text=time_str)
+        else:  # >20 --> make it green
+            self.Label15.configure(text=time_str, fg='#5eaf24')
+
 
     def __call__(self):
         print "RUN Command"
