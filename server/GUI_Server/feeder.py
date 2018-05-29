@@ -84,7 +84,7 @@ class Feeder:
         for i in range(steps): #53.3 for big pill # 133 for pill device# 1600 for archimeds ### one step is 1.8 degrees
             velocity_val = self.velocity_calc(velocity, steps, accl, i)
             if velocity_val < 1: velocity_val = 1
-            wait_val = 1.0/(100.0*velocity_val)
+            wait_val = 1.0/(5000.0*velocity_val)
             #print ('{0},{1:.2f}-{2:.5f}\t\t'.format(i, velocity_val, 1.0/(velocity_val)), end='')
             #if i/10 == 0: print (".", end='')
             GPIO.output(pin_num, True)## Switch on pin
