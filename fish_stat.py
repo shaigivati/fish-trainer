@@ -157,7 +157,7 @@ def get_information(directory, days_back, int_relevant_input):
             old_date = item[3][2]
             # print("Old Date:" + str(old_date))
             j += 1
-        if j < 2:  # Definding relevant fish from 2 last tranings
+        if j < 7:  # Definding relevant fish from 7 last tranings
             # print("Rel:" + str(item[0]))
             if item[0] not in relevant_fish: relevant_fish.append(item[0])
 

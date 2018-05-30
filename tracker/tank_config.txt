@@ -1,1 +1,1 @@
-{'upper': 205, 'lower': 278, 'right': 594, 'left': 24}
+{'upper': 34, 'lower': 477, 'right': 610, 'left': 18}

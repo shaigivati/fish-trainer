@@ -18,16 +18,23 @@ class FishClient:
 
     def send(self, id_num, side, steps=None, velocity=None, accl=None):
         if velocity is None:
-            data = json.dumps({'id':id_num,'side':side})
+            data = json.dumps({'id': id_num, 'side': side})
         else:
             data = json.dumps({'id': id_num, 'side': side, 'steps': steps, 'velocity': velocity, 'accl': accl})
 
         self.s.send(data)
+        old_data = data
+        # print('DATA_SENT:{}'.format(data))
         data = self.s.recv(self.BUFFER_SIZE)
+        # print('DATA_REC:{}'.format(data))
+        # print ('ECHO OK? {}'.format(old_data == data))
 
-        str_to_print = 'received data:{0}'.format(data)
+        if old_data == data:
+            str_to_print = 'echo OK. \t\t'
+        else:
+            str_to_print = 'ERROR! CHECK CONNECTION!'
         if self.cb_obj is not None:
-            self.cb_obj.print_and_update_main_log(str_to_print)
+            self.cb_obj.print_and_update_main_log(str_to_print, False)
         # print (str_to_print)
 
     def kill(self):
