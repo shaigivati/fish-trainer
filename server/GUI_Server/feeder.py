@@ -52,7 +52,7 @@ class Feeder:
         time.sleep(time_to_sleep)
         GPIO.output(en_pin, False) #pull slp pin to HIGH
         time.sleep(time_to_sleep)## sleep back Wait
-        print ("Done",end='') ## When loop is complete, print "Done"
+        print ("Done", end='') ## When loop is complete, print "Done"
         return 'Done'
 
     def spin_program(self, pin_num, pin_direction, en_pin, steps=0):
